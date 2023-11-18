@@ -1,0 +1,97 @@
+﻿<Page x:Class="Coursework.CalculatePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:Coursework"
+      d:DataContext="{d:DesignInstance local:CalculatePage, IsDesignTimeCreatable=True}"
+      mc:Ignorable="d"
+      Title="CalculatePage" Loaded="CalculatePage_OnLoaded">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="90"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" VerticalAlignment="Center" FontSize="24" FontWeight="Bold">Модификации</Label>
+
+            <ListView Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" x:Name="lvDataBinding" 
+                      ItemsSource="{Binding SelectedSiding}"
+                      SelectedItem="{Binding SelectedSiding, Mode=TwoWay}"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Center">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Foreground="Blue"/>
+                                <Image Width="150" Height="150" Source="{Binding Image}"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackPanel  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" Visibility="{Binding IsVisibleSelected}" Margin="10">
+                <DockPanel x:Name="getDockPanel">
+                    <Image x:Name="Image1" DockPanel.Dock="Left" Width="300" Height="300" Source="{Binding SelectedSiding.Image, UpdateSourceTrigger=PropertyChanged}"/>
+                    <StackPanel Margin="10" Orientation="Vertical">
+                        <TextBlock Text="Модель" FontSize="24" />
+                        <Label Content="{Binding SelectedSiding.Title, UpdateSourceTrigger=PropertyChanged}" FontSize="18" />
+                        <TextBlock Text="Производитель" FontSize="24" />
+                        <Label Content="{Binding SelectedSiding.Description, UpdateSourceTrigger=PropertyChanged}" FontSize="18" />
+                        <TextBlock Text="Цена" FontSize="24" />
+                        <Label Content="{Binding SelectedSiding.Price, UpdateSourceTrigger=PropertyChanged}" FontSize="18" />
+                    </StackPanel>
+                </DockPanel>
+            </StackPanel>
+            
+            <Button Grid.Column="1" Grid.Row="3" x:Name="AddWallButton" Content="Добавить стену" Click="AddWallButton_OnClick" FontSize="18" FontWeight="Bold" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="2" Padding="10" Margin="10"/>
+
+            <StackPanel Grid.Column="1" Grid.ColumnSpan="6" Grid.Row="4" Grid.RowSpan="2" x:Name="elementStackPanel" Orientation="Horizontal" Margin="10"/> 
+            
+            <TextBlock Grid.Column="4" Grid.Row="4"  x:Name="txtResult" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
+            
+            <Label Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Margin="0, 20, 20,20">Дополнительные параметры</Label>
+
+            <StackPanel Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="6">
+                <DockPanel>
+                    <CheckBox x:Name="WindowDoorCheckBox"  Content="Проёмы (окна, двери)" Margin="0, 0, 20,0"/>
+                    <CheckBox x:Name="InsulationCheckBox"  Content="Нужен ли утеплитель" Margin="0, 0, 20,0"/>
+                </DockPanel>
+            </StackPanel>
+            <Button x:Name="MakeCalculation" Grid.Row="9" Grid.Column="2" Width="250" Height="50" Grid.ColumnSpan="2" Background="Red" Click="MakeCalculation_OnClick">Сделать расчёт</Button>
+            <TextBlock Grid.Column="4" Grid.Row="4"  x:Name="totalLenResult" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
+            <StackPanel x:Name="exectResult" Grid.Row="10" Grid.Column="5" />
+            <StackPanel x:Name="getExectResult"  Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="10" Grid.RowSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center">
+                
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>
