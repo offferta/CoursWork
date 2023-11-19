@@ -27,10 +27,16 @@
       <Resource Include="Resources\picture.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Resource>
-      <None Remove="Resources\планка.png" />
-      <None Remove="Resources\финишная.png" />
-      <None Remove="Resources\планка.jpg" />
-      <Resource Include="Resources\планка.jpg">
+      <None Remove="Resources\planka.png" />
+      <Resource Include="Resources\planka.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Resources\finish.png" />
+      <Resource Include="Resources\finish.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Resources\film.png" />
+      <Resource Include="Resources\film.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Resource>
     </ItemGroup>

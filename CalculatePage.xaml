@@ -61,7 +61,7 @@
             <StackPanel  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" Visibility="{Binding IsVisibleSelected}" Margin="10">
                 <DockPanel x:Name="getDockPanel">
                     <Image x:Name="Image1" DockPanel.Dock="Left" Width="300" Height="300" Source="{Binding SelectedSiding.Image, UpdateSourceTrigger=PropertyChanged}"/>
-                    <StackPanel Margin="10" Orientation="Vertical">
+                    <StackPanel Margin="10"  Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <TextBlock Text="Модель" FontSize="24" />
                         <Label Content="{Binding SelectedSiding.Title, UpdateSourceTrigger=PropertyChanged}" FontSize="18" />
                         <TextBlock Text="Производитель" FontSize="24" />
@@ -86,12 +86,15 @@
                     <CheckBox x:Name="InsulationCheckBox"  Content="Нужен ли утеплитель" Margin="0, 0, 20,0"/>
                 </DockPanel>
             </StackPanel>
+            
             <Button x:Name="MakeCalculation" Grid.Row="9" Grid.Column="2" Width="250" Height="50" Grid.ColumnSpan="2" Background="Red" Click="MakeCalculation_OnClick">Сделать расчёт</Button>
             <TextBlock Grid.Column="4" Grid.Row="4"  x:Name="totalLenResult" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
-            <StackPanel x:Name="exectResult" Grid.Row="10" Grid.Column="5" />
-            <StackPanel x:Name="getExectResult"  Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="10" Grid.RowSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center">
-                
-            </StackPanel>
+            
+            <Grid Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="10">
+                <StackPanel x:Name="getExectResult" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <StackPanel x:Name="exectResult" HorizontalAlignment="Right" VerticalAlignment="Top" />
+            </Grid>
+            
         </Grid>
     </ScrollViewer>
 </Page>
