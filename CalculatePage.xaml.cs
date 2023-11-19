@@ -26,6 +26,9 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
     private double totalLengthSum;
     private double totalSum;
     private double countSiding;
+    private double sidingCount;
+    private double starterPlanksCount;
+    private double finishPlanksCount;
 
     private Visibility _isVisibleSelected = Visibility.Collapsed;
 
@@ -269,11 +272,12 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
     private void MakeCalculation_OnClick(object sender, RoutedEventArgs e)
     {
         GetMakeCaculation();
-        ShowCalculationResults();
+        
         DisplaySidingInfo(getExectResult);
         GetSlats(getExectResult);
         GetSlatsFinish(getExectResult);
         GetFilm(getExectResult);
+        ShowCalculationResults();
     }
 
     private async Task GetMakeCaculation()
@@ -356,7 +360,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                 TextAlignment = TextAlignment.Left,
                 Margin = new Thickness(5)
             };
-            
+
             var totalSidingPriceTextBlock = new TextBlock
             {
                 Text = $"Итоговая цена: {totalSidingPrice:C}",
@@ -393,6 +397,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         }
     }
 
+    private double slatsCount;
     private void GetSlats(StackPanel dockPanel)
     {
         if (SelectedSiding != null)
@@ -419,19 +424,19 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                 FontSize = 20,
                 TextAlignment = TextAlignment.Left, Margin = new Thickness(5)
             };
-
-            var slatsCount = totalLengthSum;
+            
+            slatsCount = totalLengthSum;
             var slatsPrice = slatsCount * 420;
 
             var countSlats = new TextBlock()
             {
-                Text = $"необходимо: {slatsCount} шт",
+                Text = $"Необходимо: {slatsCount} шт",
                 FontFamily = new FontFamily("Arial"),
                 FontSize = 20,
                 TextAlignment = TextAlignment.Left,
                 Margin = new Thickness(5)
             };
-            
+
             var totalSlatsPriceTextBlock = new TextBlock
             {
                 Text = $"Итого: {slatsPrice:C}",
@@ -469,6 +474,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         }
     }
 
+    //финишная планка
     private void GetSlatsFinish(StackPanel dockPanel)
     {
         if (SelectedSiding != null)
@@ -498,7 +504,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
             var slatsCount = totalLengthSum;
             var slatsPrice = slatsCount * 420;
-            
+
             var countSlats = new TextBlock()
             {
                 Text = $"необходимо: {slatsCount} шт",
@@ -508,7 +514,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                 Margin = new Thickness(5)
             };
 
-            
+
             var totalSlatsPriceTextBlock = new TextBlock
             {
                 Text = $"Итого: {slatsPrice:C}",
@@ -545,6 +551,8 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             dockPanel.Children.Add(stackPanel);
         }
     }
+
+    //ветрозащитная плёнка
     private void GetFilm(StackPanel dockPanel)
     {
         if (SelectedSiding != null)
@@ -575,7 +583,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             var slatsCount = totalLengthSum;
             var slatsPrice = slatsCount * 420;
             int quantity = (int)Math.Ceiling(totalSum / 75.0);
-            
+
             var totalSlatsPriceTextBlock = new TextBlock
             {
                 Text = $"Необходимо: {quantity} шт",
@@ -594,7 +602,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                 TextAlignment = TextAlignment.Left,
                 Margin = new Thickness(5)
             };
-            
+
             var imageSlatsStackPanel = new StackPanel();
             imageSlatsStackPanel.Children.Add(imageSlats);
 
@@ -623,12 +631,18 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         }
     }
 
+    
     private void ShowCalculationResults()
     {
         exectResult.Children.Clear();
 
         var sectionLabel = new Label
-            { Content = "Счёт/заказ", FontWeight = FontWeights.Bold, Margin = new Thickness(0, 5, 5, 0) };
+        {
+            Content = "Счёт/заказ",
+            FontWeight = FontWeights.Bold,
+            Margin = new Thickness(0, 5, 5, 0),
+            FontSize = 16 // Размер шрифта
+        };
         exectResult.Children.Add(sectionLabel);
 
         foreach (var tuple in groupTextBoxes)
@@ -638,59 +652,67 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             {
                 var result = value1 * value2;
 
-                // Создание лейбла для отображения площади стены и её размеров
                 var wallAreaLabel = new Label
                 {
                     Content = $"Площадь стены ({value1} м x {value2} м): {result:F2} м²",
-                    Margin = new Thickness(0, 5, 5, 0)
+                    Margin = new Thickness(0, 5, 5, 0),
+                    FontSize = 14 // Размер шрифта
                 };
                 exectResult.Children.Add(wallAreaLabel);
             }
         }
 
-        // Добавление дополнительной информации при необходимости
-        // Пример добавления нового элемента с информацией
         var additionalInfoLabel = new Label
-            { Content = "Дополнительная информация", Margin = new Thickness(0, 5, 5, 0) };
+        {
+            Content = "Дополнительная информация",
+            Margin = new Thickness(0, 5, 5, 0),
+            FontSize = 16 // Размер шрифта
+        };
         exectResult.Children.Add(additionalInfoLabel);
 
-        // Вычисление общей длины стен из введенных пользователем данных
         var totalWallLength = groupTextBoxes.Sum(tuple =>
         {
             double value;
             return double.TryParse(tuple.Item1.Text, out value) ? value : 0;
         });
 
-        // Вычисление количества сайдинга
-        double sidingLength = 3; // Длина одной планки сайдинга (в метрах)
-        var sidingCount = totalLengthSum / sidingLength;
+        double sidingLength = 3;
+        sidingCount = totalWallLength / sidingLength;
 
-        // Вычисление количества стартовых планок (предположим, что одна планка - 3 м)
-        var starterPlanksCount = totalWallLength / 3;
-
-        // Вычисление количества финишных планок (примерное кол-во, можно заменить на реальные данные)
-        var finishPlanksCount = 10; // Замените это значение на реальное количество финишных планок
-
-        // Вычисление количества Н-профилей (предположим, что 1 профиль на каждую планку)
+        starterPlanksCount = totalWallLength / 3;
+        finishPlanksCount = starterPlanksCount;
         var nProfilesCount = sidingCount;
 
-        // Добавление информации о количестве сайдинга, планок и Н-профилей в exectResult
         var sidingCountLabel = new Label
-            { Content = $"Количество сайдинга: {sidingCount:F2} шт.", Margin = new Thickness(0, 5, 5, 0) };
+        {
+            Content = $"Количество сайдинга: {Math.Ceiling(countSiding)} шт.",
+            Margin = new Thickness(0, 5, 5, 0),
+            FontSize = 14 // Размер шрифта
+        };
         exectResult.Children.Add(sidingCountLabel);
 
         var starterPlanksLabel = new Label
         {
-            Content = $"Количество стартовых планок: {starterPlanksCount:F2} шт.", Margin = new Thickness(0, 5, 5, 0)
+            Content = $"Количество стартовых планок: {slatsCount} шт.",
+            Margin = new Thickness(0, 5, 5, 0),
+            FontSize = 14 // Размер шрифта
         };
         exectResult.Children.Add(starterPlanksLabel);
 
         var finishPlanksLabel = new Label
-            { Content = $"Количество финишных планок: {finishPlanksCount} шт.", Margin = new Thickness(0, 5, 5, 0) };
+        {
+            Content = $"Количество финишных планок: {slatsCount} шт.",
+            Margin = new Thickness(0, 5, 5, 0),
+            FontSize = 14 // Размер шрифта
+        };
         exectResult.Children.Add(finishPlanksLabel);
 
         var nProfilesLabel = new Label
-            { Content = $"Количество Н-профилей: {nProfilesCount:F2} шт.", Margin = new Thickness(0, 5, 5, 0) };
+        {
+            Content = $"Количество Н-профилей: {nProfilesCount:F2} шт.",
+            Margin = new Thickness(0, 5, 5, 0),
+            FontSize = 14 // Размер шрифта
+        };
         exectResult.Children.Add(nProfilesLabel);
     }
 }
