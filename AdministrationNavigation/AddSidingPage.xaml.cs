@@ -12,13 +12,14 @@ using Microsoft.Win32;
 
 namespace Coursework.AdministrationNavigation;
 
-public partial class AddSidingPage : Page
+public partial class 
+    AddSidingPage : Page
 {
-    private byte[] imageData;
+    private byte[] _imageData;
     private Worker _worker;
-    private byte[] selectedImageBytes;
-    private Siding siningId;
-    private List<Siding> siningList = new List<Siding>();
+    private byte[] _selectedImageBytes;
+    private Siding _siningId;
+    private List<Siding> _siningList = new List<Siding>();
     
     public AddSidingPage(Worker worker)
     {
@@ -32,21 +33,21 @@ public partial class AddSidingPage : Page
         {
             await using var context = new MyDbContext();
             
-            if (imageData == null)
+            if (_imageData == null)
             {
                 MessageBox.Show("Please select an image.");
                 return;
             }
-            siningId = 
+            _siningId = 
             context.Sidings.Update(new Siding()
             {
                 Title = TitleTextBox.Text,
                 Description = DescriptionTextBox.Text,
                 Price = decimal.Parse(PriceTextBox.Text),
-                Image = ConvertToBitmapImage(imageData)
+                Image = ConvertToBitmapImage(_imageData)
             }).Entity;
             
-            siningList.Add(siningId);
+            _siningList.Add(_siningId);
 
             MessageBox.Show("Добавление произведено");
             await context.SaveChangesAsync();
@@ -69,7 +70,7 @@ public partial class AddSidingPage : Page
             BitmapImage bitmap = new BitmapImage(new Uri(imagePath));
             SelectedImage.Source = bitmap;
 
-            imageData = File.ReadAllBytes(imagePath);
+            _imageData = File.ReadAllBytes(imagePath);
         }
     }
 }

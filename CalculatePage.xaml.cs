@@ -17,29 +17,44 @@ namespace Coursework;
 
 public partial class CalculatePage : Page, INotifyPropertyChanged
 {
-    private readonly List<Tuple<TextBox, TextBox>> groupTextBoxes = new();
-    private readonly List<Tuple<TextBox, TextBox, TextBox>> groupTextBoxes2 = new();
-    private int wallButtonClickCount;
-    private int windowButtonClickCount;
-    private int textBoxCount = 0;
+    private readonly List<Tuple<TextBox, TextBox>> _groupTextBoxes = new();
+    private readonly List<Tuple<TextBox, TextBox, TextBox>> _groupTextBoxes2 = new();
+    private int _wallButtonClickCount;
+    private int _windowButtonClickCount;
+    private Siding _selectedSiding;
     private Worker _worker;
-    private Siding selectedSiding;
-    private readonly double totalResult = 0;
-    private double totalLengthSum;
-    private double totalSum;
-    private double countSiding;
-    private double sidingCount;
-    private double starterPlanksCount;
-    private double finishPlanksCount;
+    private readonly double _totalResult = 0;
+    private int _textBoxCount = 0;
+    private double _totalLengthSum;
+    
+    private double _sumFilm; //сумма плёнки
+    private int _countFilm; //количество плёнки
+    private double _priceFilm = 5200; //цена пленки5200 
+    
+    private double _sumSlats; //сумма планокСтартовых/Финишных
+    private double _countSlats; //кол-во планок Стартовых/Финишных
+
+    private double _sumSiding; //сумма сайдинга итоговая
+    private double _countSiding; //кол-во сайдинга 
+
+    private double _sumWindow; //сумма окон 
+    private double _sumWall; //сумма стенк
+
+    private decimal _lengthSiding; //длиннна выбранного сайдинга
+    private decimal _widthSiding; //ширина выбранного сайдинга
+    private decimal _areaSidind; //площадь сайдинга
+
+    private double _totalAreaWall; //общаяя площадь стен
+    private double _totalLengthWall; //общаяя длинна стен
 
     private Visibility _isVisibleSelected = Visibility.Collapsed;
 
     public Siding SelectedSiding
     {
-        get => selectedSiding;
+        get => _selectedSiding;
         set
         {
-            selectedSiding = value;
+            _selectedSiding = value;
             IsVisibleSelected = Visibility.Visible;
             OnPropertyChanged();
         }
@@ -88,11 +103,11 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
     private void AddWallButton_OnClick(object sender, RoutedEventArgs e)
     {
-        if (wallButtonClickCount < 6)
+        if (_wallButtonClickCount < 6)
         {
             var group = CreateElementGroup();
             elementStackPanel.Children.Add(group);
-            wallButtonClickCount++;
+            _wallButtonClickCount++;
         }
         else
         {
@@ -176,7 +191,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
     private double CalculateTotal()
     {
-        totalSum = groupTextBoxes.Sum(tuple =>
+        _sumWall = _groupTextBoxes.Sum(tuple =>
         {
             double value1, value2;
             return double.TryParse(tuple.Item1.Text, out value1) && double.TryParse(tuple.Item2.Text, out value2)
@@ -184,21 +199,34 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                 : 0;
         });
 
-        txtResult.Text = $"Общая сумма: {totalSum:F2} м²";
-        return totalSum;
+        txtResult.Text = $"Общая сумма: {_sumWall:F2} м²";
+        return _sumWall;
+    }
+    private double CalculateTotal2()
+    {
+        _sumWindow = _groupTextBoxes2.Sum(tuple =>
+        {
+            double value1, value2, value3;
+            return double.TryParse(tuple.Item1.Text, out value1) && double.TryParse(tuple.Item2.Text, out value2) && double.TryParse(tuple.Item3.Text, out value3)
+                ? value1 * value2 * value3
+                : 0;
+        });
+
+        txtResult2.Text = $"Общая сумма: {_sumWindow:F2} м²";
+        return _sumWindow;
     }
 
     private double CalculateTotalLength()
     {
-        var totalLength = 0.0;
+        var totalLengthWall = 0.0;
 
-        foreach (var tuple in groupTextBoxes)
+        foreach (var tuple in _groupTextBoxes)
         {
             double length;
-            if (double.TryParse(tuple.Item1.Text, out length)) totalLength += length;
+            if (double.TryParse(tuple.Item1.Text, out length)) totalLengthWall += length;
         }
 
-        return totalLength;
+        return totalLengthWall;
     }
 
     private void CalculateResult(TextBox textBox1, TextBox textBox2, Label resultLabel)
@@ -213,7 +241,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             UpdateResult();
 
             var tupleToUpdate =
-                groupTextBoxes.FirstOrDefault(tuple => tuple.Item1 == textBox1 && tuple.Item2 == textBox2);
+                _groupTextBoxes.FirstOrDefault(tuple => tuple.Item1 == textBox1 && tuple.Item2 == textBox2);
             if (tupleToUpdate != null)
             {
                 tupleToUpdate.Item1.Text = textBox1.Text;
@@ -221,7 +249,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             }
             else
             {
-                groupTextBoxes.Add(new Tuple<TextBox, TextBox>(textBox1, textBox2));
+                _groupTextBoxes.Add(new Tuple<TextBox, TextBox>(textBox1, textBox2));
             }
 
             CalculateTotal();
@@ -245,7 +273,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             UpdateResult();
 
             var tupleToUpdate =
-                groupTextBoxes2.FirstOrDefault(tuple => tuple.Item1 == textBox1 && tuple.Item2 == textBox2 && tuple.Item3 == textBox3);
+                _groupTextBoxes2.FirstOrDefault(tuple => tuple.Item1 == textBox1 && tuple.Item2 == textBox2 && tuple.Item3 == textBox3);
             if (tupleToUpdate != null)
             {
                 tupleToUpdate.Item1.Text = textBox1.Text;
@@ -254,10 +282,10 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             }
             else
             {
-                groupTextBoxes2.Add(new Tuple<TextBox, TextBox, TextBox>(textBox1, textBox2, textBox3));
+                _groupTextBoxes2.Add(new Tuple<TextBox, TextBox, TextBox>(textBox1, textBox2, textBox3));
             }
 
-            CalculateTotal();
+            CalculateTotal2();
         }
         else
         {
@@ -273,10 +301,10 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             if (elementStackPanel.Children.Contains(group))
             {
                 elementStackPanel.Children.Remove(group);
-                wallButtonClickCount--;
+                _wallButtonClickCount--;
 
-                var tupleToRemove = groupTextBoxes.FirstOrDefault(tuple => tuple.Item1.Parent == group);
-                if (tupleToRemove != null) groupTextBoxes.Remove(tupleToRemove);
+                var tupleToRemove = _groupTextBoxes.FirstOrDefault(tuple => tuple.Item1.Parent == group);
+                if (tupleToRemove != null) _groupTextBoxes.Remove(tupleToRemove);
 
                 CalculateTotal();
             }
@@ -285,7 +313,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
     private void UpdateResult()
     {
-        txtResult.Text = $"{totalResult:F2} s";
+        txtResult.Text = $"{_totalResult:F2} s";
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -318,10 +346,10 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
     {
         try
         {
-            totalLengthSum = CalculateTotalLength();
+            _totalLengthSum = CalculateTotalLength();
             var context = new MyDbContext();
             var result = context.FeaturesMaterials
-                .Where(fm => fm.SidingId == selectedSiding.SidingId)
+                .Where(fm => fm.SidingId == _selectedSiding.SidingId)
                 .Include(fm => fm.Features)
                 .Select(fm => new
                 {
@@ -334,18 +362,18 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                 .Select(item => item.FeaturesMaterials)
                 .ToList();
 
-            decimal length = Math.Round(Convert.ToDecimal(featuresMaterialsValue[0]), 3);
-            decimal width = Math.Round(Convert.ToDecimal(featuresMaterialsValue[1]), 3);
+            _lengthSiding = Math.Round(Convert.ToDecimal(featuresMaterialsValue[0]), 3);
+            _widthSiding = Math.Round(Convert.ToDecimal(featuresMaterialsValue[1]), 3);
 
-            if (length != 0 && width != 0)
+            if (_lengthSiding != 0 && _widthSiding != 0)
             {
-                var squareSiding = length * width;
-                var totalWallArea = CalculateTotal();
+                _areaSidind = _lengthSiding * _widthSiding;
+                _totalAreaWall = CalculateTotal();
 
-                if (squareSiding != 0)
+                if (_areaSidind != 0)
                 {
-                    countSiding = Convert.ToDouble(totalWallArea) / Convert.ToDouble(squareSiding);
-                    MessageBox.Show(countSiding.ToString());
+                    _countSiding = Convert.ToDouble(_totalAreaWall) / Convert.ToDouble(_areaSidind);
+                    MessageBox.Show(_countSiding.ToString());
                 }
             }
         }
@@ -384,11 +412,12 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                 Margin = new Thickness(5)
             };
 
-            double totalSidingPrice = Convert.ToDouble(SelectedSiding.Price) * countSiding;
+            _countSiding = Math.Ceiling(_countSiding);
+            _sumSiding = Convert.ToDouble(SelectedSiding.Price) * _countSiding;
 
             var countSlats = new TextBlock()
             {
-                Text = $"Необходимо: {Math.Ceiling(countSiding)} шт",
+                Text = $"Необходимо: {Math.Ceiling(_countSiding)} шт",
                 FontFamily = new FontFamily("Arial"),
                 FontSize = 20,
                 TextAlignment = TextAlignment.Left,
@@ -397,7 +426,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
             var totalSidingPriceTextBlock = new TextBlock
             {
-                Text = $"Итоговая цена: {totalSidingPrice:C}",
+                Text = $"Итоговая цена: {_sumSiding:C}",
                 TextAlignment = TextAlignment.Left,
                 FontSize = 20,
                 FontFamily = new FontFamily("Arial"),
@@ -430,8 +459,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             dockPanel.Children.Add(allStackPanel);
         }
     }
-
-    private double slatsCount;
+    
     private void GetSlats(StackPanel dockPanel)
     {
         if (SelectedSiding != null)
@@ -459,12 +487,12 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                 TextAlignment = TextAlignment.Left, Margin = new Thickness(5)
             };
             
-            slatsCount = totalLengthSum;
-            var slatsPrice = slatsCount * 420;
+            _countSlats = _totalLengthSum;
+            _sumSlats = _countSlats * 420;
 
-            var countSlats = new TextBlock()
+            var countSlatsTextBlocl = new TextBlock()
             {
-                Text = $"Необходимо: {slatsCount} шт",
+                Text = $"Необходимо: {_countSlats} шт",
                 FontFamily = new FontFamily("Arial"),
                 FontSize = 20,
                 TextAlignment = TextAlignment.Left,
@@ -473,7 +501,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
             var totalSlatsPriceTextBlock = new TextBlock
             {
-                Text = $"Итого: {slatsPrice:C}",
+                Text = $"Итого: {_sumSlats:C}",
                 FontFamily = new FontFamily("Arial"),
                 FontSize = 20,
                 TextAlignment = TextAlignment.Left,
@@ -492,7 +520,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
             infoStackPanel.Children.Add(sidingSlatsTextBlock);
             infoStackPanel.Children.Add(sidingSlatsPriceBlock);
-            infoStackPanel.Children.Add(countSlats);
+            infoStackPanel.Children.Add(countSlatsTextBlocl);
             infoStackPanel.Children.Add(totalSlatsPriceTextBlock);
 
             var stackPanel = new StackPanel
@@ -536,12 +564,12 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                 TextAlignment = TextAlignment.Left, Margin = new Thickness(5)
             };
 
-            var slatsCount = totalLengthSum;
-            var slatsPrice = slatsCount * 420;
+            _countSlats = _totalLengthSum;
+            _sumSlats = _countSlats * 420;
 
-            var countSlats = new TextBlock()
+            var countSlataTextBlock = new TextBlock()
             {
-                Text = $"необходимо: {slatsCount} шт",
+                Text = $"необходимо: {_countSlats} шт",
                 FontFamily = new FontFamily("Arial"),
                 FontSize = 20,
                 TextAlignment = TextAlignment.Left,
@@ -551,7 +579,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
             var totalSlatsPriceTextBlock = new TextBlock
             {
-                Text = $"Итого: {slatsPrice:C}",
+                Text = $"Итого: {_sumSlats:C}",
                 FontFamily = new FontFamily("Arial"),
                 FontSize = 20,
                 TextAlignment = TextAlignment.Left,
@@ -570,7 +598,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
             infoStackPanel.Children.Add(sidingSlatsTextBlock);
             infoStackPanel.Children.Add(sidingSlatsPriceBlock);
-            infoStackPanel.Children.Add(countSlats);
+            infoStackPanel.Children.Add(countSlataTextBlock);
             infoStackPanel.Children.Add(totalSlatsPriceTextBlock);
 
             var stackPanel = new StackPanel
@@ -608,29 +636,29 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             };
             var sidingSlatsPriceBlock = new TextBlock
             {
-                Text = $"Цена за штуку: {5200:C}",
+                Text = $"Цена за штуку: {_priceFilm:C}",
                 FontFamily = new FontFamily("Arial"),
                 FontSize = 20,
                 TextAlignment = TextAlignment.Left, Margin = new Thickness(5)
             };
 
-            var slatsCount = totalLengthSum;
-            var slatsPrice = slatsCount * 420;
-            int quantity = (int)Math.Ceiling(totalSum / 75.0);
+            _countSlats = _totalLengthSum;
+            //slatsPrice = countSlats * 420;
+            _countFilm = (int)Math.Ceiling(_sumWall / 75.0);
 
             var totalSlatsPriceTextBlock = new TextBlock
             {
-                Text = $"Необходимо: {quantity} шт",
+                Text = $"Необходимо: {_countFilm} шт",
                 FontFamily = new FontFamily("Arial"),
                 FontSize = 20,
                 TextAlignment = TextAlignment.Left,
                 Margin = new Thickness(5)
             };
 
-            int sum = quantity * 5200;
+            _sumFilm = _countFilm * 5200;
             var totalSumPriceTextBlock = new TextBlock
             {
-                Text = $"Итого: {sum:C} ",
+                Text = $"Итого: {_sumFilm:C} ",
                 FontFamily = new FontFamily("Arial"),
                 FontSize = 20,
                 TextAlignment = TextAlignment.Left,
@@ -678,7 +706,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         };
         exectResult.Children.Add(sectionLabel);
 
-        foreach (var tuple in groupTextBoxes)
+        foreach (var tuple in _groupTextBoxes)
         {
             double value1, value2;
             if (double.TryParse(tuple.Item1.Text, out value1) && double.TryParse(tuple.Item2.Text, out value2))
@@ -697,28 +725,25 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
         var additionalInfoLabel = new Label
         {
-            Content = "Дополнительная информация",
+            Content = "Количетсво материалов",
             Margin = new Thickness(0, 5, 5, 0),
             FontSize = 16 // Размер шрифта
         };
         exectResult.Children.Add(additionalInfoLabel);
 
-        var totalWallLength = groupTextBoxes.Sum(tuple =>
+        var totalWallLength = _groupTextBoxes.Sum(tuple =>
         {
             double value;
             return double.TryParse(tuple.Item1.Text, out value) ? value : 0;
         });
+        
+        _countSiding = _totalAreaWall / Convert.ToDouble(_areaSidind);
 
-        double sidingLength = 3;
-        sidingCount = totalWallLength / sidingLength;
-
-        starterPlanksCount = totalWallLength / 3;
-        finishPlanksCount = starterPlanksCount;
-        var nProfilesCount = sidingCount;
+        var nProfilesCount = _countSiding;
 
         var sidingCountLabel = new Label
         {
-            Content = $"Количество сайдинга: {Math.Ceiling(countSiding)} шт.",
+            Content = $"Количество сайдинга: {Math.Ceiling(_countSiding)} шт.",
             Margin = new Thickness(0, 5, 5, 0),
             FontSize = 14 // Размер шрифта
         };
@@ -726,7 +751,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
         var starterPlanksLabel = new Label
         {
-            Content = $"Количество стартовых планок: {slatsCount} шт.",
+            Content = $"Количество стартовых планок: {_countSlats} шт.",
             Margin = new Thickness(0, 5, 5, 0),
             FontSize = 14 // Размер шрифта
         };
@@ -734,30 +759,23 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
         var finishPlanksLabel = new Label
         {
-            Content = $"Количество финишных планок: {slatsCount} шт.",
+            Content = $"Количество финишных планок: {_countSlats} шт.",
             Margin = new Thickness(0, 5, 5, 0),
             FontSize = 14 // Размер шрифта
         };
         exectResult.Children.Add(finishPlanksLabel);
-
-        var nProfilesLabel = new Label
-        {
-            Content = $"Количество Н-профилей: {nProfilesCount:F2} шт.",
-            Margin = new Thickness(0, 5, 5, 0),
-            FontSize = 14 // Размер шрифта
-        };
-        exectResult.Children.Add(nProfilesLabel);
     }
 
     private void WindowDoorCheckBox_OnChecked(object sender, RoutedEventArgs e)
     {
-        var additionalButton = new Button { Content = "Дополнительная кнопка" };
+        var additionalButton = new Button { Content = "Добавить проём" };
         additionalButton.Click += AdditionalButton_Click;
         additionalButton.Width = 200;
+        additionalButton.Content = "Добавить проём";
         
         StackPanel.Children.Add(additionalButton);
         
-        if (windowButtonClickCount <= 6)
+        if (_windowButtonClickCount < 6)
         {
             var group = GetWindow();
             WindowStackPanel.Children.Add(group);
@@ -849,13 +867,13 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
     return grid;
 }
-
     private void AdditionalButton_Click(object sender, RoutedEventArgs e)
     {
-        if (wallButtonClickCount < 6)
+        if (_windowButtonClickCount < 5)
         {
             var group = GetWindow();
             WindowStackPanel.Children.Add(group);
+            _windowButtonClickCount++;
         }
         else
         {
@@ -871,12 +889,12 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             if (WindowStackPanel.Children.Contains(group))
             {
                 WindowStackPanel.Children.Remove(group);
-                windowButtonClickCount--;
+                _windowButtonClickCount--;
 
-                var tupleToRemove = groupTextBoxes.FirstOrDefault(tuple => tuple.Item1.Parent == group);
-                if (tupleToRemove != null) groupTextBoxes.Remove(tupleToRemove);
+                var tupleToRemove = _groupTextBoxes.FirstOrDefault(tuple => tuple.Item1.Parent == group);
+                if (tupleToRemove != null) _groupTextBoxes.Remove(tupleToRemove);
 
-                CalculateTotal();
+                CalculateTotal2();
             }
         }
     }

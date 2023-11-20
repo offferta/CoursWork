@@ -82,26 +82,27 @@
             <StackPanel Grid.Column="1" Grid.ColumnSpan="6" Grid.Row="4" Grid.RowSpan="2" x:Name="elementStackPanel" Orientation="Horizontal" Margin="10"/> 
             
             <TextBlock Grid.Column="4" Grid.Row="4"  x:Name="txtResult" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Background="Red"/>
+            <TextBlock Grid.Column="4" Grid.Row="4"  x:Name="txtResult2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Background="Blue"/>
             
             <Label Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Margin="0, 20, 20,20">Дополнительные параметры</Label>
 
-            <StackPanel Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="6">
+            <StackPanel Grid.Row="7" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="6">
                 <DockPanel>
                     <DockPanel>
                         <CheckBox x:Name="WindowDoorCheckBox"  Content="Проёмы (окна, двери)" Margin="0, 0, 20,0" Checked="WindowDoorCheckBox_OnChecked" Unchecked="WindowDoorCheckBox_OnUnchecked"/>
                         <CheckBox x:Name="InsulationCheckBox"  Content="Нужен ли утеплитель" Margin="0, 0, 20,0"/>
                     </DockPanel>
-                    <StackPanel x:Name="StackPanel" HorizontalAlignment="Left"/>
                 </DockPanel>
+                <StackPanel x:Name="StackPanel" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0, 20,20,20"/>
             </StackPanel>
-            <StackPanel x:Name="WindowStackPanel" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="6" Orientation="Horizontal" Margin="10">
+            <StackPanel x:Name="WindowStackPanel" Grid.Row="9"  Grid.Column="1" Grid.ColumnSpan="6" Orientation="Horizontal" Margin="10">
                 
             </StackPanel>
             
-            <Button x:Name="MakeCalculation" Grid.Row="9" Grid.Column="2" Width="250" Height="50" Grid.ColumnSpan="2" Background="Red" Click="MakeCalculation_OnClick">Произвести расчёт</Button>
+            <Button x:Name="MakeCalculation" Grid.Row="10" Grid.Column="2" Width="250" Height="50" Grid.ColumnSpan="2" Background="Red" Click="MakeCalculation_OnClick">Произвести расчёт</Button>
             <TextBlock Grid.Column="4" Grid.Row="4"  x:Name="totalLenResult" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
             
-            <Grid Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="10">
+            <Grid Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="11">
                 <StackPanel x:Name="getExectResult" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <StackPanel x:Name="exectResult" HorizontalAlignment="Right" VerticalAlignment="Top" />
             </Grid>

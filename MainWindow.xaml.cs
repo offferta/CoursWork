@@ -28,7 +28,7 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
-        private byte[] imageData;
+        private byte[] _imageData;
         
         public MainWindow()
         {
@@ -42,7 +42,7 @@ namespace WpfApp1
             {
             await using var context = new MyDbContext();
             
-            if (imageData == null)
+            if (_imageData == null)
             {
                 MessageBox.Show("Please select an image.");
                 return;
@@ -52,7 +52,7 @@ namespace WpfApp1
                     Title = TitleTextBox.Text,
                     Description = DescriptionTextBox.Text,
                     Price = decimal.Parse(PriceTextBox.Text),
-                    Image = ConvertToBitmapImage(imageData)
+                    Image = ConvertToBitmapImage(_imageData)
                 });
                 await context.SaveChangesAsync();
             }
@@ -75,7 +75,7 @@ namespace WpfApp1
                 SelectedImage.Source = bitmap;
 
                 // Read and store the image data as byte array
-                imageData = File.ReadAllBytes(imagePath);
+                _imageData = File.ReadAllBytes(imagePath);
             }
         }
     }
