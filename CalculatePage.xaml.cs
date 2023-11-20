@@ -18,7 +18,9 @@ namespace Coursework;
 public partial class CalculatePage : Page, INotifyPropertyChanged
 {
     private readonly List<Tuple<TextBox, TextBox>> groupTextBoxes = new();
+    private readonly List<Tuple<TextBox, TextBox, TextBox>> groupTextBoxes2 = new();
     private int wallButtonClickCount;
+    private int windowButtonClickCount;
     private int textBoxCount = 0;
     private Worker _worker;
     private Siding selectedSiding;
@@ -230,6 +232,38 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         }
     }
 
+    private void CalculateResult(TextBox textBox1, TextBox textBox2, Label resultLabel, TextBox textBox3)
+    {
+        double value1, value2, value3;
+
+        if (!string.IsNullOrWhiteSpace(textBox1.Text) && double.TryParse(textBox1.Text, out value1) &&
+            !string.IsNullOrWhiteSpace(textBox2.Text) && double.TryParse(textBox2.Text, out value2) &&
+        !string.IsNullOrWhiteSpace(textBox3.Text) && double.TryParse(textBox3.Text, out value3))
+        {
+            var result = value1 * value2 * value3;
+            resultLabel.Content = $"Результат: {result:F2} м²";
+            UpdateResult();
+
+            var tupleToUpdate =
+                groupTextBoxes2.FirstOrDefault(tuple => tuple.Item1 == textBox1 && tuple.Item2 == textBox2 && tuple.Item3 == textBox3);
+            if (tupleToUpdate != null)
+            {
+                tupleToUpdate.Item1.Text = textBox1.Text;
+                tupleToUpdate.Item2.Text = textBox2.Text;
+                tupleToUpdate.Item3.Text = textBox3.Text;
+            }
+            else
+            {
+                groupTextBoxes2.Add(new Tuple<TextBox, TextBox, TextBox>(textBox1, textBox2, textBox3));
+            }
+
+            CalculateTotal();
+        }
+        else
+        {
+            resultLabel.Content = "Неверный ввод. Введите числовые значения.";
+        }
+    }
     private void DeleteGroup_Click(object sender, RoutedEventArgs e)
     {
         if (sender is FrameworkElement element)
@@ -630,8 +664,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             dockPanel.Children.Add(stackPanel);
         }
     }
-
-    
+   
     private void ShowCalculationResults()
     {
         exectResult.Children.Clear();
@@ -714,5 +747,142 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             FontSize = 14 // Размер шрифта
         };
         exectResult.Children.Add(nProfilesLabel);
+    }
+
+    private void WindowDoorCheckBox_OnChecked(object sender, RoutedEventArgs e)
+    {
+        var additionalButton = new Button { Content = "Дополнительная кнопка" };
+        additionalButton.Click += AdditionalButton_Click;
+        additionalButton.Width = 200;
+        
+        StackPanel.Children.Add(additionalButton);
+        
+        if (windowButtonClickCount <= 6)
+        {
+            var group = GetWindow();
+            WindowStackPanel.Children.Add(group);
+        }
+        else
+        {
+            MessageBox.Show("Ограничение на стены");
+        }
+    }
+
+    private UIElement GetWindow()
+{
+    var grid = new Grid();
+
+    grid.Margin = new Thickness(30);
+    grid.ColumnDefinitions.Add(new ColumnDefinition()); // New column for the button
+    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(150) }); // Fixed width for the second column
+    grid.ColumnDefinitions.Add(new ColumnDefinition()); // New column for the first text box
+
+    for (var i = 0; i < 9; i++) grid.RowDefinitions.Add(new RowDefinition());
+
+    
+
+    // Label for number of windows
+    var numWindowsLabel = new Label { Content = "Количество окон", VerticalAlignment = VerticalAlignment.Center };
+    Grid.SetRow(numWindowsLabel, 1);
+    Grid.SetColumn(numWindowsLabel, 1);
+    grid.Children.Add(numWindowsLabel);
+
+    // TextBox for number of windows
+    var numWindowsTextBox = new TextBox();
+    Grid.SetRow(numWindowsTextBox, 2);
+    Grid.SetColumn(numWindowsTextBox, 1);
+    grid.Children.Add(numWindowsTextBox);
+
+    // Label 1
+    var label1 = new Label { Content = "Длина (м):", VerticalAlignment = VerticalAlignment.Center };
+    Grid.SetRow(label1, 3);
+    Grid.SetColumn(label1, 1);
+    grid.Children.Add(label1);
+
+    // TextBox 1
+    var textBox1 = new TextBox();
+    Grid.SetRow(textBox1, 4);
+    Grid.SetColumn(textBox1, 1);
+    grid.Children.Add(textBox1);
+
+    // Label 2
+    var label2 = new Label { Content = "Ширина (м):", VerticalAlignment = VerticalAlignment.Center };
+    Grid.SetRow(label2, 5);
+    Grid.SetColumn(label2, 1);
+    grid.Children.Add(label2);
+
+    // TextBox 2
+    var textBox2 = new TextBox();
+    Grid.SetRow(textBox2, 6);
+    Grid.SetColumn(textBox2, 1);
+    grid.Children.Add(textBox2);
+
+    // Result label
+    var resultLabel = new Label { Content = "Результат:", VerticalAlignment = VerticalAlignment.Center };
+    Grid.SetRow(resultLabel, 7);
+    Grid.SetColumn(resultLabel, 1);
+    grid.Children.Add(resultLabel);
+
+    // Event handlers for automatic calculation
+    numWindowsTextBox.TextChanged += (sender, args) =>
+    {
+        TextBox_TextChanged(numWindowsTextBox);
+        CalculateResult(textBox1, textBox2, resultLabel, numWindowsTextBox);
+    };
+    textBox1.TextChanged += (sender, e) =>
+    {
+        TextBox_TextChanged(textBox1);
+        CalculateResult(textBox1, textBox2, resultLabel, numWindowsTextBox);
+    };
+    textBox2.TextChanged += (sender, e) =>
+    {
+        TextBox_TextChanged(textBox2);
+        CalculateResult(textBox1, textBox2, resultLabel, numWindowsTextBox);
+    };
+
+    // Buttons
+    var deleteButton = new Button { Content = "Удалить стену" };
+    deleteButton.Click += DeleteWindowGroup_Click;
+    Grid.SetRow(deleteButton, 8);
+    Grid.SetColumn(deleteButton, 1); // Moved to the second column
+    grid.Children.Add(deleteButton);
+
+    return grid;
+}
+
+    private void AdditionalButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (wallButtonClickCount < 6)
+        {
+            var group = GetWindow();
+            WindowStackPanel.Children.Add(group);
+        }
+        else
+        {
+            MessageBox.Show("Ограничение на стены");
+        }
+    }
+    private void DeleteWindowGroup_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is FrameworkElement element)
+        {
+            var group = element.Parent as UIElement;
+
+            if (WindowStackPanel.Children.Contains(group))
+            {
+                WindowStackPanel.Children.Remove(group);
+                windowButtonClickCount--;
+
+                var tupleToRemove = groupTextBoxes.FirstOrDefault(tuple => tuple.Item1.Parent == group);
+                if (tupleToRemove != null) groupTextBoxes.Remove(tupleToRemove);
+
+                CalculateTotal();
+            }
+        }
+    }
+    private void WindowDoorCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
+    {
+        WindowStackPanel.Children.Clear();
+        StackPanel.Children.Clear();
     }
 }
