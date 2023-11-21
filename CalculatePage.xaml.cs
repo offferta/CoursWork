@@ -1,59 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Xml.Schema;
 using Coursework.Context;
 using Coursework.Entities;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using System.Linq;
 
 namespace Coursework;
 
 public partial class CalculatePage : Page, INotifyPropertyChanged
 {
-    private List<FeaturesMaterial> listSidingFuture = new ();
     private readonly List<Tuple<TextBox, TextBox>> _groupTextBoxes = new();
     private readonly List<Tuple<TextBox, TextBox, TextBox>> _groupTextBoxes2 = new();
-    private int _wallButtonClickCount;
-    private int _windowButtonClickCount;
-    private Siding _selectedSiding;
-    private Worker _worker;
     private readonly double _totalResult = 0;
-    private int _textBoxCount = 0;
-    private double _totalLengthSum;
-    
-    private double _sumFilm; //сумма плёнки
+    private decimal _areaSidind; //площадь сайдинга
     private int _countFilm; //количество плёнки
-    private double _priceFilm = 5200; //цена пленки5200 
-    
-    private double _sumSlats; //сумма планокСтартовых/Финишных
+    private double _countSiding; //кол-во сайдинга 
     private double _countSlats; //кол-во планок Стартовых/Финишных
 
-    private double _sumSiding; //сумма сайдинга итоговая
-    private double _countSiding; //кол-во сайдинга 
-
-    private double _sumWindow = 0; //сумма окон 
-    private double _sumWall; //сумма стенк
-
-    private decimal _lengthSiding; //длиннна выбранного сайдинга
-    private decimal _widthSiding; //ширина выбранного сайдинга
-    private decimal _areaSidind; //площадь сайдинга
-
-    private double _totalAreaWall; //общаяя площадь стен
-    private double _totalLengthWall; //общаяя длинна стен
-
- 
 
     private Visibility _isVisibleSelected = Visibility.Collapsed;
+
+    private decimal _lengthSiding; //длиннна выбранного сайдинга
+    private readonly double _priceFilm = 5200; //цена пленки5200 
+    private Siding _selectedSiding;
+
+    private double _sumFilm; //сумма плёнки
+
+    private double _sumSiding; //сумма сайдинга итоговая
+
+    private double _sumSlats; //сумма планокСтартовых/Финишных
+    private double _sumWall; //сумма стенк
+
+    private double _sumWindow; //сумма окон 
+    private int _textBoxCount = 0;
+
+    private double _totalAreaWall; //общаяя площадь стен
+    private double _totalLengthSum;
+    private double _totalLengthWall; //общаяя длинна стен
+    private int _wallButtonClickCount;
+    private decimal _widthSiding; //ширина выбранного сайдинга
+    private int _windowButtonClickCount;
+    private readonly Worker _worker;
+    private List<FeaturesMaterial> listSidingFuture = new();
+
+    public CalculatePage(Worker worker)
+    {
+        InitializeComponent();
+        _worker = worker;
+        UpdateList();
+        DataContext = this;
+    }
 
     public List<FeaturesMaterial> ListSidingFuture
     {
@@ -64,6 +69,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
     public Siding SelectedSiding
     {
         get => _selectedSiding;
@@ -74,6 +80,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
     public Visibility IsVisibleSelected
     {
         get => _isVisibleSelected;
@@ -83,13 +90,8 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    public CalculatePage(Worker worker)
-    {
-        InitializeComponent();
-        _worker = worker;
-        UpdateList();
-        DataContext = this;
-    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     private void CalculatePage_OnLoaded(object sender, RoutedEventArgs e)
     {
@@ -215,12 +217,14 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         txtResult.Text = $"Общая сумма: {_sumWall:F2} м²";
         return _sumWall;
     }
+
     private double CalculateTotal2()
     {
         _sumWindow = _groupTextBoxes2.Sum(tuple =>
         {
             double value1, value2, value3;
-            return double.TryParse(tuple.Item1.Text, out value1) && double.TryParse(tuple.Item2.Text, out value2) && double.TryParse(tuple.Item3.Text, out value3)
+            return double.TryParse(tuple.Item1.Text, out value1) && double.TryParse(tuple.Item2.Text, out value2) &&
+                   double.TryParse(tuple.Item3.Text, out value3)
                 ? value1 * value2 * value3
                 : 0;
         });
@@ -279,14 +283,15 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
         if (!string.IsNullOrWhiteSpace(textBox1.Text) && double.TryParse(textBox1.Text, out value1) &&
             !string.IsNullOrWhiteSpace(textBox2.Text) && double.TryParse(textBox2.Text, out value2) &&
-        !string.IsNullOrWhiteSpace(textBox3.Text) && double.TryParse(textBox3.Text, out value3))
+            !string.IsNullOrWhiteSpace(textBox3.Text) && double.TryParse(textBox3.Text, out value3))
         {
             var result = value1 * value2 * value3;
             resultLabel.Content = $"Результат: {result:F2} м²";
             UpdateResult();
 
             var tupleToUpdate =
-                _groupTextBoxes2.FirstOrDefault(tuple => tuple.Item1 == textBox1 && tuple.Item2 == textBox2 && tuple.Item3 == textBox3);
+                _groupTextBoxes2.FirstOrDefault(tuple =>
+                    tuple.Item1 == textBox1 && tuple.Item2 == textBox2 && tuple.Item3 == textBox3);
             if (tupleToUpdate != null)
             {
                 tupleToUpdate.Item1.Text = textBox1.Text;
@@ -305,6 +310,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             resultLabel.Content = "Неверный ввод. Введите числовые значения.";
         }
     }
+
     private void DeleteGroup_Click(object sender, RoutedEventArgs e)
     {
         if (sender is FrameworkElement element)
@@ -329,18 +335,15 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         txtResult.Text = $"{_totalResult:F2} s";
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
-    
+
     private void MakeCalculation_OnClick(object sender, RoutedEventArgs e)
     {
-        
         GetMakeCaculation();
-        
+
         DisplaySidingInfo(getExectResult);
         GetSlats(getExectResult);
         GetSlatsFinish(getExectResult);
@@ -422,7 +425,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             _countSiding = Math.Ceiling(_countSiding);
             _sumSiding = Convert.ToDouble(SelectedSiding.Price) * _countSiding;
 
-            var countSlats = new TextBlock()
+            var countSlats = new TextBlock
             {
                 Text = $"Необходимо: {Math.Ceiling(_countSiding)} шт",
                 FontFamily = new FontFamily("Arial"),
@@ -466,7 +469,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             dockPanel.Children.Add(allStackPanel);
         }
     }
-    
+
     private void GetSlats(StackPanel dockPanel)
     {
         if (SelectedSiding != null)
@@ -493,11 +496,11 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                 FontSize = 20,
                 TextAlignment = TextAlignment.Left, Margin = new Thickness(5)
             };
-            
+
             _countSlats = _totalLengthSum;
             _sumSlats = _countSlats * 420;
 
-            var countSlatsTextBlocl = new TextBlock()
+            var countSlatsTextBlocl = new TextBlock
             {
                 Text = $"Необходимо: {_countSlats} шт",
                 FontFamily = new FontFamily("Arial"),
@@ -574,7 +577,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             _countSlats = _totalLengthSum;
             _sumSlats = _countSlats * 420;
 
-            var countSlataTextBlock = new TextBlock()
+            var countSlataTextBlock = new TextBlock
             {
                 Text = $"необходимо: {_countSlats} шт",
                 FontFamily = new FontFamily("Arial"),
@@ -699,7 +702,8 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             dockPanel.Children.Add(stackPanel);
         }
     }
-   private void ShowCalculationResults()
+
+    private void ShowCalculationResults()
     {
         exectResult.Children.Clear();
 
@@ -743,10 +747,10 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             double value;
             return double.TryParse(tuple.Item1.Text, out value) ? value : 0;
         });
-        
+
         _countSiding = _totalAreaWall - _sumWindow / Convert.ToDouble(_areaSidind);
 
-       var sidingCountLabel = new Label
+        var sidingCountLabel = new Label
         {
             Content = $"Количество сайдинга: {Math.Ceiling(_countSiding)} шт.",
             Margin = new Thickness(0, 5, 5, 0),
@@ -769,7 +773,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             FontSize = 14 // Размер шрифта
         };
         exectResult.Children.Add(finishPlanksLabel);
-        
+
         var saveResultCalButton = new Button { Content = "Сохранить" };
         saveResultCalButton.Click += SaveResultCalButtonOnClick;
         saveResultCalButton.Width = 200;
@@ -777,16 +781,14 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         exectResult.Children.Add(saveResultCalButton);
     }
 
-   
-
-   private void WindowDoorCheckBox_OnChecked(object sender, RoutedEventArgs e)
+    private void WindowDoorCheckBox_OnChecked(object sender, RoutedEventArgs e)
     {
         var additionalButton = new Button { Content = "Добавить проём" };
         additionalButton.Click += AdditionalButton_Click;
         additionalButton.Width = 200;
-        
+
         StackPanel.Children.Add(additionalButton);
-        
+
         if (_windowButtonClickCount < 6)
         {
             var group = GetWindow();
@@ -797,87 +799,89 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             MessageBox.Show("Ограничение на стены");
         }
     }
+
     private UIElement GetWindow()
-{
-    var grid = new Grid();
-
-    grid.Margin = new Thickness(30);
-    grid.ColumnDefinitions.Add(new ColumnDefinition()); // New column for the button
-    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(150) }); // Fixed width for the second column
-    grid.ColumnDefinitions.Add(new ColumnDefinition()); // New column for the first text box
-
-    for (var i = 0; i < 9; i++) grid.RowDefinitions.Add(new RowDefinition());
-
-    
-
-    // Label for number of windows
-    var numWindowsLabel = new Label { Content = "Количество окон", VerticalAlignment = VerticalAlignment.Center };
-    Grid.SetRow(numWindowsLabel, 1);
-    Grid.SetColumn(numWindowsLabel, 1);
-    grid.Children.Add(numWindowsLabel);
-
-    // TextBox for number of windows
-    var numWindowsTextBox = new TextBox();
-    Grid.SetRow(numWindowsTextBox, 2);
-    Grid.SetColumn(numWindowsTextBox, 1);
-    grid.Children.Add(numWindowsTextBox);
-
-    // Label 1
-    var label1 = new Label { Content = "Длина (м):", VerticalAlignment = VerticalAlignment.Center };
-    Grid.SetRow(label1, 3);
-    Grid.SetColumn(label1, 1);
-    grid.Children.Add(label1);
-
-    // TextBox 1
-    var textBox1 = new TextBox();
-    Grid.SetRow(textBox1, 4);
-    Grid.SetColumn(textBox1, 1);
-    grid.Children.Add(textBox1);
-
-    // Label 2
-    var label2 = new Label { Content = "Ширина (м):", VerticalAlignment = VerticalAlignment.Center };
-    Grid.SetRow(label2, 5);
-    Grid.SetColumn(label2, 1);
-    grid.Children.Add(label2);
-
-    // TextBox 2
-    var textBox2 = new TextBox();
-    Grid.SetRow(textBox2, 6);
-    Grid.SetColumn(textBox2, 1);
-    grid.Children.Add(textBox2);
-
-    // Result label
-    var resultLabel = new Label { Content = "Результат:", VerticalAlignment = VerticalAlignment.Center };
-    Grid.SetRow(resultLabel, 7);
-    Grid.SetColumn(resultLabel, 1);
-    grid.Children.Add(resultLabel);
-
-    // Event handlers for automatic calculation
-    numWindowsTextBox.TextChanged += (sender, args) =>
     {
-        TextBox_TextChanged(numWindowsTextBox);
-        CalculateResult(textBox1, textBox2, resultLabel, numWindowsTextBox);
-    };
-    textBox1.TextChanged += (sender, e) =>
-    {
-        TextBox_TextChanged(textBox1);
-        CalculateResult(textBox1, textBox2, resultLabel, numWindowsTextBox);
-    };
-    textBox2.TextChanged += (sender, e) =>
-    {
-        TextBox_TextChanged(textBox2);
-        CalculateResult(textBox1, textBox2, resultLabel, numWindowsTextBox);
-    };
+        var grid = new Grid();
 
-    // Buttons
-    var deleteButton = new Button { Content = "Удалить стену" };
-    deleteButton.Click += DeleteWindowGroup_Click;
-    Grid.SetRow(deleteButton, 8);
-    Grid.SetColumn(deleteButton, 1); // Moved to the second column
-    grid.Children.Add(deleteButton);
+        grid.Margin = new Thickness(30);
+        grid.ColumnDefinitions.Add(new ColumnDefinition()); // New column for the button
+        grid.ColumnDefinitions.Add(new ColumnDefinition
+            { Width = new GridLength(150) }); // Fixed width for the second column
+        grid.ColumnDefinitions.Add(new ColumnDefinition()); // New column for the first text box
 
-    return grid;
-}
+        for (var i = 0; i < 9; i++) grid.RowDefinitions.Add(new RowDefinition());
+
+
+        // Label for number of windows
+        var numWindowsLabel = new Label { Content = "Количество окон", VerticalAlignment = VerticalAlignment.Center };
+        Grid.SetRow(numWindowsLabel, 1);
+        Grid.SetColumn(numWindowsLabel, 1);
+        grid.Children.Add(numWindowsLabel);
+
+        // TextBox for number of windows
+        var numWindowsTextBox = new TextBox();
+        Grid.SetRow(numWindowsTextBox, 2);
+        Grid.SetColumn(numWindowsTextBox, 1);
+        grid.Children.Add(numWindowsTextBox);
+
+        // Label 1
+        var label1 = new Label { Content = "Длина (м):", VerticalAlignment = VerticalAlignment.Center };
+        Grid.SetRow(label1, 3);
+        Grid.SetColumn(label1, 1);
+        grid.Children.Add(label1);
+
+        // TextBox 1
+        var textBox1 = new TextBox();
+        Grid.SetRow(textBox1, 4);
+        Grid.SetColumn(textBox1, 1);
+        grid.Children.Add(textBox1);
+
+        // Label 2
+        var label2 = new Label { Content = "Ширина (м):", VerticalAlignment = VerticalAlignment.Center };
+        Grid.SetRow(label2, 5);
+        Grid.SetColumn(label2, 1);
+        grid.Children.Add(label2);
+
+        // TextBox 2
+        var textBox2 = new TextBox();
+        Grid.SetRow(textBox2, 6);
+        Grid.SetColumn(textBox2, 1);
+        grid.Children.Add(textBox2);
+
+        // Result label
+        var resultLabel = new Label { Content = "Результат:", VerticalAlignment = VerticalAlignment.Center };
+        Grid.SetRow(resultLabel, 7);
+        Grid.SetColumn(resultLabel, 1);
+        grid.Children.Add(resultLabel);
+
+        // Event handlers for automatic calculation
+        numWindowsTextBox.TextChanged += (sender, args) =>
+        {
+            TextBox_TextChanged(numWindowsTextBox);
+            CalculateResult(textBox1, textBox2, resultLabel, numWindowsTextBox);
+        };
+        textBox1.TextChanged += (sender, e) =>
+        {
+            TextBox_TextChanged(textBox1);
+            CalculateResult(textBox1, textBox2, resultLabel, numWindowsTextBox);
+        };
+        textBox2.TextChanged += (sender, e) =>
+        {
+            TextBox_TextChanged(textBox2);
+            CalculateResult(textBox1, textBox2, resultLabel, numWindowsTextBox);
+        };
+
+        // Buttons
+        var deleteButton = new Button { Content = "Удалить стену" };
+        deleteButton.Click += DeleteWindowGroup_Click;
+        Grid.SetRow(deleteButton, 8);
+        Grid.SetColumn(deleteButton, 1); // Moved to the second column
+        grid.Children.Add(deleteButton);
+
+        return grid;
+    }
+
     private void AdditionalButton_Click(object sender, RoutedEventArgs e)
     {
         if (_windowButtonClickCount < 5)
@@ -891,6 +895,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             MessageBox.Show("Ограничение на стены");
         }
     }
+
     private void DeleteWindowGroup_Click(object sender, RoutedEventArgs e)
     {
         if (sender is FrameworkElement element)
@@ -909,16 +914,18 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             }
         }
     }
+
     private void WindowDoorCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
     {
         WindowStackPanel.Children.Clear();
         StackPanel.Children.Clear();
     }
+
     public async void GetSidingFeatures(int id)
     {
         try
         {
-            MyDbContext context = new MyDbContext();
+            var context = new MyDbContext();
 
             ListSidingFuture = await context.FeaturesMaterials
                 .Include(p => p.Siding)
@@ -931,6 +938,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             throw;
         }
     }
+
     private void LvDataBinding_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         GetSidingFeatures(SelectedSiding.SidingId);
@@ -938,7 +946,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
     public void AddDataInDataBase()
     {
-        MyDbContext context = new MyDbContext();
+        var context = new MyDbContext();
 
         var calculation = new Calculation
         {
@@ -948,23 +956,41 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         };
         context.Calculations.Add(calculation);
         context.SaveChanges();
-        
+
         foreach (var tuple in _groupTextBoxes)
         {
             double value1, value2;
             if (double.TryParse(tuple.Item1.Text, out value1) && double.TryParse(tuple.Item2.Text, out value2))
             {
                 var wall = new Wall
-                {  
+                {
                     CalculationId = calculation.CalculationId,
                     Width = Convert.ToDecimal(value1),
                     Length = Convert.ToDecimal(value2),
-                    Count =  1
+                    Count = 1
                 };
                 context.Walls.Add(wall);
             }
         }
+
         context.SaveChanges();
+        
+        foreach (var tuple in _groupTextBoxes2)
+        {
+            double value1, value2, value3;
+            if (double.TryParse(tuple.Item1.Text, out value1) && 
+                double.TryParse(tuple.Item2.Text, out value2) &&
+                double.TryParse(tuple.Item3.Text, out value3))
+            {
+                var window = new Entities.Window()
+                {
+                    CalculationId = calculation.CalculationId,
+                    Count = (byte)value1,
+                    Length = (decimal) value2,
+                    Width = (decimal) value3
+                };
+            }
+        }
 
         var materialsCount = new MaterialsCalculation
         {
@@ -975,9 +1001,10 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         };
         context.MaterialsCalculations.Add(materialsCount);
         context.SaveChanges();
-        MessageBox.Show("ТЫ АХУЕНЕН!");
+        MessageBox.Show("Расчёт успешно добавлен!");
+        
     }
-    
+
     private void SaveResultCalButtonOnClick(object sender, RoutedEventArgs e)
     {
         AddDataInDataBase();

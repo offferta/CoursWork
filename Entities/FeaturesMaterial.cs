@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Coursework.Entities;
 
-namespace Coursework.Entities;
-
-public partial class FeaturesMaterial
+public class FeaturesMaterial
 {
     public int FeaturesId { get; set; }
 

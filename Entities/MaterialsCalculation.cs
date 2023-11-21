@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Coursework.Entities;
 
-namespace Coursework.Entities;
-
-public partial class MaterialsCalculation
+public class MaterialsCalculation
 {
     public int SidingId { get; set; }
 

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Coursework.Entities;
 
-namespace Coursework.Entities;
-
-public partial class Wall
+public class Wall
 {
     public int WallId { get; set; }
 

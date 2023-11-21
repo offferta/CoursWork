@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Coursework.Entities;
 
-public partial class Calculation
+public class Calculation
 {
     public int CalculationId { get; set; }
 
@@ -13,7 +13,8 @@ public partial class Calculation
 
     public DateTime DateOrder { get; set; }
 
-    public virtual ICollection<MaterialsCalculation> MaterialsCalculations { get; set; } = new List<MaterialsCalculation>();
+    public virtual ICollection<MaterialsCalculation> MaterialsCalculations { get; set; } =
+        new List<MaterialsCalculation>();
 
     public virtual ICollection<Wall> Walls { get; set; } = new List<Wall>();
 

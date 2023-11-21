@@ -7,7 +7,8 @@ namespace Coursework;
 
 public partial class AdministrationWindow : Window
 {
-    private Worker _worker;
+    private readonly Worker _worker;
+
     public AdministrationWindow(Worker worker)
     {
         InitializeComponent();

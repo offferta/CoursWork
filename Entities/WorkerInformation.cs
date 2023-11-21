@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Coursework.Entities;
 
-namespace Coursework.Entities;
-
-public partial class WorkerInformation
+public class WorkerInformation
 {
     public int WorkerInformation1 { get; set; }
 

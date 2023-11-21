@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Windows;
 using Coursework.Context;
 using Microsoft.EntityFrameworkCore;
@@ -13,21 +12,22 @@ public partial class Authorization : Window
         InitializeComponent();
     }
 
-   private async void AuthorizatiorButton_OnClick(object sender, RoutedEventArgs e)
+    private async void AuthorizatiorButton_OnClick(object sender, RoutedEventArgs e)
     {
-        string username = LoginTextBox.Text;
-        string password = PasswordTextBox.Password;
-            
+        var username = LoginTextBox.Text;
+        var password = PasswordTextBox.Password;
+
         if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
         {
-            MessageBox.Show("Пожалуйста, введите имя пользователя и пароль.", "Ошибка Авторизации", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Пожалуйста, введите имя пользователя и пароль.", "Ошибка Авторизации", MessageBoxButton.OK,
+                MessageBoxImage.Error);
             return;
         }
+
         if (username != LoginTextBox.Text || password != PasswordTextBox.Password)
-        {
-            MessageBox.Show("Имя пользователя и пароль не содержат пробелы в начале или конце.", "Ошибка Авторизации", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        
+            MessageBox.Show("Имя пользователя и пароль не содержат пробелы в начале или конце.", "Ошибка Авторизации",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+
         try
         {
             await using var context = new MyDbContext();
@@ -41,7 +41,7 @@ public partial class Authorization : Window
 
             if (worker.RoleId == 1)
             {
-               // MessageBox.Show("Авториазция прошла успешно!", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Information);
+                // MessageBox.Show("Авториазция прошла успешно!", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Information);
                 //new MenedgerWindow().Show();
                 new AdministrationWindow(worker).Show();
                 Close();
@@ -49,14 +49,15 @@ public partial class Authorization : Window
 
             if (worker.RoleId == 2)
             {
-               // MessageBox.Show("Авториазция прошла успешно!", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Information);
+                // MessageBox.Show("Авториазция прошла успешно!", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Information);
                 new MenedgerWindow(worker).Show();
                 Close();
             }
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Провертье логин и пароль" + ex, "Ошибка авторизации", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Провертье логин и пароль" + ex, "Ошибка авторизации", MessageBoxButton.OK,
+                MessageBoxImage.Error);
         }
     }
 }

@@ -3,43 +3,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:Coursework"
         mc:Ignorable="d"
-        Title="Авторизации"  MinHeight="600" MinWidth="900" WindowState="Maximized">
-   
-    
+        Title="Авторизации" MinHeight="600" MinWidth="900" WindowState="Maximized">
+
+
     <Grid>
         <Grid VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/> <!-- Верхний отступ -->
-                <RowDefinition/>
-                <RowDefinition Height="Auto"/> <!-- Отступ между элементами -->
-                <RowDefinition/>
-                <RowDefinition Height="Auto"/> <!-- Отступ между элементами -->
-                <RowDefinition/>
-                <RowDefinition Height="Auto"/> <!-- Отступ между элементами -->
-                <RowDefinition/>
-                <RowDefinition Height="Auto"/> <!-- Отступ между элементами -->
-                <RowDefinition/>
-                <RowDefinition Height="Auto"/> <!-- Нижний отступ -->
+                <RowDefinition Height="Auto" /> <!-- Верхний отступ -->
+                <RowDefinition />
+                <RowDefinition Height="Auto" /> <!-- Отступ между элементами -->
+                <RowDefinition />
+                <RowDefinition Height="Auto" /> <!-- Отступ между элементами -->
+                <RowDefinition />
+                <RowDefinition Height="Auto" /> <!-- Отступ между элементами -->
+                <RowDefinition />
+                <RowDefinition Height="Auto" /> <!-- Отступ между элементами -->
+                <RowDefinition />
+                <RowDefinition Height="Auto" /> <!-- Нижний отступ -->
             </Grid.RowDefinitions>
-        
+
             <!-- Заголовок -->
-            <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Text="Авторизация" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
-            <TextBlock Text="Введите логин" Grid.Row="1" Grid.Column="1" Margin="10" FontSize="17"/>
-            <TextBox x:Name="LoginTextBox" Text="manager" Grid.Row="2" Grid.Column="1"  Margin="10" Padding="5" BorderBrush="#CCCCCC" BorderThickness="1"/>
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Text="Авторизация" HorizontalAlignment="Center"
+                       FontSize="24" FontWeight="Bold" />
+            <TextBlock Text="Введите логин" Grid.Row="1" Grid.Column="1" Margin="10" FontSize="17" />
+            <TextBox x:Name="LoginTextBox" Text="manager" Grid.Row="2" Grid.Column="1" Margin="10" Padding="5"
+                     BorderBrush="#CCCCCC" BorderThickness="1" />
 
             <!-- Пароль -->
-            <TextBlock Text="Введите пароль" Grid.Row="3" Grid.Column="1" Margin="10" FontSize="17"/>
-            <PasswordBox x:Name="PasswordTextBox" Password="manager_pass"  Grid.Row="4" Grid.Column="1"  Margin="10" Padding="5" BorderBrush="#CCCCCC" BorderThickness="1"/>
+            <TextBlock Text="Введите пароль" Grid.Row="3" Grid.Column="1" Margin="10" FontSize="17" />
+            <PasswordBox x:Name="PasswordTextBox" Password="manager_pass" Grid.Row="4" Grid.Column="1" Margin="10"
+                         Padding="5" BorderBrush="#CCCCCC" BorderThickness="1" />
 
             <!-- Кнопка Войти -->
-            <Button x:Name="AuthorizatiorButton" Content="Войти" Grid.Row="5" Grid.Column="1" Margin="10" Padding="5" Background="#007ACC" Foreground="White" FontWeight="Bold" Click="AuthorizatiorButton_OnClick"/>
+            <Button x:Name="AuthorizatiorButton" Content="Войти" Grid.Row="5" Grid.Column="1" Margin="10" Padding="5"
+                    Background="#007ACC" Foreground="White" FontWeight="Bold" Click="AuthorizatiorButton_OnClick" />
         </Grid>
     </Grid>
 </Window>

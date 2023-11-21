@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Media.Imaging;
 using Coursework.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -39,8 +37,9 @@ public partial class MyDbContext : DbContext
     public virtual DbSet<WorkerInformation> WorkerInformations { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=coursework;User Id=admin;Password=qAz1!;TrustServerCertificate=true;Trusted_Connection=true;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https: //go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer(
+            "Server=localhost;Database=coursework;User Id=admin;Password=qAz1!;TrustServerCertificate=true;Trusted_Connection=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -270,14 +269,11 @@ public partial class MyDbContext : DbContext
     // Метод для преобразования byte[] в BitmapImage
     public static BitmapImage ConvertToBitmapImage(byte[] byteArray)
     {
-        if (byteArray == null || byteArray.Length == 0)
-        {
-            return null;
-        }
+        if (byteArray == null || byteArray.Length == 0) return null;
 
-        using (MemoryStream stream = new MemoryStream(byteArray))
+        using (var stream = new MemoryStream(byteArray))
         {
-            BitmapImage bitmapImage = new BitmapImage();
+            var bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
             bitmapImage.StreamSource = stream;
             bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
@@ -289,12 +285,9 @@ public partial class MyDbContext : DbContext
 // Метод для преобразования BitmapImage в byte[]
     private byte[] ConvertToByteArray(BitmapImage bitmapImage)
     {
-        if (bitmapImage == null)
-        {
-            return null;
-        }
+        if (bitmapImage == null) return null;
 
-        using (MemoryStream stream = new MemoryStream())
+        using (var stream = new MemoryStream())
         {
             BitmapEncoder encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
@@ -302,5 +295,6 @@ public partial class MyDbContext : DbContext
             return stream.ToArray();
         }
     }
+
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

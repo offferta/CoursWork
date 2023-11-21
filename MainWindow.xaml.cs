@@ -1,83 +1,69 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Dynamic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using static Coursework.Context.MyDbContext;
 using Coursework.Context;
 using Coursework.Entities;
-using Microsoft.Data.SqlClient;
+using Microsoft.Win32;
+using static Coursework.Context.MyDbContext;
 using Window = System.Windows.Window;
 
-namespace WpfApp1
+namespace WpfApp1;
+
+/// <summary>
+///     Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    private byte[] _imageData;
+
+    public MainWindow()
     {
-        private byte[] _imageData;
-        
-        public MainWindow()
+        InitializeComponent();
+    }
+
+
+    private async void AddButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        try
         {
-            InitializeComponent();
-        }
-        
-        
-        private async void AddButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            try
-            {
             await using var context = new MyDbContext();
-            
+
             if (_imageData == null)
             {
                 MessageBox.Show("Please select an image.");
                 return;
             }
-                context.Sidings.Update(new Siding()
-                {
-                    Title = TitleTextBox.Text,
-                    Description = DescriptionTextBox.Text,
-                    Price = decimal.Parse(PriceTextBox.Text),
-                    Image = ConvertToBitmapImage(_imageData)
-                });
-                await context.SaveChangesAsync();
-            }
-            catch (Exception exception)
+
+            context.Sidings.Update(new Siding
             {
-                MessageBox.Show("dfffsdf");
-            }
+                Title = TitleTextBox.Text,
+                Description = DescriptionTextBox.Text,
+                Price = decimal.Parse(PriceTextBox.Text),
+                Image = ConvertToBitmapImage(_imageData)
+            });
+            await context.SaveChangesAsync();
         }
-
-        private void BrowseImage_OnClick(object sender, RoutedEventArgs e)
+        catch (Exception exception)
         {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.DefaultExt = ".jpg";
-            dlg.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
-
-            if (dlg.ShowDialog() == true)
-            {
-                string imagePath = dlg.FileName;
-                BitmapImage bitmap = new BitmapImage(new Uri(imagePath));
-                SelectedImage.Source = bitmap;
-
-                // Read and store the image data as byte array
-                _imageData = File.ReadAllBytes(imagePath);
-            }
+            MessageBox.Show("dfffsdf");
         }
     }
-    
+
+    private void BrowseImage_OnClick(object sender, RoutedEventArgs e)
+    {
+        var dlg = new OpenFileDialog();
+        dlg.DefaultExt = ".jpg";
+        dlg.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
+
+        if (dlg.ShowDialog() == true)
+        {
+            var imagePath = dlg.FileName;
+            var bitmap = new BitmapImage(new Uri(imagePath));
+            SelectedImage.Source = bitmap;
+
+            // Read and store the image data as byte array
+            _imageData = File.ReadAllBytes(imagePath);
+        }
+    }
 }

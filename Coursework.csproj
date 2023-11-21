@@ -8,41 +8,41 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.12">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-      <PackageReference Include="System.Diagnostics.Tools" Version="4.3.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.12">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+        <PackageReference Include="System.Diagnostics.Tools" Version="4.3.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Resources\picture.png" />
-      <Resource Include="Resources\picture.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Resource>
-      <None Remove="Resources\planka.png" />
-      <Resource Include="Resources\planka.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Resource>
-      <None Remove="Resources\finish.png" />
-      <Resource Include="Resources\finish.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Resource>
-      <None Remove="Resources\film.png" />
-      <Resource Include="Resources\film.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Resource>
+        <None Remove="Resources\picture.png"/>
+        <Resource Include="Resources\picture.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Resource>
+        <None Remove="Resources\planka.png"/>
+        <Resource Include="Resources\planka.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Resource>
+        <None Remove="Resources\finish.png"/>
+        <Resource Include="Resources\finish.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Resource>
+        <None Remove="Resources\film.png"/>
+        <Resource Include="Resources\film.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Resource>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Methods\" />
+        <Folder Include="Methods\"/>
     </ItemGroup>
 
 </Project>
