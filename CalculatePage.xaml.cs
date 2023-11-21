@@ -14,7 +14,6 @@ using Coursework.Context;
 using Coursework.Entities;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Word = Microsoft.Office.Interop.Word;
 using System.Linq;
 
 namespace Coursework;
@@ -781,44 +780,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
     }
 
    // создание файла счёт фактур
-   private void CreateInvoiceTable()
-   {
-       // Инициализируем объект Word и создаем новый документ
-       Word.Application wordApp = new Word.Application();
-       Word.Document doc = wordApp.Documents.Add();
 
-       // Добавляем таблицу
-       Word.Table table = doc.Tables.Add(wordApp.Selection.Range, _groupTextBoxes.Count + 1, 2); // Создаем таблицу с двумя колонками
-
-       // Задаем заголовки таблицы
-       table.Cell(1, 1).Range.Text = "Позиция";
-       table.Cell(1, 2).Range.Text = "Количество";
-       // Добавьте дополнительные заголовки, если необходимо
-       // table.Cell(1, 3).Range.Text = "...";
-
-       int row = 2; // Начинаем с добавления данных со второй строки
-       foreach (var tuple in _groupTextBoxes)
-       {
-           double value1, value2;
-           if (double.TryParse(tuple.Item1.Text, out value1) && double.TryParse(tuple.Item2.Text, out value2))
-           {
-               var result = value1 * value2;
-
-               table.Cell(row, 1).Range.Text = $"Площадь стены ({value1} м x {value2} м)";
-               table.Cell(row, 2).Range.Text = $"{result:F2} м²";
-               // Добавьте дополнительные данные, если необходимо
-               // table.Cell(row, 3).Range.Text = "...";
-
-               row++;
-           }
-       }
-
-       // Сохраняем документ
-       string fileName = "Invoice.docx";
-       doc.SaveAs2(fileName);
-       doc.Close();
-       wordApp.Quit();
-   }
 
     private void WindowDoorCheckBox_OnChecked(object sender, RoutedEventArgs e)
     {
@@ -976,10 +938,5 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
     private void LvDataBinding_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         GetSidingFeatures(SelectedSiding.SidingId);
-    }
-
-    private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-    {
-        CreateInvoiceTable();
     }
 }

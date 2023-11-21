@@ -121,7 +121,6 @@
             </StackPanel>
             
             <Button x:Name="MakeCalculation" Grid.Row="10" Grid.Column="2" Width="250" Height="50" Grid.ColumnSpan="2" Background="#4CAF50" Foreground="White" FontSize="18" Click="MakeCalculation_OnClick">Выполнить расчёт</Button>
-            <Button Grid.Row="10" Grid.Column="3" Click="ButtonBase_OnClick"/>
             <TextBlock Grid.Column="4" Grid.Row="4"  x:Name="totalLenResult" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
             
             <Grid Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="11">
