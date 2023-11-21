@@ -6,12 +6,12 @@
       xmlns:local="clr-namespace:Coursework"
       d:DataContext="{d:DesignInstance local:CalculatePage, IsDesignTimeCreatable=True}"
       mc:Ignorable="d"
-      Title="CalculatePage" Loaded="CalculatePage_OnLoaded">
+      Title="CalculatePage" Loaded="CalculatePage_OnLoaded" >
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-        <Grid Margin="10">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
+                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -37,52 +37,73 @@
 
             <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" VerticalAlignment="Center" FontSize="24" FontWeight="Bold">Модификации</Label>
 
+            <!--Вывод списка сайдинга-->
             <ListView Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" x:Name="lvDataBinding" 
                       ItemsSource="{Binding SelectedSiding}"
                       SelectedItem="{Binding SelectedSiding, Mode=TwoWay}"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Center"
-                      BorderThickness="0">
+                      BorderThickness="0"
+                      SelectionChanged="LvDataBinding_OnSelectionChanged">
                 
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                        <UniformGrid Columns="6" />
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
+    
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                            <StackPanel>
+                            <WrapPanel Orientation="Vertical">
                                 <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Foreground="Blue"/>
-                                <Image Width="150" Height="150" Source="{Binding Image}"/>
-                            </StackPanel>
+                                <Image Width="200" Height="200" Source="{Binding Image}"/>
+                            </WrapPanel>
                         </DockPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
-            <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" BorderBrush="Black" BorderThickness="2">
-                 <StackPanel   Visibility="{Binding IsVisibleSelected}" >
-                    <DockPanel x:Name="getDockPanel">
-                        <Image x:Name="Image1" DockPanel.Dock="Left" Width="300" Height="300" Source="{Binding SelectedSiding.Image, UpdateSourceTrigger=PropertyChanged}"/>
-                        <StackPanel Margin="10"  Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
-                            <TextBlock Text="Модель" FontSize="24" />
-                            <Label Content="{Binding SelectedSiding.Title, UpdateSourceTrigger=PropertyChanged}" FontSize="18" />
-                            <TextBlock Text="Производитель" FontSize="24" />
-                            <Label Content="{Binding SelectedSiding.Description, UpdateSourceTrigger=PropertyChanged}" FontSize="18" />
-                            <TextBlock Text="Цена" FontSize="24" />
-                            <Label Content="{Binding SelectedSiding.Price, UpdateSourceTrigger=PropertyChanged}" FontSize="18" />
-                        </StackPanel>
-                    </DockPanel>
+
+            <!--Вывод информации о выбранном сайдинге из списка выше-->
+            <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" Visibility="{Binding IsVisibleSelected}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/> <!-- Оставшееся пространство -->
+                    <ColumnDefinition Width="*"/> <!-- Оставшееся пространство -->
+                </Grid.ColumnDefinitions>
+                
+                <Label Content="Выбранная модель" FontSize="24" FontWeight="Bold" />
+                <Image x:Name="Image1" Width="300" Height="300" Source="{Binding SelectedSiding.Image, UpdateSourceTrigger=PropertyChanged}"/>
+                
+                <StackPanel Grid.Column="1" Margin="10" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <TextBlock Text="Модель" FontWeight="Bold" FontSize="24" />
+                    <Label Content="{Binding SelectedSiding.Title, UpdateSourceTrigger=PropertyChanged}" FontSize="18" />
+                    <TextBlock Text="Производитель" FontWeight="Bold" FontSize="24" />
+                    <Label Content="{Binding SelectedSiding.Description, UpdateSourceTrigger=PropertyChanged}" FontSize="18" />
+                    <TextBlock Text="Цена" FontWeight="Bold" FontSize="24" />
+                    <Label Content="{Binding SelectedSiding.Price, UpdateSourceTrigger=PropertyChanged}" FontSize="18" />
                 </StackPanel>
-            </Border>
+                <StackPanel  Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <ItemsControl ItemsSource="{Binding ListSidingFuture }">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel  >
+                                    <TextBlock Text="{Binding Features.Title}" FontSize="18" Margin="5" FontWeight="Bold" />
+                                    <TextBlock Text=" "/>
+                                    <TextBlock Text="{Binding Value }" FontSize="18" Margin="5" />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Grid>
            
             
             <Button Grid.Column="1" Grid.Row="3" x:Name="AddWallButton" Content="Добавить стену" Click="AddWallButton_OnClick" FontSize="18" FontWeight="Bold" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="2" Padding="10" Margin="10"/>
 
             <StackPanel Grid.Column="1" Grid.ColumnSpan="6" Grid.Row="4" Grid.RowSpan="2" x:Name="elementStackPanel" Orientation="Horizontal" Margin="10"/> 
             
-            <TextBlock Grid.Column="4" Grid.Row="4"  x:Name="txtResult" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Background="Red"/>
-            <TextBlock Grid.Column="4" Grid.Row="4"  x:Name="txtResult2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Background="Blue"/>
+            <TextBlock Grid.Column="4" Grid.Row="4"  x:Name="txtResult" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Visibility="Hidden"/>
+            <TextBlock Grid.Column="4" Grid.Row="4"  x:Name="txtResult2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Background="Blue" Visibility="Hidden"/>
             
             <Label Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Margin="0, 20, 20,20">Дополнительные параметры</Label>
 
@@ -99,13 +120,15 @@
                 
             </StackPanel>
             
-            <Button x:Name="MakeCalculation" Grid.Row="10" Grid.Column="2" Width="250" Height="50" Grid.ColumnSpan="2" Background="Red" Click="MakeCalculation_OnClick">Произвести расчёт</Button>
+            <Button x:Name="MakeCalculation" Grid.Row="10" Grid.Column="2" Width="250" Height="50" Grid.ColumnSpan="2" Background="#4CAF50" Foreground="White" FontSize="18" Click="MakeCalculation_OnClick">Выполнить расчёт</Button>
+            <Button Grid.Row="10" Grid.Column="3" Click="ButtonBase_OnClick"/>
             <TextBlock Grid.Column="4" Grid.Row="4"  x:Name="totalLenResult" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
             
             <Grid Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="11">
                 <StackPanel x:Name="getExectResult" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <StackPanel x:Name="exectResult" HorizontalAlignment="Right" VerticalAlignment="Top" />
             </Grid>
+            
             
         </Grid>
     </ScrollViewer>

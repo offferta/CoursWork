@@ -1,22 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Coursework.Context;
 using Coursework.Entities;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Word = Microsoft.Office.Interop.Word;
+using System.Linq;
 
 namespace Coursework;
 
 public partial class CalculatePage : Page, INotifyPropertyChanged
 {
+    private List<FeaturesMaterial> listSidingFuture = new ();
     private readonly List<Tuple<TextBox, TextBox>> _groupTextBoxes = new();
     private readonly List<Tuple<TextBox, TextBox, TextBox>> _groupTextBoxes2 = new();
     private int _wallButtonClickCount;
@@ -37,7 +42,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
     private double _sumSiding; //сумма сайдинга итоговая
     private double _countSiding; //кол-во сайдинга 
 
-    private double _sumWindow; //сумма окон 
+    private double _sumWindow = 0; //сумма окон 
     private double _sumWall; //сумма стенк
 
     private decimal _lengthSiding; //длиннна выбранного сайдинга
@@ -49,6 +54,15 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
     private Visibility _isVisibleSelected = Visibility.Collapsed;
 
+    public List<FeaturesMaterial> ListSidingFuture
+    {
+        get => listSidingFuture;
+        set
+        {
+            listSidingFuture = value;
+            OnPropertyChanged();
+        }
+    }
     public Siding SelectedSiding
     {
         get => _selectedSiding;
@@ -80,7 +94,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
     private void CalculatePage_OnLoaded(object sender, RoutedEventArgs e)
     {
-        //  
+        GetSidingFeatures(SelectedSiding.SidingId);
     }
 
     private void UpdateList()
@@ -333,6 +347,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
     private void MakeCalculation_OnClick(object sender, RoutedEventArgs e)
     {
+        
         GetMakeCaculation();
         
         DisplaySidingInfo(getExectResult);
@@ -342,6 +357,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         ShowCalculationResults();
     }
 
+    //получение количества сайдинга
     private async Task GetMakeCaculation()
     {
         try
@@ -372,7 +388,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
                 if (_areaSidind != 0)
                 {
-                    _countSiding = Convert.ToDouble(_totalAreaWall) / Convert.ToDouble(_areaSidind);
+                    _countSiding = Convert.ToDouble(_totalAreaWall) - _sumWindow / Convert.ToDouble(_areaSidind);
                     MessageBox.Show(_countSiding.ToString());
                 }
             }
@@ -692,8 +708,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             dockPanel.Children.Add(stackPanel);
         }
     }
-   
-    private void ShowCalculationResults()
+   private void ShowCalculationResults()
     {
         exectResult.Children.Clear();
 
@@ -726,6 +741,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         var additionalInfoLabel = new Label
         {
             Content = "Количетсво материалов",
+            FontWeight = FontWeights.Bold,
             Margin = new Thickness(0, 5, 5, 0),
             FontSize = 16 // Размер шрифта
         };
@@ -737,11 +753,9 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             return double.TryParse(tuple.Item1.Text, out value) ? value : 0;
         });
         
-        _countSiding = _totalAreaWall / Convert.ToDouble(_areaSidind);
+        _countSiding = _totalAreaWall - _sumWindow / Convert.ToDouble(_areaSidind);
 
-        var nProfilesCount = _countSiding;
-
-        var sidingCountLabel = new Label
+       var sidingCountLabel = new Label
         {
             Content = $"Количество сайдинга: {Math.Ceiling(_countSiding)} шт.",
             Margin = new Thickness(0, 5, 5, 0),
@@ -766,6 +780,46 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         exectResult.Children.Add(finishPlanksLabel);
     }
 
+   // создание файла счёт фактур
+   private void CreateInvoiceTable()
+   {
+       // Инициализируем объект Word и создаем новый документ
+       Word.Application wordApp = new Word.Application();
+       Word.Document doc = wordApp.Documents.Add();
+
+       // Добавляем таблицу
+       Word.Table table = doc.Tables.Add(wordApp.Selection.Range, _groupTextBoxes.Count + 1, 2); // Создаем таблицу с двумя колонками
+
+       // Задаем заголовки таблицы
+       table.Cell(1, 1).Range.Text = "Позиция";
+       table.Cell(1, 2).Range.Text = "Количество";
+       // Добавьте дополнительные заголовки, если необходимо
+       // table.Cell(1, 3).Range.Text = "...";
+
+       int row = 2; // Начинаем с добавления данных со второй строки
+       foreach (var tuple in _groupTextBoxes)
+       {
+           double value1, value2;
+           if (double.TryParse(tuple.Item1.Text, out value1) && double.TryParse(tuple.Item2.Text, out value2))
+           {
+               var result = value1 * value2;
+
+               table.Cell(row, 1).Range.Text = $"Площадь стены ({value1} м x {value2} м)";
+               table.Cell(row, 2).Range.Text = $"{result:F2} м²";
+               // Добавьте дополнительные данные, если необходимо
+               // table.Cell(row, 3).Range.Text = "...";
+
+               row++;
+           }
+       }
+
+       // Сохраняем документ
+       string fileName = "Invoice.docx";
+       doc.SaveAs2(fileName);
+       doc.Close();
+       wordApp.Quit();
+   }
+
     private void WindowDoorCheckBox_OnChecked(object sender, RoutedEventArgs e)
     {
         var additionalButton = new Button { Content = "Добавить проём" };
@@ -785,7 +839,6 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             MessageBox.Show("Ограничение на стены");
         }
     }
-
     private UIElement GetWindow()
 {
     var grid = new Grid();
@@ -902,5 +955,31 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
     {
         WindowStackPanel.Children.Clear();
         StackPanel.Children.Clear();
+    }
+    public async void GetSidingFeatures(int id)
+    {
+        try
+        {
+            MyDbContext context = new MyDbContext();
+
+            ListSidingFuture = await context.FeaturesMaterials
+                .Include(p => p.Siding)
+                .Include(p => p.Features)
+                .Where(p => p.SidingId == id).ToListAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    private void LvDataBinding_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        GetSidingFeatures(SelectedSiding.SidingId);
+    }
+
+    private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+    {
+        CreateInvoiceTable();
     }
 }
