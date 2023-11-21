@@ -39,7 +39,7 @@
 
             <!--Вывод списка сайдинга-->
             <ListView Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" x:Name="lvDataBinding" 
-                      ItemsSource="{Binding SelectedSiding}"
+
                       SelectedItem="{Binding SelectedSiding, Mode=TwoWay}"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Center"
                       BorderThickness="0"

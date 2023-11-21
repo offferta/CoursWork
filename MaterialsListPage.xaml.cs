@@ -14,32 +14,56 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Coursework;
 
-public partial class MaterialsListPage : Page
+public partial class MaterialsListPage : Page, INotifyPropertyChanged
 {
     private Worker _worker;
+    private Siding _selectedSiding;
+    private Visibility _isVisibleSelected = Visibility.Collapsed;
+    
+    public Siding SelectedSiding
+    {
+        get => _selectedSiding;
+        set
+        {
+            _selectedSiding = value;
+            IsVisibleSelected = Visibility.Visible;
+            OnPropertyChanged();
+        }
+    }
+    public Visibility IsVisibleSelected
+    {
+        get => _isVisibleSelected;
+        set
+        {
+            _isVisibleSelected = value;
+            OnPropertyChanged();
+        }
+    }
     public MaterialsListPage(Worker worker)
     {
         InitializeComponent();
         _worker = worker;
         UpdateList();
+        DataContext = this;
     }
+    
     private void UpdateList()
     {
         using var context = new MyDbContext();
         var b = new BitmapImage(new Uri($"{Environment.CurrentDirectory}\\picture.png"));
         var project = context.Sidings
-            .Select(p => new
+            .Select(p => new Siding
             {
-                p.Title,
-                p.Description,
-                p.Price,
+                Title = p.Title,
+                Description = p.Description,
+                Price = p.Price,
                 Image = p.Image ?? b
             })
             .ToList();
         
-        lvDataBinding.ItemsSource = project;
+        lvDataBinding2.ItemsSource = project;
     }
-    private async void UpdateListViewData()
+    private void UpdateListViewData()
     {
         using var context = new MyDbContext();
         var b = new BitmapImage(new Uri($"{Environment.CurrentDirectory}\\picture.png"));
@@ -53,7 +77,7 @@ public partial class MaterialsListPage : Page
             })
             .ToList();
         
-        lvDataBinding.ItemsSource = project;
+        lvDataBinding2.ItemsSource = project;
         
         string searchText = SerchTextBox.Text;
         string selectedType = ComboType.SelectedItem as string;
@@ -63,7 +87,7 @@ public partial class MaterialsListPage : Page
             (selectedType == null || item.Title == selectedType || item.Description == selectedType)
         ).ToList();
 
-        lvDataBinding.ItemsSource = filteredData;
+        lvDataBinding2.ItemsSource = filteredData;
     }
     
     
@@ -76,5 +100,10 @@ public partial class MaterialsListPage : Page
     private void ComboType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         
+    }
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
