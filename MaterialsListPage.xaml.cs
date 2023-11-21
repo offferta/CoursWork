@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Coursework.Context;
 using Coursework.Entities;
@@ -106,4 +107,6 @@ public partial class MaterialsListPage : Page, INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+    public ICommand ShowPopupCommand { get; }   
+    
 }

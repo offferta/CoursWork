@@ -127,8 +127,6 @@
                 <StackPanel x:Name="getExectResult" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <StackPanel x:Name="exectResult" HorizontalAlignment="Right" VerticalAlignment="Top" />
             </Grid>
-            
-            
         </Grid>
     </ScrollViewer>
 </Page>

@@ -51,6 +51,8 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
     private double _totalAreaWall; //общаяя площадь стен
     private double _totalLengthWall; //общаяя длинна стен
 
+ 
+
     private Visibility _isVisibleSelected = Visibility.Collapsed;
 
     public List<FeaturesMaterial> ListSidingFuture
@@ -72,7 +74,6 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-
     public Visibility IsVisibleSelected
     {
         get => _isVisibleSelected;
@@ -82,7 +83,6 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-
     public CalculatePage(Worker worker)
     {
         InitializeComponent();
@@ -269,7 +269,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         }
         else
         {
-            resultLabel.Content = "Неверный ввод. Введите числовые значения.";
+            resultLabel.Content = "Неверный ввод";
         }
     }
 
@@ -769,17 +769,21 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             FontSize = 14 // Размер шрифта
         };
         exectResult.Children.Add(finishPlanksLabel);
+        
+        var saveResultCalButton = new Button { Content = "Сохранить" };
+        saveResultCalButton.Click += SaveResultCalButtonOnClick;
+        saveResultCalButton.Width = 200;
+
+        exectResult.Children.Add(saveResultCalButton);
     }
 
-   // создание файла счёт фактур
+   
 
-
-    private void WindowDoorCheckBox_OnChecked(object sender, RoutedEventArgs e)
+   private void WindowDoorCheckBox_OnChecked(object sender, RoutedEventArgs e)
     {
         var additionalButton = new Button { Content = "Добавить проём" };
         additionalButton.Click += AdditionalButton_Click;
         additionalButton.Width = 200;
-        additionalButton.Content = "Добавить проём";
         
         StackPanel.Children.Add(additionalButton);
         
@@ -930,5 +934,52 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
     private void LvDataBinding_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         GetSidingFeatures(SelectedSiding.SidingId);
+    }
+
+    public void AddDataInDataBase()
+    {
+        MyDbContext context = new MyDbContext();
+
+        var calculation = new Calculation
+        {
+            WorkerId = _worker.WorkerId,
+            Title = "Новый расчёт",
+            DateOrder = DateTime.Now
+        };
+        context.Calculations.Add(calculation);
+        context.SaveChanges();
+        
+        foreach (var tuple in _groupTextBoxes)
+        {
+            double value1, value2;
+            if (double.TryParse(tuple.Item1.Text, out value1) && double.TryParse(tuple.Item2.Text, out value2))
+            {
+                var wall = new Wall
+                {  
+                    CalculationId = calculation.CalculationId,
+                    Width = Convert.ToDecimal(value1),
+                    Length = Convert.ToDecimal(value2),
+                    Count =  1
+                };
+                context.Walls.Add(wall);
+            }
+        }
+        context.SaveChanges();
+
+        var materialsCount = new MaterialsCalculation
+        {
+            SidingId = SelectedSiding.SidingId,
+            CalculationId = calculation.CalculationId,
+            Count = (decimal) _countSiding,
+            CurrentPrice = SelectedSiding.Price
+        };
+        context.MaterialsCalculations.Add(materialsCount);
+        context.SaveChanges();
+        MessageBox.Show("ТЫ АХУЕНЕН!");
+    }
+    
+    private void SaveResultCalButtonOnClick(object sender, RoutedEventArgs e)
+    {
+        AddDataInDataBase();
     }
 }

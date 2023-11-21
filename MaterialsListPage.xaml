@@ -49,14 +49,14 @@
         <Grid Grid.Row="2" Visibility="{Binding IsVisibleSelected}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/> <!-- Оставшееся пространство -->
-                <ColumnDefinition Width="*"/> <!-- Оставшееся пространство -->
+                <ColumnDefinition Width="*"/> 
+                <ColumnDefinition Width="*"/> 
             </Grid.ColumnDefinitions>
             
             <Label Content="Выбранная модель" FontSize="24" FontWeight="Bold" />
             <Image x:Name="Image1" Width="300" Height="300" Source="{Binding SelectedSiding.Image, UpdateSourceTrigger=PropertyChanged}"/>
-
-            <StackPanel Grid.Column="1" Margin="10" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
+            
+            <StackPanel Grid.Column="2" Margin="10" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <TextBlock Text="Модель" FontWeight="Bold" FontSize="24" />
                 <Label Content="{Binding SelectedSiding.Title, UpdateSourceTrigger=PropertyChanged}" FontSize="18" />
                 <TextBlock Text="Производитель" FontWeight="Bold" FontSize="24" />
