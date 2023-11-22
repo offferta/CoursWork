@@ -70,13 +70,12 @@ public partial class CalculationsList : Page
                         calculationId = calculation.CalculationId,
                         name = calculation.Title,
                         wall = wall.WallId,
-                        count = wall.Count,
                         lenght = wall.Length,
-                        wight = wall.Width
+                        wight = wall.Width,
+                        count = wall.Count,
                     }
                 )
                 .ToList();
-
             Grid.ItemsSource = listCalculation;
             
             var searchText = SerchTextBox.Text;
