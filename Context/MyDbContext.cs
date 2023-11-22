@@ -193,7 +193,6 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.WindowId).HasColumnName("windowId");
             entity.Property(e => e.CalculationId).HasColumnName("calculationId");
             entity.Property(e => e.Count).HasColumnName("count");
-            entity.Property(e => e.IsDoor).HasColumnName("isDoor");
             entity.Property(e => e.Length)
                 .HasColumnType("decimal(4, 1)")
                 .HasColumnName("length");

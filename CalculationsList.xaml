@@ -8,13 +8,32 @@
       Title="CalculationsList" Loaded="CalculationsList_OnLoaded" Height="900" Width="1900">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-            <DataGrid x:Name="calculationsList" AutoGenerateColumns="True">
-                
-            </DataGrid>
-        </ScrollViewer>
+        
+        <WrapPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Введите название для поиска: " Width="175" TextAlignment="Right" />
+                <TextBox Width="225" Name="SerchTextBox" TextChanged="SerchTextBox_OnTextChanged" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Выберите тип: " Width="175" TextAlignment="Right" />
+                <ComboBox Width="225" Name="ComboType" 
+                          DisplayMemberPath="Name" />
+            </StackPanel>
+        </WrapPanel>
+        <DataGrid Grid.Row="1" x:Name="Grid" AutoGenerateColumns="True" >
+            <DataGrid.Columns>
+                <!-- Другие столбцы DataGrid, если они есть -->
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Редактировать" Click="ButtonBase_OnClick"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>
