@@ -972,8 +972,6 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                 context.Walls.Add(wall);
             }
         }
-
-        context.SaveChanges();
         
         foreach (var tuple in _groupTextBoxes2)
         {
@@ -987,10 +985,12 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                     CalculationId = calculation.CalculationId,
                     Count = (byte)value1,
                     Length = (decimal) value2,
-                    Width = (decimal) value3
+                    Width = (decimal) value3,
                 };
+                context.Windows.Add(window);
             }
         }
+        
 
         var materialsCount = new MaterialsCalculation
         {
@@ -1002,7 +1002,6 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         context.MaterialsCalculations.Add(materialsCount);
         context.SaveChanges();
         MessageBox.Show("Расчёт успешно добавлен!");
-        
     }
 
     private void SaveResultCalButtonOnClick(object sender, RoutedEventArgs e)

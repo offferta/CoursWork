@@ -56,6 +56,7 @@ public partial class MenedgerWindow : Window, INotifyPropertyChanged
 
     private void CalculationButton_OnClick(object sender, RoutedEventArgs e)
     {
+        MenedgerFrame.Navigate(new CalculationsList(_worker));
     }
 
     private void ListMaterialsButton_OnClick(object sender, RoutedEventArgs e)
