@@ -11,6 +11,6 @@ public class Window
     public decimal Width { get; set; }
 
     public byte Count { get; set; }
-    
+
     public virtual Calculation Calculation { get; set; } = null!;
 }

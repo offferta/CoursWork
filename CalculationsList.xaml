@@ -3,15 +3,14 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:Coursework"
       mc:Ignorable="d"
       Title="CalculationsList" Loaded="CalculationsList_OnLoaded" Height="900" Width="1900">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition/>
+            <RowDefinition Height="50" />
+            <RowDefinition />
         </Grid.RowDefinitions>
-        
+
         <WrapPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Введите название для поиска: " Width="175" TextAlignment="Right" />
@@ -19,17 +18,16 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Выберите тип: " Width="175" TextAlignment="Right" />
-                <ComboBox Width="225" Name="ComboType" 
+                <ComboBox Width="225" Name="ComboType"
                           DisplayMemberPath="Name" />
             </StackPanel>
         </WrapPanel>
-        <DataGrid Grid.Row="1" x:Name="Grid" AutoGenerateColumns="True" >
+        <DataGrid Grid.Row="1" x:Name="Grid" AutoGenerateColumns="True">
             <DataGrid.Columns>
-                <!-- Другие столбцы DataGrid, если они есть -->
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Редактировать" Click="ButtonBase_OnClick"/>
+                            <Button Content="Редактировать" Click="ButtonBase_OnClick" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

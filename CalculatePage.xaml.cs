@@ -8,11 +8,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Xml.Schema;
 using Coursework.Context;
 using Coursework.Entities;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Window = Coursework.Entities.Window;
 
 namespace Coursework;
 
@@ -20,7 +20,9 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 {
     private readonly List<Tuple<TextBox, TextBox>> _groupTextBoxes = new();
     private readonly List<Tuple<TextBox, TextBox, TextBox>> _groupTextBoxes2 = new();
+    private readonly double _priceFilm = 5200; //цена пленки5200 
     private readonly double _totalResult = 0;
+    private readonly Worker _worker;
     private decimal _areaSidind; //площадь сайдинга
     private int _countFilm; //количество плёнки
     private double _countSiding; //кол-во сайдинга 
@@ -30,7 +32,6 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
     private Visibility _isVisibleSelected = Visibility.Collapsed;
 
     private decimal _lengthSiding; //длиннна выбранного сайдинга
-    private readonly double _priceFilm = 5200; //цена пленки5200 
     private Siding _selectedSiding;
 
     private double _sumFilm; //сумма плёнки
@@ -49,7 +50,6 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
     private int _wallButtonClickCount;
     private decimal _widthSiding; //ширина выбранного сайдинга
     private int _windowButtonClickCount;
-    private readonly Worker _worker;
     private List<FeaturesMaterial> listSidingFuture = new();
 
     public CalculatePage(Worker worker)
@@ -972,31 +972,31 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                 context.Walls.Add(wall);
             }
         }
-        
+
         foreach (var tuple in _groupTextBoxes2)
         {
             double value1, value2, value3;
-            if (double.TryParse(tuple.Item1.Text, out value1) && 
+            if (double.TryParse(tuple.Item1.Text, out value1) &&
                 double.TryParse(tuple.Item2.Text, out value2) &&
                 double.TryParse(tuple.Item3.Text, out value3))
             {
-                var window = new Entities.Window()
+                var window = new Window
                 {
                     CalculationId = calculation.CalculationId,
                     Count = (byte)value1,
-                    Length = (decimal) value2,
-                    Width = (decimal) value3,
+                    Length = (decimal)value2,
+                    Width = (decimal)value3
                 };
                 context.Windows.Add(window);
             }
         }
-        
+
 
         var materialsCount = new MaterialsCalculation
         {
             SidingId = SelectedSiding.SidingId,
             CalculationId = calculation.CalculationId,
-            Count = (decimal) _countSiding,
+            Count = (decimal)_countSiding,
             CurrentPrice = SelectedSiding.Price
         };
         context.MaterialsCalculations.Add(materialsCount);

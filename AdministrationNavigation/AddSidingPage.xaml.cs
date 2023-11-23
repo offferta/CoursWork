@@ -14,10 +14,10 @@ namespace Coursework.AdministrationNavigation;
 public partial class
     AddSidingPage : Page
 {
+    private readonly List<Siding> _siningList = new();
     private byte[] _imageData;
     private byte[] _selectedImageBytes;
     private Siding _siningId;
-    private readonly List<Siding> _siningList = new();
     private Worker _worker;
 
     public AddSidingPage(Worker worker)

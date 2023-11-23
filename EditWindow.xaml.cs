@@ -3,14 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using Coursework.Context;
 using Coursework.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using Window = System.Windows.Window;
 
@@ -18,41 +14,45 @@ namespace Coursework;
 
 public partial class EditWindow : Window, INotifyPropertyChanged
 {
+    private readonly MyDbContext _context = new();
+    private double _countSiding;
     public object _dataC0ontext;
+    private int _intCalculationId;
 
     private int _intSiding;
-    private int _wallId;
-    private int _intCalculationId;
+    private double _newCount;
     private double _newLenght;
     private double _newWight;
-    private double _newCount;
-    private double _countSiding;
-
-    private MyDbContext _context = new MyDbContext();
     private double _sumWall; //сумма стенк
-    
+    private int _wallId;
+
     public EditWindow(object dataContext)
     {
         InitializeComponent();
-        
+
         _dataC0ontext = dataContext;
 
         DataContext = _dataC0ontext;
     }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
     private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
     {
         ReplaceDotWithComma();
     }
-    public event PropertyChangedEventHandler? PropertyChanged;
+
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+
     private async void ButtonBase_OnClick(object sender, RoutedEventArgs e)
     {
         NewCountSiding();
     }
-    private  void NewCountSiding()
+
+    private void NewCountSiding()
     {
         _intSiding = Convert.ToInt32(txtCalculationId.Text);
         _wallId = Convert.ToInt32(txtWallId.Text);
@@ -60,10 +60,10 @@ public partial class EditWindow : Window, INotifyPropertyChanged
         _newWight = Convert.ToDouble(txtWidth.Text);
         _newCount = Convert.ToDouble(txtCount.Text);
         _intCalculationId = Convert.ToInt32(txtCalculationId.Text);
-        
+
         try
         {
-            var result =  (
+            var result = (
                 from mc in _context.MaterialsCalculations
                 join fm in _context.FeaturesMaterials on mc.SidingId equals fm.SidingId
                 join s in _context.Sidings on mc.SidingId equals s.SidingId
@@ -76,12 +76,12 @@ public partial class EditWindow : Window, INotifyPropertyChanged
                     currentPrice = mc.CurrentPrice,
                     featuresId = fm.FeaturesId,
                     value = fm.Value,
-                    sidingTitle = s.Title,  
+                    sidingTitle = s.Title,
                     sidingDescription = s.Description,
                     sidingPrice = s.Price
                 }
             ).ToList();
-            
+
             var serializedResult = JsonConvert.SerializeObject(result);
 
             var featuresMaterialsValue = JsonConvert.DeserializeObject<List<dynamic>>(serializedResult)
@@ -90,7 +90,7 @@ public partial class EditWindow : Window, INotifyPropertyChanged
 
             decimal _widthSiding = Math.Round(Convert.ToDecimal(featuresMaterialsValue[0]), 3);
             decimal _lengthSiding = Math.Round(Convert.ToDecimal(featuresMaterialsValue[1]), 3);
-            
+
             if (_lengthSiding != 0 && _widthSiding != 0)
             {
                 var _areaSidind = _lengthSiding * _widthSiding;
@@ -102,11 +102,11 @@ public partial class EditWindow : Window, INotifyPropertyChanged
                     MessageBox.Show(_countSiding.ToString());
                 }
 
-                
                 var updateCountSiding = _context.Set<MaterialsCalculation>()
                     .AsNoTrackingWithIdentityResolution()
                     .FirstOrDefault(e => e.CalculationId == _intCalculationId);
-                updateCountSiding.Count = (decimal) _countSiding;
+
+                updateCountSiding.Count = (decimal)_countSiding;
                 _context.Set<MaterialsCalculation>().Update(updateCountSiding);
                 _context.SaveChanges();
             }
@@ -119,16 +119,16 @@ public partial class EditWindow : Window, INotifyPropertyChanged
 
     private double CalculateTotal()
     {
-        int calculationId = Convert.ToInt32(txtCalculationId.Text);
-        
+        var calculationId = Convert.ToInt32(txtCalculationId.Text);
+
         decimal requiredSidingArea = 0;
-        
+
         var wallToUpdate = _context.Walls.FirstOrDefault(w => w.WallId == _wallId);
         if (wallToUpdate != null)
         {
-            wallToUpdate.Length = (decimal) _newLenght;
-            wallToUpdate.Width = (decimal) _newWight;
-            wallToUpdate.Count = (byte) _newCount;
+            wallToUpdate.Length = (decimal)_newLenght;
+            wallToUpdate.Width = (decimal)_newWight;
+            wallToUpdate.Count = (byte)_newCount;
             _context.SaveChanges();
         }
 
@@ -136,7 +136,7 @@ public partial class EditWindow : Window, INotifyPropertyChanged
             .Where(wall => wall.WallId == _wallId)
             .Select(wall => wall.Length * wall.Width)
             .FirstOrDefault();
-        
+
         var totalWallArea = _context.Walls
             .Where(wall => wall.CalculationId == calculationId)
             .Select(wall => wall.Length * wall.Width)
@@ -148,27 +148,18 @@ public partial class EditWindow : Window, INotifyPropertyChanged
 
         var result = new
         {
-            UpdatedWallArea = updatedWallArea, 
+            UpdatedWallArea = updatedWallArea,
             TotalWallArea = totalWallArea,
             TotalWindowArea = totalWindowArea,
             RequiredSidingArea = totalWallArea - totalWindowArea
         };
-        if (result != null)
-        {
-             requiredSidingArea = result.TotalWallArea - result.TotalWindowArea;
-        }
-        return (double) requiredSidingArea;
+        if (result != null) requiredSidingArea = result.TotalWallArea - result.TotalWindowArea;
+        return (double)requiredSidingArea;
     }
+
     private void ReplaceDotWithComma()
     {
-        if (txtLength != null)
-        {
-            txtLength.Text = txtLength.Text.Replace('.', ',');
-        }
-        if (txtWidth != null)
-        {
-            txtWidth.Text = txtWidth.Text.Replace('.', ',');
-        }
+        if (txtLength != null) txtLength.Text = txtLength.Text.Replace('.', ',');
+        if (txtWidth != null) txtWidth.Text = txtWidth.Text.Replace('.', ',');
     }
-    
 }
