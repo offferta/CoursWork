@@ -61,20 +61,20 @@ public partial class CalculationsList : Page
         try
         {
             var listCalculation =  context.Calculations
-                .Join(
-                    context.Walls,
-                    calculation => calculation.CalculationId,
-                    wall => wall.CalculationId,
-                    (calculation, wall) => new
-                    {
-                        calculationId = calculation.CalculationId,
-                        name = calculation.Title,
-                        wall = wall.WallId,
-                        lenght = wall.Length,
-                        wight = wall.Width,
-                        count = wall.Count,
-                    }
-                )
+                    .Join(
+                        context.Walls,
+                        calculation => calculation.CalculationId,
+                        wall => wall.CalculationId,
+                        (calculation, wall) => new
+                        {
+                            calculationId = calculation.CalculationId,
+                            name = calculation.Title,
+                            wallId = wall.WallId,
+                            lenght = wall.Length,
+                            wight = wall.Width,
+                            count = wall.Count,
+                        }
+                    )
                 .ToList();
             Grid.ItemsSource = listCalculation;
             
@@ -99,7 +99,7 @@ public partial class CalculationsList : Page
         if (Grid.SelectedItem != null)
         {
             EditWindow editWindow = new EditWindow(dataContext);
-            editWindow.ShowDialog();
+            editWindow.Show();
         }
         else
         {

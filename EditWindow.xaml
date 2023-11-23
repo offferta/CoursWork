@@ -6,28 +6,32 @@
         xmlns:local="clr-namespace:Coursework"
         mc:Ignorable="d"
         Title="EditWindow" Height="450" Width="800" >
-    <Grid>
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
-        <StackPanel Margin="10">
-            <TextBlock Text="Calculation ID:"/>
+        <StackPanel Margin="10" Loaded="FrameworkElement_OnLoaded">
+            <TextBlock Text="Номер расчёта:"/>
             <TextBlock x:Name="txtCalculationId" Text="{Binding calculationId}"/>
 
-            <TextBlock Text="Name:"/>
+            <TextBlock Text="Название расчёта:"/>
             <TextBox x:Name="txtName" Text="{Binding name, Mode=OneWay}" />
             
-            <TextBlock Text="Length:"/>
+            <TextBlock Text="Стена id:"/>
+            <TextBox x:Name="txtWallId" Text="{Binding wall, Mode=OneWay}" />
+            
+            <TextBlock Text="Длинна:"/>
             <TextBox x:Name="txtLength" Text="{Binding lenght, Mode=OneWay}" />
+            
+            
 
-            <TextBlock Text="Width:"/>
+            <TextBlock Text="Ширина:"/>
             <TextBox x:Name="txtWidth" Text="{Binding wight, Mode=OneWay}"/>
 
-            <TextBlock Text="Count:"/>
-            <TextBox x:Name="txtCount" Text="{Binding count, Mode=OneWay}" IsReadOnly="True"/>
+            <TextBlock Text="Количество:"/>
+            <TextBox x:Name="txtCount" Text="{Binding count, Mode=OneWay}"/>
 
-            <Button Content="Update" Click="ButtonBase_OnClick"/>
+            <Button  Content="Update" Click="ButtonBase_OnClick"/>
         </StackPanel>
     </Grid>
 </Window>
