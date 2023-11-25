@@ -18,11 +18,18 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Выберите тип: " Width="175" TextAlignment="Right" />
-                <ComboBox Width="225" Name="ComboType"
-                          DisplayMemberPath="Name" />
+                <ComboBox Width="225" Name="GetTypeSerchInfo"
+                          DisplayMemberPath="Name" SelectionChanged="GetTypeSerchInfo_OnSelectionChanged" >
+                    <ComboBoxItem>
+                        <TextBlock Text="Стены"></TextBlock>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <TextBlock Text="Проёмы"/>
+                    </ComboBoxItem>
+                </ComboBox>
             </StackPanel>
         </WrapPanel>
-        <DataGrid Grid.Row="1" x:Name="Grid" AutoGenerateColumns="True">
+        <DataGrid Grid.Row="1" x:Name="Grid" AutoGenerateColumns="True" >
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>

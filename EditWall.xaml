@@ -1,11 +1,10 @@
-﻿<Window x:Class="Coursework.EditWindow"
+﻿<Window x:Class="Coursework.EditWall"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:Coursework"
         mc:Ignorable="d"
-        Title="EditWindow" Height="450" Width="800">
+        Title="EditWall" Height="450" Width="800">
     <Grid>
         <StackPanel Margin="10" Loaded="FrameworkElement_OnLoaded">
             <TextBlock Text="Номер расчёта:" />
@@ -15,7 +14,7 @@
             <TextBox x:Name="txtName" Text="{Binding name, Mode=OneWay}" />
 
             <TextBlock Text="Стена id:" />
-            <TextBox x:Name="txtWindowId" Text="{Binding wall, Mode=OneWay}" />
+            <TextBox x:Name="txtWallId" Text="{Binding wall, Mode=OneWay}" />
 
             <TextBlock Text="Длинна:" />
             <TextBox x:Name="txtLength" Text="{Binding lenght, Mode=OneWay}" />

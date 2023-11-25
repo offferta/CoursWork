@@ -12,11 +12,12 @@ public partial class CalculationsList : Page
 {
     private readonly MyDbContext _context = new();
     private readonly Worker _worker;
+    private int selectedType = 0;
 
     public CalculationsList(Worker worker)
     {
         InitializeComponent();
-        LoadListCalculation();
+        LoadListWallCalculation();
         _worker = worker;
     }
 
@@ -24,7 +25,7 @@ public partial class CalculationsList : Page
     {
     }
 
-    private async void LoadListCalculation()
+    private async void LoadListWallCalculation()
     {
         try
         {
@@ -38,6 +39,34 @@ public partial class CalculationsList : Page
                         calculationId = calculation.CalculationId,
                         name = calculation.Title,
                         wall = wall.WallId,
+                        count = wall.Count,
+                        lenght = wall.Length,
+                        wight = wall.Width
+                    })
+                .ToList();
+
+            Grid.ItemsSource = listCalculation;
+        }
+        catch (Exception e)
+        {
+            MessageBox.Show("" + e);
+        }
+    }
+
+    private async void LoadListWindowCalculation()
+    {
+        try
+        {
+            var listCalculation = _context.Calculations
+                .Join(
+                    _context.Windows,
+                    calculation => calculation.CalculationId,
+                    wall => wall.CalculationId,
+                    (calculation, wall) => new
+                    {
+                        calculationId = calculation.CalculationId,
+                        name = calculation.Title,
+                        wall = wall.WindowId,
                         count = wall.Count,
                         lenght = wall.Length,
                         wight = wall.Width
@@ -84,24 +113,51 @@ public partial class CalculationsList : Page
             MessageBox.Show("" + exception);
         }
     }
-
     private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
     {
         var button = sender as Button;
         var dataContext = button?.DataContext;
-        if (Grid.SelectedItem != null)
+
+        if (selectedType == 0)
         {
-            var editWindow = new EditWindow(dataContext);
-            editWindow.Show();
-            editWindow.Closing += EditWindowOnClosing;
+            if (Grid.SelectedItem != null)
+            {
+                var editWall = new EditWall(dataContext);
+                editWall.Show();
+                editWall.Closing += EditWallOnClosing;
+            }
         }
         else
         {
-            MessageBox.Show("Выберите запись для редактирования.");
+            var editWindow = new EditWindow(dataContext);
+            editWindow.Show();
+            editWindow.Closing += EditWindowOnClosing ;
         }
+        
     }
 
     private void EditWindowOnClosing(object? sender, CancelEventArgs e)
+    {
+        var listCalculation = _context.Calculations
+            .Join(
+                _context.Windows,
+                calculation => calculation.CalculationId,
+                wall => wall.CalculationId,
+                (calculation, wall) => new
+                {
+                    calculationId = calculation.CalculationId,
+                    name = calculation.Title,
+                    wall = wall.WindowId,
+                    count = wall.Count,
+                    lenght = wall.Length,
+                    wight = wall.Width
+                }
+            )
+            .ToList();
+        Grid.ItemsSource = listCalculation;
+    }
+
+    private void EditWallOnClosing(object? sender, CancelEventArgs e)
     {
         var listCalculation = _context.Calculations
             .Join(
@@ -120,5 +176,23 @@ public partial class CalculationsList : Page
             )
             .ToList();
         Grid.ItemsSource = listCalculation;
+    }
+
+
+    private void GetTypeSerchInfo_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (GetTypeSerchInfo.SelectedIndex is int selectedItem)
+        {
+            selectedType =  selectedItem;
+
+            if (selectedType == 0)
+            {
+                LoadListWallCalculation();
+            }
+            else if (selectedType == 1)
+            {
+                LoadListWindowCalculation();
+            }
+        }
     }
 }
