@@ -38,6 +38,6 @@
             Список Расчётов
         </Button>
 
-        <Label x:Name="FullNameLabel" Grid.Column="7" />
+        <Label x:Name="FullNameLabel" Grid.Column="7"  />
     </Grid>
 </Window>

@@ -41,15 +41,12 @@ public partial class Authorization : Window
 
             if (worker.RoleId == 1)
             {
-                // MessageBox.Show("Авториазция прошла успешно!", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Information);
-                //new MenedgerWindow().Show();
                 new AdministrationWindow(worker).Show();
                 Close();
             }
 
             if (worker.RoleId == 2)
             {
-                // MessageBox.Show("Авториазция прошла успешно!", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Information);
                 new MenedgerWindow(worker).Show();
                 Close();
             }

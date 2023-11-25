@@ -1,0 +1,49 @@
+﻿<Page x:Class="Coursework.Navigation.AdministrationNavigation.AddNewWorker"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:Coursework.Navigation.AdministrationNavigation"
+      mc:Ignorable="d"
+      Title="AddNewWorker" Height="1000" Width="1400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition/>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="70"/>
+        </Grid.ColumnDefinitions>
+        
+        <Label Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0" Content="Добавление нового работника" FontSize="28" VerticalAlignment="Center"/>
+        <Border Grid.Column="1" Grid.ColumnSpan="6" Grid.Row="1" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="3" Background="WhiteSmoke"></Border>
+        
+        <DockPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="10">
+            <StackPanel>
+                <Label Content="Логин:" FontSize="18"/>
+                <TextBox x:Name="LoginTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
+                <Label Content="Пароль:" FontSize="18"/>
+                <TextBox x:Name="PasswordTextBox" Width="200" Height="30" Margin="0,0,0,10"/> <Label Content="Имя:" FontSize="18"/>
+                <TextBox x:Name="FirstNameTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
+                <Label Content="Фамилия:" FontSize="18"/>
+                <TextBox x:Name="LastNameTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
+                <Label Content="Отчество:" FontSize="18"/>
+                <TextBox x:Name="SecondNameTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
+                <Label Content="Email:" FontSize="18"/>
+                <TextBox x:Name="EmailTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
+                <Label Content="Телефон:" FontSize="18"/>
+                <TextBox x:Name="PhoneTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
+                <ComboBox x:Name="RoleComboBox" SelectionChanged="Selector_OnSelectionChanged"/>
+                
+                
+                <Button x:Name="AddButton" Content="Добавить" Click="AddButton_Click" Width="150" Height="30" Margin="0,10,0,0"/>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</Page>

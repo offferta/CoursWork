@@ -32,12 +32,12 @@
             <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Text="Авторизация" HorizontalAlignment="Center"
                        FontSize="24" FontWeight="Bold" />
             <TextBlock Text="Введите логин" Grid.Row="1" Grid.Column="1" Margin="10" FontSize="17" />
-            <TextBox x:Name="LoginTextBox" Text="manager" Grid.Row="2" Grid.Column="1" Margin="10" Padding="5"
+            <TextBox x:Name="LoginTextBox" Text="admin" Grid.Row="2" Grid.Column="1" Margin="10" Padding="5"
                      BorderBrush="#CCCCCC" BorderThickness="1" />
 
             <!-- Пароль -->
             <TextBlock Text="Введите пароль" Grid.Row="3" Grid.Column="1" Margin="10" FontSize="17" />
-            <PasswordBox x:Name="PasswordTextBox" Password="manager_pass" Grid.Row="4" Grid.Column="1" Margin="10"
+            <PasswordBox x:Name="PasswordTextBox" Password="admin_pass" Grid.Row="4" Grid.Column="1" Margin="10"
                          Padding="5" BorderBrush="#CCCCCC" BorderThickness="1" />
 
             <!-- Кнопка Войти -->
