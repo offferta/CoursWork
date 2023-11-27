@@ -36,7 +36,6 @@ public partial class ListWorker : Page
             workerUpdate.Show();
             workerUpdate.Closing += WorkerUpdateOnClosing;
         }
-
     }
 
     private void WorkerUpdateOnClosing(object? sender, CancelEventArgs e)

@@ -5,7 +5,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
         Title="Авторизации" MinHeight="600" MinWidth="900" WindowState="Maximized">
-
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="Verdana" />
+            <Setter Property="Background" Value="Black" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Verdana" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+    </Window.Resources>
 
     <Grid>
         <Grid VerticalAlignment="Center">
@@ -41,8 +52,8 @@
                          Padding="5" BorderBrush="#CCCCCC" BorderThickness="1" />
 
             <!-- Кнопка Войти -->
-            <Button x:Name="AuthorizatiorButton" Content="Войти" Grid.Row="5" Grid.Column="1" Margin="10" Padding="5"
-                    Background="#007ACC" Foreground="White" FontWeight="Bold" Click="AuthorizatiorButton_OnClick" />
+            <Button x:Name="AuthorizatiorButton" Content="Войти" Grid.Row="5" Grid.Column="1" Click="AuthorizatiorButton_OnClick" />
+            
         </Grid>
     </Grid>
 </Window>
