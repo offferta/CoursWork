@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Coursework.Context;
@@ -15,6 +16,7 @@ public partial class UpdateWorkerInformation : Page
     {
         InitializeComponent();
         _worker = worker;
+        UpdateWorkerInformation_OnLoaded();
     }
 
     private async void UpDateButton_OnClick(object sender, RoutedEventArgs e)
@@ -57,4 +59,35 @@ public partial class UpdateWorkerInformation : Page
         }
     }
 
+    private async void UpdateWorkerInformation_OnLoaded()
+    {
+        try
+        {
+            var workerInformations = await _context.WorkerInformations
+                .Include(p => p.Worker)
+                .Where(p => p.WorkerId == _worker.WorkerId)
+                .Select(p => new
+                {
+                    LoginTextBox = p.Worker.Login,
+                    PasswordTextBox = p.Worker.Password,
+                    FirstNameTextBox = p.FirstName,
+                    SecondNameTextBox = p.SecondName,
+                    LastNameTextBox = p.LastName,
+                    EmailTextBox = p.Email,
+                    PhoneTextBox = p.Phone
+                })
+                .FirstOrDefaultAsync();
+            LoginTextBox.Text = workerInformations.LoginTextBox.ToString();
+            PasswordTextBox.Password = workerInformations.PasswordTextBox.ToString();
+            FirstNameTextBox.Text = workerInformations.FirstNameTextBox.ToString();
+            SecondNameTextBox.Text = workerInformations.SecondNameTextBox.ToString();
+            LastNameTextBox.Text = workerInformations.LastNameTextBox.ToString();
+            EmailTextBox.Text = workerInformations.EmailTextBox.ToString();
+            PhoneTextBox.Text = workerInformations.PhoneTextBox.ToString();
+        }
+        catch (Exception exception)
+        {
+            MessageBox.Show("Ошибка" + exception);
+        }
+    }
 }

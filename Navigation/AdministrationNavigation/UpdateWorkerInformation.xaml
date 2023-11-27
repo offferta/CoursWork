@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Coursework.Navigation.AdministrationNavigation"
       mc:Ignorable="d"
-      Title="UpdateWorkerInformation" Height="1000" Width="1400">
+      Title="UpdateWorkerInformation" Height="1000" Width="1400" >
      <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -21,27 +21,77 @@
             <ColumnDefinition Width="70"/>
         </Grid.ColumnDefinitions>
         
-        <Label Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0" Content="Добавление нового работника" FontSize="28" VerticalAlignment="Center"/>
-        <Border Grid.Column="1" Grid.ColumnSpan="6" Grid.Row="1" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="3" Background="WhiteSmoke"></Border>
+        <Label Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0" Content="Ваш профиль" FontSize="28" VerticalAlignment="Center" />
+        <Border Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="3" Background="WhiteSmoke"></Border>
         
-        <DockPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="10">
-            <StackPanel>
-                <Label Content="Логин:" FontSize="18"/>
-                <TextBox x:Name="LoginTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
-                <Label Content="Пароль:" FontSize="18"/>
-                <TextBox x:Name="PasswordTextBox" Width="200" Height="30" Margin="0,0,0,10"/> <Label Content="Имя:" FontSize="18"/>
-                <TextBox x:Name="FirstNameTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
-                <Label Content="Фамилия:" FontSize="18"/>
-                <TextBox x:Name="LastNameTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
-                <Label Content="Отчество:" FontSize="18"/>
-                <TextBox x:Name="SecondNameTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
-                <Label Content="Email:" FontSize="18"/>
-                <TextBox x:Name="EmailTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
-                <Label Content="Телефон:" FontSize="18"/>
-                <TextBox x:Name="PhoneTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
-                
-                <Button x:Name="UpDateButton" Content="Обновить данные" Click="UpDateButton_OnClick" Width="150" Height="30" Margin="0,10,0,0"/>
+        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <StackPanel.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="FontSize" Value="18"/>
+                        <Setter Property="Height" Value="40"/>
+                        <Setter Property="Width" Value="170"></Setter>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Margin" Value="0,0,0,10"/>
+                    </Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Width" Value="200"/>
+                        <Setter Property="Height" Value="30"/>
+                        <Setter Property="Margin" Value="0,0,0,10"/>
+                    </Style>
+                    <Style TargetType="PasswordBox">
+                        <Setter Property="Width" Value="200"/>
+                        <Setter Property="Height" Value="30"/>
+                        <Setter Property="Margin" Value="0,0,0,10"/>
+                    </Style>
+                </StackPanel.Resources>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Логин:"/>
+                    <TextBox x:Name="LoginTextBox"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Пароль:"/>
+                    <PasswordBox x:Name="PasswordTextBox"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Имя:"/>
+                    <TextBox x:Name="FirstNameTextBox"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Фамилия:"/>
+                    <TextBox x:Name="LastNameTextBox"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Отчество:"/>
+                    <TextBox x:Name="SecondNameTextBox"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Email:"/>
+                    <TextBox x:Name="EmailTextBox"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Телефон:"/>
+                    <TextBox x:Name="PhoneTextBox"/>
+                </StackPanel>
             </StackPanel>
-        </DockPanel>
+            
+        </Grid>
+        <!--<StackPanel Grid.Row="1" Grid.Column="4">
+            <Image Resources=""></Image>
+        </StackPanel>-->
+        <Button Grid.Row="1" Grid.Column="4" VerticalAlignment="Bottom" x:Name="UpDateButton" Content="Обновить данные" Click="UpDateButton_OnClick" Width="230" Height="30" Margin="0,0,0,10" HorizontalAlignment="Left"/>
+        <Button Grid.Row="1" Grid.Column="5" VerticalAlignment="Bottom" x:Name="ExitProfileButton" Content="Выйти" Click="UpDateButton_OnClick" Width="230" Height="30" Margin="0,0,0,10" HorizontalAlignment="Left"/>
     </Grid>
 </Page>

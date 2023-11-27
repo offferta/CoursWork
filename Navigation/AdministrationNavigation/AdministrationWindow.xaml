@@ -22,8 +22,8 @@
         </Grid.ColumnDefinitions>
 
         <Frame x:Name="AdministrationFrame" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7"
-               NavigationUIVisibility="Hidden" />
-        <WrapPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="6" HorizontalAlignment="Left" >
+               NavigationUIVisibility="Hidden"  HorizontalAlignment="Left"/>
+        <WrapPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="7" HorizontalAlignment="Left" >
             <StackPanel Orientation="Horizontal" Margin="0, 0, 50, 10">
                 <Button Grid.Column="1" x:Name="AddSiningButton" Background="White" BorderBrush="White" FontSize="20"
                         Click="AddSiningButton_OnClick" Margin="0, 10, 25, 0">
@@ -36,9 +36,7 @@
             </StackPanel>
             <Label x:Name="FullNameLabel" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"
                    MouseLeftButtonUp="FullNameLabel_OnMouseLeftButtonUp" 
-                   Cursor="Hand"
-                   Content="Click me!" />
-
+                   Cursor="Hand" HorizontalContentAlignment="Right"/>
         </WrapPanel>
     </Grid>
 </Window>
