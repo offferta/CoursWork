@@ -39,33 +39,44 @@ public partial class AddNewWorker : Page
    
     private async void AddButton_Click(object sender, RoutedEventArgs e)
     {
-        try
+        if (string.IsNullOrWhiteSpace(LoginTextBox.Text) || string.IsNullOrWhiteSpace(PasswordTextBox.Password) || string.IsNullOrWhiteSpace(FirstNameTextBox.Text) || string.IsNullOrWhiteSpace(LastNameTextBox.Text))
         {
-            var newWorker = new Worker()
-            {
-                Login = LoginTextBox.Text,
-                Password = PasswordTextBox.Text,
-                RoleId = selectedRoleId
-            };
-            _context.Workers.Add(newWorker);
-            await _context.SaveChangesAsync();
-            
-            var updateWorkerInformation = new WorkerInformation()
-            {
-                WorkerId = newWorker.WorkerId,
-                FirstName = FirstNameTextBox.Text,
-                SecondName = SecondNameTextBox.Text,
-                LastName = LastNameTextBox.Text
-            };
-            
-            _context.WorkerInformations.Add(updateWorkerInformation);
-            await _context.SaveChangesAsync();
-            MessageBox.Show("Пользователь успешно добавлен.");
+            MessageBox.Show("Пожалуйста, заполните все обязательные поля.");
         }
-        catch (Exception ex)
+        else
         {
-            MessageBox.Show($"Ошибка при добавлении пользователя: {ex.Message}");
+            try
+            {
+                var newWorker = new Worker()
+                {
+                    Login = LoginTextBox.Text,
+                    Password = PasswordTextBox.Password,
+                    RoleId = selectedRoleId
+                };
+
+                var updateWorkerInformation = new WorkerInformation()
+                {
+                    FirstName = FirstNameTextBox.Text,
+                    SecondName = SecondNameTextBox.Text,
+                    LastName = LastNameTextBox.Text
+                };
+
+                _context.Workers.Add(newWorker);
+                await _context.SaveChangesAsync();
+
+                updateWorkerInformation.WorkerId = newWorker.WorkerId;
+
+                _context.WorkerInformations.Add(updateWorkerInformation);
+                await _context.SaveChangesAsync();
+
+                MessageBox.Show("Пользователь успешно добавлен.");
+            }
+            catch (DbUpdateException ex)
+            {
+                MessageBox.Show($"Ошибка при добавлении пользователя: {ex.InnerException?.Message}");
+            }
         }
+
     }
 
     private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

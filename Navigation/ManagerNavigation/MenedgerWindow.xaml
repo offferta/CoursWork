@@ -38,6 +38,8 @@
             Список Расчётов
         </Button>
 
-        <Label x:Name="FullNameLabel" Grid.Column="7"  />
+        <Label x:Name="FullNameLabel" Grid.Column="7" 
+               MouseLeftButtonUp="FullNameLabel_OnMouseLeftButtonUp" 
+               Cursor="Hand" HorizontalContentAlignment="Right" />
     </Grid>
 </Window>

@@ -20,12 +20,6 @@
                 <TextBlock Text="Выберите тип: " Width="175" TextAlignment="Right" />
                 <ComboBox Width="225" Name="GetTypeSerchInfo"
                           DisplayMemberPath="Name" SelectionChanged="GetTypeSerchInfo_OnSelectionChanged" >
-                    <ComboBoxItem>
-                        <TextBlock Text="Стены"></TextBlock>
-                    </ComboBoxItem>
-                    <ComboBoxItem>
-                        <TextBlock Text="Проёмы"/>
-                    </ComboBoxItem>
                 </ComboBox>
             </StackPanel>
         </WrapPanel>

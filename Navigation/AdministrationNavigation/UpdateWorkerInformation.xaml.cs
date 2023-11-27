@@ -90,4 +90,9 @@ public partial class UpdateWorkerInformation : Page
             MessageBox.Show("Ошибка" + exception);
         }
     }
+
+    private void ExitProfileButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        new Authorization().Show();
+    }
 }

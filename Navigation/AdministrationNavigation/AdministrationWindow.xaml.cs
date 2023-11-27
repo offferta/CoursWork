@@ -77,4 +77,14 @@ public partial class AdministrationWindow : Window, INotifyPropertyChanged
     {
         AdministrationFrame.Navigate(new UpdateWorkerInformation(_worker));
     }
+
+    private void CalculationsList_OnClick(object sender, RoutedEventArgs e)
+    {
+        AdministrationFrame.Navigate(new CalculationsList(_worker));
+    }
+
+    private void ListWorkerButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        AdministrationFrame.Navigate(new ListWorker(_worker));
+    }
 }

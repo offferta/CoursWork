@@ -21,29 +21,80 @@
             <ColumnDefinition Width="70"/>
         </Grid.ColumnDefinitions>
         
-        <Label Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0" Content="Добавление нового работника" FontSize="28" VerticalAlignment="Center"/>
-        <Border Grid.Column="1" Grid.ColumnSpan="6" Grid.Row="1" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="3" Background="WhiteSmoke"></Border>
+        <Label Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0" Content="Ваш профиль" FontSize="28" VerticalAlignment="Center" />
+        <Border Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="3" BorderBrush="Gainsboro" BorderThickness="1" Background="WhiteSmoke"></Border>
         
-        <DockPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="10">
-            <StackPanel>
-                <Label Content="Логин:" FontSize="18"/>
-                <TextBox x:Name="LoginTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
-                <Label Content="Пароль:" FontSize="18"/>
-                <TextBox x:Name="PasswordTextBox" Width="200" Height="30" Margin="0,0,0,10"/> <Label Content="Имя:" FontSize="18"/>
-                <TextBox x:Name="FirstNameTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
-                <Label Content="Фамилия:" FontSize="18"/>
-                <TextBox x:Name="LastNameTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
-                <Label Content="Отчество:" FontSize="18"/>
-                <TextBox x:Name="SecondNameTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
-                <Label Content="Email:" FontSize="18"/>
-                <TextBox x:Name="EmailTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
-                <Label Content="Телефон:" FontSize="18"/>
-                <TextBox x:Name="PhoneTextBox" Width="200" Height="30" Margin="0,0,0,10"/>
-                <ComboBox x:Name="RoleComboBox" SelectionChanged="Selector_OnSelectionChanged"/>
+        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Grid.ColumnSpan="3">  
+                <StackPanel.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="FontSize" Value="18"/>
+                        <Setter Property="Height" Value="40"/>
+                        <Setter Property="Width" Value="170"></Setter>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Margin" Value="0,0,0,10"/>
+                    </Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Width" Value="200"/>
+                        <Setter Property="Height" Value="30"/>
+                        <Setter Property="Margin" Value="0,0,0,10"/>
+                    </Style>
+                    <Style TargetType="PasswordBox">
+                        <Setter Property="Width" Value="200"/>
+                        <Setter Property="Height" Value="30"/>
+                        <Setter Property="Margin" Value="0,0,0,10"/>
+                    </Style>
+                    
+                </StackPanel.Resources>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Логин:"/>
+                    <TextBox x:Name="LoginTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Пароль:"/>
+                    <PasswordBox x:Name="PasswordTextBox"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Имя:"/>
+                    <TextBox x:Name="FirstNameTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Фамилия:"/>
+                    <TextBox x:Name="LastNameTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Отчество:"/>
+                    <TextBox x:Name="SecondNameTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Email:"/>
+                    <TextBox x:Name="EmailTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Телефон:"/>
+                    <TextBox x:Name="PhoneTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+                </StackPanel>
                 
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Width="550" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Label Content="Выберите роль пользователя:" Width="280"/>
+                    <ComboBox x:Name="RoleComboBox" Width="200" SelectionChanged="Selector_OnSelectionChanged"/>
+                </StackPanel>
                 
                 <Button x:Name="AddButton" Content="Добавить" Click="AddButton_Click" Width="150" Height="30" Margin="0,10,0,0"/>
             </StackPanel>
-        </DockPanel>
+        </Grid>       
     </Grid>
 </Page>

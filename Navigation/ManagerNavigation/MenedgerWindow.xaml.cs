@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 using Coursework.Context;
 using Coursework.Entities;
+using Coursework.Navigation.AdministrationNavigation;
 using Microsoft.EntityFrameworkCore;
 using Window = System.Windows.Window;
 
@@ -79,5 +81,10 @@ public partial class MenedgerWindow : Window, INotifyPropertyChanged
         field = value;
         OnPropertyChanged(propertyName);
         return true;
+    }
+
+    private void FullNameLabel_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        MenedgerFrame.Content = new UpdateWorkerInformation(_worker);
     }
 }

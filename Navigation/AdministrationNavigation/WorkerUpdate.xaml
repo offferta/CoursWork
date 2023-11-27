@@ -1,0 +1,53 @@
+﻿<Window x:Class="Coursework.Navigation.AdministrationNavigation.WorkerUpdate"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Coursework.Navigation.AdministrationNavigation"
+        mc:Ignorable="d"
+        Title="WorkerUpdate" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" Margin="10">
+            <TextBlock Text="Информация о сотруднике" FontWeight="Bold" Margin="0 0 0 5"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                <TextBlock Text="ID сотрудника:" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtWorkerId" Width="150" Text="{Binding id, Mode=OneWay}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                <TextBlock Text="Имя:" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtFirstName" Width="150" Text="{Binding имя, Mode=OneWay}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                <TextBlock Text="Фамилия:" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtLastName" Width="150" Text="{Binding фамилия, Mode=OneWay}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                <TextBlock Text="Отчество:" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtSecondName" Width="150" Text="{Binding отчество, Mode=OneWay}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                <TextBlock Text="Email:" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtEmail" Width="150" Text="{Binding почта, Mode=OneWay}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                <TextBlock Text="Телефон:" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtPhone" Width="150" Text="{Binding номер_телефона, Mode=OneWay}"/>
+            </StackPanel>
+
+            <Button Content="Сохранить" Width="100" Click="ButtonBase_OnClick"/>
+        </StackPanel>
+
+        <!-- Здесь может быть вывод таблицы или другой информации -->
+    </Grid>
+</Window>

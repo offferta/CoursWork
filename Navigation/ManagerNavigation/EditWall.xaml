@@ -8,7 +8,7 @@
     <Grid>
         <StackPanel Margin="10" Loaded="FrameworkElement_OnLoaded">
             <TextBlock Text="Номер расчёта:" />
-            <TextBlock x:Name="txtCalculationId" Text="{Binding calculationId}" />
+            <TextBlock x:Name="txtCalculationId" Text="{Binding calculationId}"  />
 
             <TextBlock Text="Название расчёта:" />
             <TextBox x:Name="txtName" Text="{Binding name, Mode=OneWay}" />

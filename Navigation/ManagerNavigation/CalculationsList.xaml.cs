@@ -13,12 +13,14 @@ public partial class CalculationsList : Page
     private readonly MyDbContext _context = new();
     private readonly Worker _worker;
     private int selectedType = 0;
+    private int selectedRoleId;
 
     public CalculationsList(Worker worker)
     {
         InitializeComponent();
         LoadListWallCalculation();
         _worker = worker;
+        LoadRoles();
     }
 
     private void CalculationsList_OnLoaded(object sender, RoutedEventArgs e)
@@ -101,11 +103,14 @@ public partial class CalculationsList : Page
                     }
                 )
                 .ToList();
+            
             Grid.ItemsSource = listCalculation;
             var searchText = SerchTextBox.Text;
+            
             var filteredData = listCalculation.Where(item =>
                 string.IsNullOrWhiteSpace(searchText) ||
                 item.name.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
+            
             Grid.ItemsSource = filteredData;
         }
         catch (Exception exception)
@@ -133,7 +138,6 @@ public partial class CalculationsList : Page
             editWindow.Show();
             editWindow.Closing += EditWindowOnClosing ;
         }
-        
     }
 
     private void EditWindowOnClosing(object? sender, CancelEventArgs e)
@@ -181,6 +185,7 @@ public partial class CalculationsList : Page
 
     private void GetTypeSerchInfo_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        
         if (GetTypeSerchInfo.SelectedIndex is int selectedItem)
         {
             selectedType =  selectedItem;
@@ -195,4 +200,25 @@ public partial class CalculationsList : Page
             }
         }
     }
+    private void LoadRoles()
+    {
+        try
+        {
+            var roles = new[]
+            {
+                new { Name = "Стены", RoleId = 0 },
+                new { Name = "Проёмы", RoleId = 1 }
+            };
+
+            GetTypeSerchInfo.ItemsSource = roles;
+            GetTypeSerchInfo.DisplayMemberPath = "Name";
+            GetTypeSerchInfo.SelectedValuePath = "RoleId";
+            GetTypeSerchInfo.SelectedIndex = 0;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Ошибка при загрузке ролей: {ex.Message}");
+        }
+    }
+
 }
