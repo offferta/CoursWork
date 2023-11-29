@@ -5,18 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Coursework.Navigation.AdministrationNavigation"
       mc:Ignorable="d"
-      Title="AddNewWorker" Height="1000" Width="1400">
+      Title="AddNewWorker"  Width="1920">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70"/>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition/>
-            <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition Width="70"/>
         </Grid.ColumnDefinitions>
@@ -24,77 +21,51 @@
         <Label Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0" Content="Ваш профиль" FontSize="28" VerticalAlignment="Center" />
         <Border Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="3" BorderBrush="Gainsboro" BorderThickness="1" Background="WhiteSmoke"></Border>
         
-        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" Margin="10">
+        <Grid Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" VerticalAlignment="Center" >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
+            
+            <Label Grid.Row="0" Grid.Column="0" Content="Логин:" />
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="LoginTextBox" />
+            
+            <Label Grid.Column="0" Grid.Row="1" Content="Пароль:" />
+            <PasswordBox Grid.Column="1" Grid.Row="1" x:Name="PasswordTextBox" />
 
-            <StackPanel Grid.Column="0" Grid.ColumnSpan="3">  
-                <StackPanel.Resources>
-                    <Style TargetType="Label">
-                        <Setter Property="FontSize" Value="18"/>
-                        <Setter Property="Height" Value="40"/>
-                        <Setter Property="Width" Value="170"></Setter>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                        <Setter Property="Margin" Value="0,0,0,10"/>
-                    </Style>
-                    <Style TargetType="TextBox">
-                        <Setter Property="Width" Value="200"/>
-                        <Setter Property="Height" Value="30"/>
-                        <Setter Property="Margin" Value="0,0,0,10"/>
-                    </Style>
-                    <Style TargetType="PasswordBox">
-                        <Setter Property="Width" Value="200"/>
-                        <Setter Property="Height" Value="30"/>
-                        <Setter Property="Margin" Value="0,0,0,10"/>
-                    </Style>
-                    
-                </StackPanel.Resources>
+            <Label Grid.Column="0" Grid.Row="3" Content="Имя:" />
+            <TextBox Grid.Column="1" Grid.Row="3" x:Name="FirstNameTextBox" />
+            
+            <Label Grid.Column="0" Grid.Row="5" Content="Фамилия: " />
+            <TextBox Grid.Column="1" Grid.Row="5" x:Name="LastNameTextBox" />
+            
+            <Label Grid.Column="0" Grid.Row="6" Content="Отчество: "/>
+            <TextBox Grid.Column="1" Grid.Row="6" x:Name="SecondNameTextBox"  />
+            
+            <Label Grid.Column="0" Grid.Row="7" Content="Email:" />
+            <TextBox Grid.Column="1" Grid.Row="7" x:Name="EmailTextBox"/>
 
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Логин:"/>
-                    <TextBox x:Name="LoginTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Пароль:"/>
-                    <PasswordBox x:Name="PasswordTextBox"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Имя:"/>
-                    <TextBox x:Name="FirstNameTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Фамилия:"/>
-                    <TextBox x:Name="LastNameTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Отчество:"/>
-                    <TextBox x:Name="SecondNameTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Email:"/>
-                    <TextBox x:Name="EmailTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Телефон:"/>
-                    <TextBox x:Name="PhoneTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
-                </StackPanel>
-                
-                <StackPanel Orientation="Horizontal" Grid.Column="1" Width="550" HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <Label Content="Выберите роль пользователя:" Width="280"/>
-                    <ComboBox x:Name="RoleComboBox" Width="200" SelectionChanged="Selector_OnSelectionChanged"/>
-                </StackPanel>
-                
-                <Button x:Name="AddButton" Content="Добавить" Click="AddButton_Click" Width="150" Height="30" Margin="0,10,0,0"/>
-            </StackPanel>
-        </Grid>       
+            <Label Grid.Column="0" Grid.Row="8" Content="Телефон:" />
+            <TextBox Grid.Column="1" Grid.Row="8" x:Name="PhoneTextBox" PreviewTextInput="PhoneTextBox_OnPreviewTextInput" />
+            
+            <Label Grid.Column="0" Grid.Row="9" Content="Выберите роль:" />
+            <ComboBox Grid.Column="1" Grid.Row="9" x:Name="RoleComboBox"  SelectionChanged="Selector_OnSelectionChanged"/>
+            
+            <Button Grid.Column="2" Grid.Row="9"  x:Name="AddButton" Content="Добавить" Click="AddButton_Click" />
+        </Grid>
     </Grid>
 </Page>

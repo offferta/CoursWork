@@ -3,6 +3,128 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="Authorization.xaml">
     <Application.Resources>
- 
+        <Style TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="Margin" Value="0,20,0,20"/>
+            <Setter Property="Foreground" Value="Black"/> <!-- Цвет текста Label -->
+            <Setter Property="FontFamily" Value="/Coursework;coursework\CourseWork-master\Fonts\Montserrat-Italic.ttf" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Height" Value="70"/>
+            <Setter Property="Margin" Value="20"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Background" Value="#F2F2F2"/> <!-- Светло-серый фон -->
+            <Setter Property="Foreground" Value="#333333"/> <!-- Темно-серый текст -->
+            <Setter Property="BorderBrush" Value="#6E6E6E"/> <!-- Серая рамка -->
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Padding" Value="10"/> <!-- Отступ внутри TextBox -->
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="15">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="PasswordBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Height" Value="70"/>
+            <Setter Property="Margin" Value="20"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Background" Value="#F2F2F2"/> <!-- Светло-серый фон -->
+            <Setter Property="Foreground" Value="#333333"/> <!-- Темно-серый текст -->
+            <Setter Property="BorderBrush" Value="#6E6E6E"/> <!-- Серая рамка -->
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Padding" Value="10"/> <!-- Отступ внутри TextBox -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="15">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#E9E9E9"/> <!-- Светло-серый фон -->
+            <Setter Property="Foreground" Value="#333333"/> <!-- Темно-серый текст -->
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="20"/> <!-- Пример отступа, можно настроить по своему вкусу -->
+            <Setter Property="Padding" Value="5"/> <!-- Пример внутреннего отступа, можно настроить по своему вкусу -->
+            <Setter Property="BorderThickness" Value="1"/> <!-- Толщина границы -->
+            <Setter Property="BorderBrush" Value="#CCCCCC"/> <!-- Цвет границы -->
+            <Setter Property="Width" Value="200"/> <!-- Ширина ComboBox -->
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Margin" Value="40"/>
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="Background" Value="#E9E9E9"/> <!-- Светло-серый фон -->
+            <Setter Property="Foreground" Value="#333333"/> <!-- Темно-серый текст --><!-- Цвет текста ComboBox -->
+            <Setter Property="BorderBrush" Value="#2874A6"/> <!-- Темно-голубая рамка -->
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="DataGrid" x:Key="CustomDataGridStyle">
+            <Setter Property="Background" Value="#FFD3D3D3"/> <!-- Цвет фона DataGrid -->
+            <Setter Property="Foreground" Value="#FF0000FF"/> <!-- Цвет текста DataGrid -->
+            <Setter Property="RowBackground" Value="#FFE6E6FA"/> <!-- Цвет фона строк DataGrid -->
+            <Setter Property="BorderBrush" Value="#FFFFA500"/> <!-- Цвет рамки DataGrid -->
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="16"/> <!-- Увеличиваем размер шрифта -->
+            <Setter Property="FontFamily" Value="Arial"/> <!-- Изменяем шрифт на Arial -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGrid}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="5">
+                            <ScrollViewer x:Name="DG_ScrollViewer"
+                                          Focusable="false">
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

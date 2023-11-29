@@ -39,6 +39,10 @@
         <Resource Include="Resources\film.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Resource>
+        <None Remove="Fonts\Montserrat-Italic.ttf" />
+        <Resource Include="Fonts\Montserrat-Italic.ttf">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Resource>
     </ItemGroup>
 
     <ItemGroup>

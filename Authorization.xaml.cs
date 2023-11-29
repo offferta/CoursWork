@@ -53,7 +53,7 @@ public partial class Authorization : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Провертье логин и пароль" + ex, "Ошибка авторизации", MessageBoxButton.OK,
+            MessageBox.Show("Провертье логин и пароль", "Ошибка авторизации", MessageBoxButton.OK,
                 MessageBoxImage.Error);
         }
     }

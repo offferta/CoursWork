@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Coursework.Context;
 using Coursework.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -86,5 +87,10 @@ public partial class AddNewWorker : Page
             var selectedRole = (Role)RoleComboBox.SelectedItem;
             selectedRoleId = selectedRole.RoleId;
         }
+    }
+
+    private void PhoneTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -4,20 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
-        Title="Авторизации" MinHeight="600" MinWidth="900" WindowState="Maximized">
-    <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="FontFamily" Value="Verdana" />
-            <Setter Property="Background" Value="Black" />
-            <Setter Property="Foreground" Value="White" />
-        </Style>
-        <Style TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Verdana" />
-            <Setter Property="Background" Value="White" />
-            <Setter Property="Foreground" Value="Black" />
-        </Style>
-    </Window.Resources>
-
+        Title="Авторизации" MinHeight="600" MinWidth="1600" WindowState="Maximized">
     <Grid>
         <Grid VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
@@ -39,20 +26,30 @@
                 <RowDefinition Height="Auto" /> <!-- Нижний отступ -->
             </Grid.RowDefinitions>
 
+            <Border>
+                
+            </Border>
             <!-- Заголовок -->
             <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Text="Авторизация" HorizontalAlignment="Center"
-                       FontSize="24" FontWeight="Bold" />
-            <TextBlock Text="Введите логин" Grid.Row="1" Grid.Column="1" Margin="10" FontSize="17" />
-            <TextBox x:Name="LoginTextBox" Text="admin" Grid.Row="2" Grid.Column="1" Margin="10" Padding="5"
-                     BorderBrush="#CCCCCC" BorderThickness="1" />
+                       FontFamily="Montserrat" FontSize="36" />
+            <Label Content="Введите логин" Grid.Row="1" Grid.Column="1" FontFamily="Montserrat" Margin="30,30,0,0" />
+            <TextBox x:Name="LoginTextBox" Text="admin" Grid.Row="2" Grid.Column="1"
+                     Width="500"
+                     FontSize="30"
+                     Margin="0"
+                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+                     />
 
             <!-- Пароль -->
-            <TextBlock Text="Введите пароль" Grid.Row="3" Grid.Column="1" Margin="10" FontSize="17" />
-            <PasswordBox x:Name="PasswordTextBox" Password="admin_pass" Grid.Row="4" Grid.Column="1" Margin="10"
-                         Padding="5" BorderBrush="#CCCCCC" BorderThickness="1" />
-
+            <Label Content="Введите пароль" Grid.Row="3" Grid.Column="1" Margin="30,30,0,0" />
+            <PasswordBox x:Name="PasswordTextBox" Password="admin_pass" Grid.Row="4" Grid.Column="1" 
+                         Width="500"
+                         FontSize="30"
+                         Margin="0"
+                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                         />
             <!-- Кнопка Войти -->
-            <Button x:Name="AuthorizatiorButton" Content="Войти" Grid.Row="5" Grid.Column="1" Click="AuthorizatiorButton_OnClick" />
+            <Button x:Name="AuthorizatiorButton" Content="Войти" Grid.Row="5" Grid.Column="1" Width="300" FontSize="34" Click="AuthorizatiorButton_OnClick" />
             
         </Grid>
     </Grid>

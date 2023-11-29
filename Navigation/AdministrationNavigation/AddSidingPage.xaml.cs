@@ -48,7 +48,8 @@ public partial class
 
                 if (string.IsNullOrWhiteSpace(TitleTextBox.Text) ||
                     string.IsNullOrWhiteSpace(DescriptionTextBox.Text) ||
-                    string.IsNullOrWhiteSpace(PriceTextBox.Text) || string.IsNullOrWhiteSpace(ThicknessTextBox.Text))
+                    string.IsNullOrWhiteSpace(PriceTextBox.Text) || 
+                    string.IsNullOrWhiteSpace(ThicknessTextBox.Text))
                 {
                     MessageBox.Show("Заполните все поля.");
                     return;
@@ -125,7 +126,11 @@ public partial class
             _imageData = File.ReadAllBytes(imagePath);
         }
     }
-
+    public bool IsNumber(string text)
+    {
+        return Regex.IsMatch(text, @"^-?\d{0,1}(\.\d{0,2})?$");
+    }
+    
     private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
         if (!IsNumber(e.Text))
@@ -133,12 +138,6 @@ public partial class
             e.Handled = true;
         }
     }
-
-    public bool IsNumber(string text)
-    {
-        return Regex.IsMatch(text, @"^[0-9\-,]+$");
-    }
-
     private void WidthTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
     {
         if (!IsNumber(e.Text))
@@ -146,7 +145,6 @@ public partial class
             e.Handled = true;
         }
     }
-
     private void LengthTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
     {
         if (!IsNumber(e.Text))
@@ -154,7 +152,6 @@ public partial class
             e.Handled = true;
         }
     }
-
     private void ThicknessTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
     {
         if (!IsNumber(e.Text))

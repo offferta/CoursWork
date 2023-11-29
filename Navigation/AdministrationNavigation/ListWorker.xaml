@@ -24,7 +24,8 @@
         <Label Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0" Content="Информация о работниках" FontSize="28" VerticalAlignment="Center" />
         <Border Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="2" BorderBrush="Gainsboro" BorderThickness="1" Background="WhiteSmoke"></Border>
         
-        <DataGrid x:Name="WorkerDataGrid" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="5" AutoGenerateColumns="True" >
+        <DataGrid x:Name="WorkerDataGrid" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="5">
+            
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
