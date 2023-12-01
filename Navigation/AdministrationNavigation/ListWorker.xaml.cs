@@ -50,11 +50,11 @@ public partial class ListWorker : Page
             .Select(p => new
             {
                 id = p.WorkerId,
-                имя = p.FirstName,
-                фамилия = p.LastName,
-                отчество = p.SecondName,
-                номер_телефона = p.Phone,
-                почта = p.Email,
+                firstName = p.FirstName,
+                lastName = p.LastName,
+                secondName = p.SecondName,
+                phone = p.Phone,
+                email = p.Email,
             }).ToList();
         WorkerDataGrid.ItemsSource = listWorker;
     }

@@ -24,6 +24,15 @@ public partial class WorkerUpdate : Window
 
     void UpdateInformationOnWorker()
     {
+        if (string.IsNullOrWhiteSpace(txtFirstName.Text) ||
+            string.IsNullOrWhiteSpace(txtLastName.Text) ||
+            string.IsNullOrWhiteSpace(txtSecondName.Text) ||
+            string.IsNullOrWhiteSpace(txtPhone.Text) ||
+            string.IsNullOrWhiteSpace(txtEmail.Text))
+        {
+            MessageBox.Show("Заполните все обязательные поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
         int workerId;
         if (!int.TryParse(txtWorkerId.Text, out workerId))
         {

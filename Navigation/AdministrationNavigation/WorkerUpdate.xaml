@@ -5,49 +5,53 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:Coursework.Navigation.AdministrationNavigation"
         mc:Ignorable="d"
-        Title="WorkerUpdate" Height="450" Width="800">
+        Title="WorkerUpdate" Width="1100" Height="550" MinHeight="550" MinWidth="1100">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <StackPanel Grid.Row="0" Margin="10">
-            <TextBlock Text="Информация о сотруднике" FontWeight="Bold" Margin="0 0 0 5"/>
 
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
-                <TextBlock Text="ID сотрудника:" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtWorkerId" Width="150" Text="{Binding id, Mode=OneWay}"/>
-            </StackPanel>
+        <Grid Grid.Row="0" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
-                <TextBlock Text="Имя:" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtFirstName" Width="150" Text="{Binding имя, Mode=OneWay}"/>
-            </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
-                <TextBlock Text="Фамилия:" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtLastName" Width="150" Text="{Binding фамилия, Mode=OneWay}"/>
-            </StackPanel>
+            <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Информация о сотруднике" FontWeight="Bold" Margin="0 0 0 5"/>
 
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
-                <TextBlock Text="Отчество:" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtSecondName" Width="150" Text="{Binding отчество, Mode=OneWay}"/>
-            </StackPanel>
+            <Label Grid.Row="1" Content="ID сотрудника:" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="1" Grid.Column="1"  x:Name="txtWorkerId" Text="{Binding id, Mode=OneWay}"  IsReadOnly="True"/>
 
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
-                <TextBlock Text="Email:" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtEmail" Width="150" Text="{Binding почта, Mode=OneWay}"/>
-            </StackPanel>
+            <Label Grid.Row="2" Content="Имя:" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="2" Grid.Column="1"  x:Name="txtFirstName" Text="{Binding firstName, Mode=OneWay}"/>
 
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
-                <TextBlock Text="Телефон:" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtPhone" Width="150" Text="{Binding номер_телефона, Mode=OneWay}"/>
-            </StackPanel>
+            <Label Grid.Column="0" Grid.Row="3" Content="Фамилия:" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="3" Grid.Column="1"  x:Name="txtLastName" Text="{Binding lastName, Mode=OneWay}"/>
+            
+            <Label Grid.Column="0" Grid.Row="6" Content="Отчество:" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="6" Grid.Column="1"   x:Name="txtSecondName" Text="{Binding secondName, Mode=OneWay}"/>
 
-            <Button Content="Сохранить" Width="100" Click="ButtonBase_OnClick"/>
-        </StackPanel>
+            <Label Grid.Column="3" Grid.Row="2" Content="Телефон:" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="2" Grid.Column="4"  x:Name="txtPhone" Text="{Binding phone, Mode=OneWay}"/>
 
-        <!-- Здесь может быть вывод таблицы или другой информации -->
+            <Label Grid.Column="3" Grid.Row="3"  Content="Email:" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="3" Grid.Column="4"   x:Name="txtEmail" Text="{Binding email, Mode=OneWay}"/>
+            
+            <Button Grid.Column="4" Grid.ColumnSpan="1" Grid.Row="6"  Content="Сохранить изменения" Click="ButtonBase_OnClick" />
+        </Grid>
     </Grid>
 </Window>
