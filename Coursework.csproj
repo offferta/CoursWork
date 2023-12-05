@@ -39,78 +39,78 @@
         <Resource Include="Resources\film.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Resource>
-        <None Remove="Fonts\Montserrat-Italic.ttf" />
+        <None Remove="Fonts\Montserrat-Italic.ttf"/>
         <Resource Include="Fonts\Montserrat-Italic.ttf">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Resource>
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Navigation\" />
+        <Folder Include="Navigation\"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Page Update="ManagerNavigation\EditWall.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
-      <Page Update="ManagerNavigation\EditWindow.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
-      <Page Update="ManagerNavigation\CalculatePage.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
-      <Page Update="ManagerNavigation\CalculationsList.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
-      <Page Update="ManagerNavigation\MaterialsListPage.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
-      <Page Update="ManagerNavigation\MenedgerWindow.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
-      <Page Update="Navigation\ManagerNavigation\EditWall.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Update="Navigation\ManagerNavigation\EditWindow.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Update="Navigation\ManagerNavigation\CalculatePage.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Update="Navigation\ManagerNavigation\CalculationsList.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Update="Navigation\ManagerNavigation\MaterialsListPage.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Update="Navigation\ManagerNavigation\MenedgerWindow.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Update="Navigation\AdministrationNavigation\AddSidingPage.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
-      <Page Update="Navigation\AdministrationNavigation\AdministrationWindow.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
-      <Page Update="Authorization.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
+        <Page Update="ManagerNavigation\EditWall.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="ManagerNavigation\EditWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="ManagerNavigation\CalculatePage.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="ManagerNavigation\CalculationsList.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="ManagerNavigation\MaterialsListPage.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="ManagerNavigation\MenedgerWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Navigation\ManagerNavigation\EditWall.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Navigation\ManagerNavigation\EditWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Navigation\ManagerNavigation\CalculatePage.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Navigation\ManagerNavigation\CalculationsList.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Navigation\ManagerNavigation\MaterialsListPage.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Navigation\ManagerNavigation\MenedgerWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Navigation\AdministrationNavigation\AddSidingPage.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Navigation\AdministrationNavigation\AdministrationWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Authorization.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
     </ItemGroup>
 
 </Project>

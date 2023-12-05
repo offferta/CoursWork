@@ -9,6 +9,7 @@ public partial class WorkerUpdate : Window
 {
     private readonly MyDbContext _context = new MyDbContext();
     public object _dataC0ontext;
+
     public WorkerUpdate(object dataContext)
     {
         InitializeComponent();
@@ -33,18 +34,21 @@ public partial class WorkerUpdate : Window
             MessageBox.Show("Заполните все обязательные поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
+
         int workerId;
         if (!int.TryParse(txtWorkerId.Text, out workerId))
         {
             MessageBox.Show("Не корректный ID сотрудника.");
             return;
         }
+
         var worker = _context.WorkerInformations.FirstOrDefault(w => w.WorkerId == workerId);
         if (worker == null)
         {
             MessageBox.Show("Сотрудник с указанным ID не найден.");
             return;
         }
+
         worker.FirstName = txtFirstName.Text;
         worker.LastName = txtLastName.Text;
         worker.SecondName = txtSecondName.Text;
@@ -59,6 +63,5 @@ public partial class WorkerUpdate : Window
         {
             MessageBox.Show($"Ошибка при сохранении данных: {ex.Message}");
         }
-        
     }
 }

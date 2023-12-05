@@ -5,69 +5,79 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Coursework.Navigation.AdministrationNavigation"
       mc:Ignorable="d"
-      Title="UpdateWorkerInformation" Height="1000" Width="1920" >
-     <Grid>
+      Title="UpdateWorkerInformation" Height="1000" Width="1920">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="70" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="70" />
             <ColumnDefinition />
             <ColumnDefinition />
-            <ColumnDefinition/>
             <ColumnDefinition />
-            <ColumnDefinition Width="70"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="70" />
         </Grid.ColumnDefinitions>
-        
-        <Label Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0" Content="Ваш профиль"  VerticalAlignment="Center" />
-        <Border Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="1"  BorderBrush="Gainsboro" BorderThickness="1" Background="WhiteSmoke"></Border>
-        
-        <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4" >
+
+        <Label Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0" Content="Ваш профиль" VerticalAlignment="Center" />
+        <Border Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="1" BorderBrush="Gainsboro" BorderThickness="1"
+                Background="WhiteSmoke">
+        </Border>
+
+        <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
 
-            <Label Grid.Column="0" Grid.Row="0" Content="Логин:" VerticalAlignment="Center"/>
-            <TextBox x:Name="LoginTextBox" Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+            <Label Grid.Column="0" Grid.Row="0" Content="Логин:" VerticalAlignment="Center" />
+            <TextBox x:Name="LoginTextBox" Grid.Column="1" Grid.Row="0" TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto" />
 
-            <Label Grid.Column="2" Grid.Row="0" Content="Пароль:" VerticalAlignment="Center"/>
-            <PasswordBox x:Name="PasswordTextBox" Grid.Column="3" Grid.Row="0"/>
-    
-            <Label Grid.Column="0" Grid.Row="1" Content="Имя:" VerticalAlignment="Center"/>
-            <TextBox x:Name="FirstNameTextBox" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+            <Label Grid.Column="2" Grid.Row="0" Content="Пароль:" VerticalAlignment="Center" />
+            <PasswordBox x:Name="PasswordTextBox" Grid.Column="3" Grid.Row="0" />
 
-            <Label Grid.Column="2" Grid.Row="1" Content="Фамилия:" VerticalAlignment="Center"/>
-            <TextBox x:Name="LastNameTextBox" Grid.Column="3" Grid.Row="1" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+            <Label Grid.Column="0" Grid.Row="1" Content="Имя:" VerticalAlignment="Center" />
+            <TextBox x:Name="FirstNameTextBox" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto" />
 
-            <Label Grid.Column="0" Grid.Row="2" Content="Отчество:" VerticalAlignment="Center"/>
-            <TextBox x:Name="SecondNameTextBox" Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+            <Label Grid.Column="2" Grid.Row="1" Content="Фамилия:" VerticalAlignment="Center" />
+            <TextBox x:Name="LastNameTextBox" Grid.Column="3" Grid.Row="1" TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto" />
 
-            <Label Grid.Column="2" Grid.Row="2" Content="Email:" VerticalAlignment="Center"/>
-            <TextBox x:Name="EmailTextBox" Grid.Column="3" Grid.Row="2" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+            <Label Grid.Column="0" Grid.Row="2" Content="Отчество:" VerticalAlignment="Center" />
+            <TextBox x:Name="SecondNameTextBox" Grid.Column="1" Grid.Row="2" TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto" />
 
-            <Label Grid.Column="0" Grid.Row="3" Content="Телефон:" VerticalAlignment="Center"/>
-            <TextBox x:Name="PhoneTextBox" Grid.Column="1" Grid.Row="3" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
-            
-            <Button Grid.Row="0" Grid.Column="4" VerticalAlignment="Bottom" x:Name="UpDateButton" Content="Обновить данные" Click="UpDateButton_OnClick"  />
-            <Button Grid.Row="1" Grid.Column="4" VerticalAlignment="Bottom" x:Name="ExitProfileButton" Content="Выйти" Click="ExitProfileButton_OnClick"/>
+            <Label Grid.Column="2" Grid.Row="2" Content="Email:" VerticalAlignment="Center" />
+            <TextBox x:Name="EmailTextBox" Grid.Column="3" Grid.Row="2" TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto" />
+
+            <Label Grid.Column="0" Grid.Row="3" Content="Телефон:" VerticalAlignment="Center" />
+            <TextBox x:Name="PhoneTextBox" Grid.Column="1" Grid.Row="3" TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto" />
+
+            <Button Grid.Row="0" Grid.Column="4" VerticalAlignment="Bottom" x:Name="UpDateButton"
+                    Content="Обновить данные" Click="UpDateButton_OnClick" />
+            <Button Grid.Row="1" Grid.Column="4" VerticalAlignment="Bottom" x:Name="ExitProfileButton" Content="Выйти"
+                    Click="ExitProfileButton_OnClick" />
         </Grid>
-       
-        
+
+
     </Grid>
 </Page>

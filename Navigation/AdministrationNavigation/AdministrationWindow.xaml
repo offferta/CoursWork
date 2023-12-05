@@ -4,19 +4,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
-        Title="AdministrationWindow" Height="900" Width="1600" MinHeight="600" MinWidth="1600" WindowState="Maximized">
+        Title="Старница администратора" Height="900" Width="1600" MinHeight="600" MinWidth="1600"
+        WindowState="Maximized">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="FontFamily" Value="Verdana" />
             <Setter Property="Background" Value="Black" />
             <Setter Property="Foreground" Value="Black" />
-            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="FontSize" Value="26" />
         </Style>
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Verdana" />
             <Setter Property="Background" Value="White" />
             <Setter Property="Foreground" Value="Black" />
-            <Setter Property="Cursor" Value="Help"/>
+            <Setter Property="Cursor" Value="Help" />
         </Style>
     </Window.Resources>
     <Grid>
@@ -34,31 +35,31 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" BorderBrush="Gainsboro" BorderThickness="1" ></Border>
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" BorderBrush="Gainsboro" BorderThickness="1"></Border>
         <Frame x:Name="AdministrationFrame" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7"
-               NavigationUIVisibility="Hidden"  HorizontalAlignment="Left"/>
-        <WrapPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" HorizontalAlignment="Center" >
+               NavigationUIVisibility="Hidden" HorizontalAlignment="Left" />
+        <WrapPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal" Margin="0, 0, 50, 10">
-                <Button Grid.Column="1" x:Name="AddSiningButton" Background="White" BorderBrush="White" 
+                <Button Grid.Column="1" x:Name="AddSiningButton" Background="White" BorderBrush="White"
                         Click="AddSiningButton_OnClick" Margin="0, 10, 25, 0">
                     Добавить материалы
                 </Button>
-                <Button Grid.Column="2" x:Name="AddNewWorkerButton" Background="White" BorderBrush="White" 
+                <Button Grid.Column="2" x:Name="AddNewWorkerButton" Background="White" BorderBrush="White"
                         Click="AddNewWorkerButton_OnClick" Margin="0, 10, 25, 0">
                     Добавить нового работника
                 </Button>
-                <Button Grid.Column="2" x:Name="ListWorkerButton" Background="White" BorderBrush="White" 
+                <Button Grid.Column="2" x:Name="ListWorkerButton" Background="White" BorderBrush="White"
                         Click="ListWorkerButton_OnClick" Margin="0, 10, 25, 0">
                     Список работников
                 </Button>
-                <Button Grid.Column="2" x:Name="CalculationsListButton" Background="White" BorderBrush="White" 
+                <Button Grid.Column="2" x:Name="CalculationsListButton" Background="White" BorderBrush="White"
                         Click="CalculationsList_OnClick" Margin="0, 10, 25, 0">
                     Редактировать расчёты
                 </Button>
             </StackPanel>
             <Label x:Name="FullNameLabel" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"
-                   MouseLeftButtonUp="FullNameLabel_OnMouseLeftButtonUp" 
-                   Cursor="Hand" HorizontalContentAlignment="Right" >
+                   MouseLeftButtonUp="FullNameLabel_OnMouseLeftButtonUp"
+                   Cursor="Hand" HorizontalContentAlignment="Right">
             </Label>
         </WrapPanel>
     </Grid>

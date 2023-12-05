@@ -29,7 +29,7 @@ public partial class ListWorker : Page
     {
         var button = sender as Button;
         var dataContext = button?.DataContext;
-        
+
         if (WorkerDataGrid.SelectedItem != null)
         {
             var workerUpdate = new WorkerUpdate(dataContext);

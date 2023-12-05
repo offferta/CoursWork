@@ -111,11 +111,11 @@ public partial class EditWall : Window, INotifyPropertyChanged
                 updateTitleCalSiding.Title = _newTitle;
                 _context.Set<Calculation>().Update(updateTitleCalSiding);
                 _context.SaveChanges();
-                
+
                 var updateCountSiding = _context.Set<MaterialsCalculation>()
                     .AsNoTrackingWithIdentityResolution()
                     .FirstOrDefault(e => e.CalculationId == _intCalculationId);
-                
+
                 updateCountSiding.Count = (decimal)_countSiding;
                 _context.Set<MaterialsCalculation>().Update(updateCountSiding);
                 _context.SaveChanges();

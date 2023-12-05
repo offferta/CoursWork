@@ -48,7 +48,7 @@ public partial class
 
                 if (string.IsNullOrWhiteSpace(TitleTextBox.Text) ||
                     string.IsNullOrWhiteSpace(DescriptionTextBox.Text) ||
-                    string.IsNullOrWhiteSpace(PriceTextBox.Text) || 
+                    string.IsNullOrWhiteSpace(PriceTextBox.Text) ||
                     string.IsNullOrWhiteSpace(ThicknessTextBox.Text))
                 {
                     MessageBox.Show("Заполните все поля.");
@@ -68,7 +68,7 @@ public partial class
                     Price = price,
                     Image = ConvertToBitmapImage(_imageData)
                 }).Entity;
-    
+
                 _siningList.Add(_siningId);
                 await context.SaveChangesAsync();
             }
@@ -76,32 +76,32 @@ public partial class
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
-            
+
             _featurmMaterialWidth = context.FeaturesMaterials.Add(new FeaturesMaterial
             {
                 SidingId = _siningId.SidingId,
                 FeaturesId = 1,
                 Value = WidthTextBox.Text
             }).Entity;
-            
+
             _featurmMaterialLength = context.FeaturesMaterials.Add(new FeaturesMaterial
             {
                 SidingId = _siningId.SidingId,
                 FeaturesId = 2,
                 Value = LengthTextBox.Text
             }).Entity;
-            
+
             _featurmMaterialColor = context.FeaturesMaterials.Add(new FeaturesMaterial
             {
                 SidingId = _siningId.SidingId,
                 FeaturesId = 4,
                 Value = ColorTextBox.Text
             }).Entity;
-            
+
             _featuresMaterials.Add(_featurmMaterialLength);
             _featuresMaterials.Add(_featurmMaterialWidth);
             _featuresMaterials.Add(_featurmMaterialColor);
-            
+
             await context.SaveChangesAsync();
             MessageBox.Show("Добавление произведено");
         }
@@ -110,7 +110,7 @@ public partial class
             MessageBox.Show("Непредвиденная ошибка" + exception);
         }
     }
-    
+
     private void BrowseImage_OnClick(object sender, RoutedEventArgs e)
     {
         var dlg = new OpenFileDialog();
@@ -126,11 +126,12 @@ public partial class
             _imageData = File.ReadAllBytes(imagePath);
         }
     }
+
     public bool IsNumber(string text)
     {
         return Regex.IsMatch(text, @"^-?\d{0,1}(\.\d{0,2})?$");
     }
-    
+
     private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
         if (!IsNumber(e.Text))
@@ -138,6 +139,7 @@ public partial class
             e.Handled = true;
         }
     }
+
     private void WidthTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
     {
         if (!IsNumber(e.Text))
@@ -145,6 +147,7 @@ public partial class
             e.Handled = true;
         }
     }
+
     private void LengthTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
     {
         if (!IsNumber(e.Text))
@@ -152,6 +155,7 @@ public partial class
             e.Handled = true;
         }
     }
+
     private void ThicknessTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
     {
         if (!IsNumber(e.Text))

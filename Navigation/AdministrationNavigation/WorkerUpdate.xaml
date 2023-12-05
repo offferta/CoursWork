@@ -8,50 +8,53 @@
         Title="WorkerUpdate" Width="1100" Height="550" MinHeight="550" MinWidth="1100">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Информация о сотруднике" FontWeight="Bold" Margin="0 0 0 5"/>
+            <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Информация о сотруднике" FontWeight="Bold"
+                   Margin="0 0 0 5" />
 
-            <Label Grid.Row="1" Content="ID сотрудника:" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="1" Grid.Column="1"  x:Name="txtWorkerId" Text="{Binding id, Mode=OneWay}"  IsReadOnly="True"/>
+            <Label Grid.Row="1" Content="Id сотрудника:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtWorkerId" Text="{Binding id, Mode=OneWay}"
+                     IsReadOnly="True" />
 
-            <Label Grid.Row="2" Content="Имя:" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="2" Grid.Column="1"  x:Name="txtFirstName" Text="{Binding firstName, Mode=OneWay}"/>
+            <Label Grid.Row="2" Content="Имя:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtFirstName" Text="{Binding firstName, Mode=OneWay}" />
 
-            <Label Grid.Column="0" Grid.Row="3" Content="Фамилия:" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="3" Grid.Column="1"  x:Name="txtLastName" Text="{Binding lastName, Mode=OneWay}"/>
-            
-            <Label Grid.Column="0" Grid.Row="6" Content="Отчество:" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="6" Grid.Column="1"   x:Name="txtSecondName" Text="{Binding secondName, Mode=OneWay}"/>
+            <Label Grid.Column="0" Grid.Row="3" Content="Фамилия:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtLastName" Text="{Binding lastName, Mode=OneWay}" />
 
-            <Label Grid.Column="3" Grid.Row="2" Content="Телефон:" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="2" Grid.Column="4"  x:Name="txtPhone" Text="{Binding phone, Mode=OneWay}"/>
+            <Label Grid.Column="0" Grid.Row="6" Content="Отчество:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="6" Grid.Column="1" x:Name="txtSecondName" Text="{Binding secondName, Mode=OneWay}" />
 
-            <Label Grid.Column="3" Grid.Row="3"  Content="Email:" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="3" Grid.Column="4"   x:Name="txtEmail" Text="{Binding email, Mode=OneWay}"/>
-            
-            <Button Grid.Column="4" Grid.ColumnSpan="1" Grid.Row="6"  Content="Сохранить изменения" Click="ButtonBase_OnClick" />
+            <Label Grid.Column="3" Grid.Row="2" Content="Телефон:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="2" Grid.Column="4" x:Name="txtPhone" Text="{Binding phone, Mode=OneWay}" />
+
+            <Label Grid.Column="3" Grid.Row="3" Content="Email:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="3" Grid.Column="4" x:Name="txtEmail" Text="{Binding email, Mode=OneWay}" />
+
+            <Button Grid.Column="4" Grid.ColumnSpan="1" Grid.Row="6" Content="Сохранить изменения"
+                    Click="ButtonBase_OnClick" />
         </Grid>
     </Grid>
 </Window>

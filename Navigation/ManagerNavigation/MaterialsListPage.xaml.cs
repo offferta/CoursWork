@@ -83,13 +83,11 @@ public partial class MaterialsListPage : Page, INotifyPropertyChanged
         lvDataBinding2.ItemsSource = project;
 
         var searchText = SerchTextBox.Text;
-        var selectedType = ComboType.SelectedItem as string;
 
         var filteredData = project.Where(item =>
             (string.IsNullOrWhiteSpace(searchText) ||
              item.Title.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-             item.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase)) &&
-            (selectedType == null || item.Title == selectedType || item.Description == selectedType)
+             item.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase)) 
         ).ToList();
 
         lvDataBinding2.ItemsSource = filteredData;

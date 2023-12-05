@@ -4,42 +4,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
-        Title="MenedgerWindow" Height="900" Width="1600" MinHeight="600" MinWidth="900" WindowState="Maximized">
+        Title="Страница менеджера" Width="1920" WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="150" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70" />
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="70" />
         </Grid.ColumnDefinitions>
 
         <Frame x:Name="MenedgerFrame" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7" NavigationUIVisibility="Hidden" />
-        <Button Grid.Column="1" x:Name="CalculateButton" Background="White" BorderBrush="White" FontSize="20"
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" BorderBrush="Gainsboro" BorderThickness="1"></Border>
+        <Button Grid.Row="0" Grid.Column="1" x:Name="CalculateButton" HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 Click="CalculateButton_OnClick">
             Рассчитать
         </Button>
-        <Button Grid.Column="2" x:Name="CalculationButton" Background="White" BorderBrush="White" FontSize="20"
-                Click="CalculationButton_OnClick">
+        <Button Grid.Row="0" Grid.Column="2" x:Name="CalculationButton"
+                Click="CalculationButton_OnClick" 
+                >
             Расчёты
         </Button>
-        <Button Grid.Column="3" x:Name="ListMaterialsButton" Background="White" BorderBrush="White" FontSize="20"
-                Click="ListMaterialsButton_OnClick">
+        <Button Grid.Row="0" Grid.Column="3" x:Name="ListMaterialsButton"
+                Click="ListMaterialsButton_OnClick" Width="260">
             Список Материалов
         </Button>
-        <Button Grid.Column="4" x:Name="ListCalculationButton" Background="White" BorderBrush="White" FontSize="20"
+        <Button Grid.Row="0" Grid.Column="4" x:Name="ListCalculationButton" Width="260"
                 Click="ListCalculationButton_OnClick">
             Список Расчётов
         </Button>
 
-        <Label x:Name="FullNameLabel" Grid.Column="7" 
-               MouseLeftButtonUp="FullNameLabel_OnMouseLeftButtonUp" 
-               Cursor="Hand" HorizontalContentAlignment="Right" />
+        <Label x:Name="FullNameLabel" Grid.Column="5"
+               MouseLeftButtonUp="FullNameLabel_OnMouseLeftButtonUp" Margin="0"
+               Cursor="Hand" HorizontalContentAlignment="Left" VerticalAlignment="Center" />
     </Grid>
 </Window>

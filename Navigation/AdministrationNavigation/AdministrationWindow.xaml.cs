@@ -36,6 +36,7 @@ public partial class AdministrationWindow : Window, INotifyPropertyChanged
     {
         AdministrationFrame.Navigate(new AddNewWorker(_worker));
     }
+
     public async void GetFullName(int id)
     {
         try

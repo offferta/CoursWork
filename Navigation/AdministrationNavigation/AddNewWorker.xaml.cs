@@ -14,12 +14,12 @@ public partial class AddNewWorker : Page
     private Worker _worker;
     private readonly MyDbContext _context = new MyDbContext();
     private int selectedRoleId;
+
     public AddNewWorker(Worker worker)
     {
         InitializeComponent();
         _worker = worker;
         LoadRoles();
-        
     }
 
     private async void LoadRoles()
@@ -37,10 +37,11 @@ public partial class AddNewWorker : Page
             MessageBox.Show($"Ошибка при загрузке ролей: {ex.Message}");
         }
     }
-   
+
     private async void AddButton_Click(object sender, RoutedEventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(LoginTextBox.Text) || string.IsNullOrWhiteSpace(PasswordTextBox.Password) || string.IsNullOrWhiteSpace(FirstNameTextBox.Text) || string.IsNullOrWhiteSpace(LastNameTextBox.Text))
+        if (string.IsNullOrWhiteSpace(LoginTextBox.Text) || string.IsNullOrWhiteSpace(PasswordTextBox.Password) ||
+            string.IsNullOrWhiteSpace(FirstNameTextBox.Text) || string.IsNullOrWhiteSpace(LastNameTextBox.Text))
         {
             MessageBox.Show("Пожалуйста, заполните все обязательные поля.");
         }
@@ -77,7 +78,6 @@ public partial class AddNewWorker : Page
                 MessageBox.Show($"Ошибка при добавлении пользователя: {ex.InnerException?.Message}");
             }
         }
-
     }
 
     private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -12,6 +12,7 @@ public partial class UpdateWorkerInformation : Page
 {
     private readonly Worker _worker;
     private readonly MyDbContext _context = new MyDbContext();
+
     public UpdateWorkerInformation(Worker worker)
     {
         InitializeComponent();
@@ -47,7 +48,8 @@ public partial class UpdateWorkerInformation : Page
         }
         catch (DbUpdateConcurrencyException ex)
         {
-            MessageBox.Show("Ошибка при обновлении данных: другой пользователь мог изменить данные. Пожалуйста, обновите страницу и повторите попытку.");
+            MessageBox.Show(
+                "Ошибка при обновлении данных: другой пользователь мог изменить данные. Пожалуйста, обновите страницу и повторите попытку.");
         }
         catch (DbUpdateException ex)
         {
