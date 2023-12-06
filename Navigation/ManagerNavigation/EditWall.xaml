@@ -4,42 +4,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
-        Title="Обновление данных стены" Width="750" Height="700">
+        Title="Обновление данных стены" Width="850" Height="720">
     <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+        <Border Style="{StaticResource CustomBorderStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="Номер расчёта:" />
-        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtCalculationId" Text="{Binding calculationId}" />
+                <Label Grid.Row="0" Grid.Column="0" Content="Изменение данных стены"  />
+                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtCalculationId" 
+                           Text="{Binding calculationId}" Visibility="Hidden" />
+                <Label Grid.Row="1" Grid.Column="0" Content="Название расчёта:" />
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtName" Text="{Binding name, Mode=OneWay}" Style="{StaticResource TextBoxStyle}"/>
 
-        <Label Grid.Row="1" Grid.Column="0" Content="Название расчёта:" />
-        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtName" Text="{Binding name, Mode=OneWay}" />
+                <Label Grid.Row="2" Grid.Column="0" Content="Стена id:" Visibility="Hidden" />
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtWallId" Text="{Binding wall, Mode=OneWay}" Visibility="Hidden"  Style="{StaticResource TextBoxStyle}"/>
 
-        <Label Grid.Row="2" Grid.Column="0" Content="Стена id:" Visibility="Hidden" />
-        <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtWallId" Text="{Binding wall, Mode=OneWay}" Visibility="Hidden" />
+                <Label Grid.Row="2" Grid.Column="0" Content="Длинна:" />
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtLength" Text="{Binding lenght, Mode=OneWay}" Style="{StaticResource TextBoxStyle}" />
 
-        <Label Grid.Row="2" Grid.Column="0" Content="Длинна:" />
-        <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtLength" Text="{Binding lenght, Mode=OneWay}" />
+                <Label Grid.Row="4" Grid.Column="0" Content="Ширина:" />
+                <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtWidth" Text="{Binding wight, Mode=OneWay}" Style="{StaticResource TextBoxStyle}" />
 
-        <Label Grid.Row="4" Grid.Column="0" Content="Ширина:" />
-        <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtWidth" Text="{Binding wight, Mode=OneWay}" />
+                <Label Grid.Row="5" Grid.Column="0" Content="Количество:" />
+                <TextBox Grid.Row="5" Grid.Column="1" x:Name="txtCount" Text="{Binding count, Mode=OneWay}" Style="{StaticResource TextBoxStyle}" />
 
-        <Label Grid.Row="5" Grid.Column="0" Content="Количество:" />
-        <TextBox Grid.Row="5" Grid.Column="1" x:Name="txtCount" Text="{Binding count, Mode=OneWay}" />
-
-        <Button Grid.Row="6" Grid.Column="1" Content="Обновить данные " Click="ButtonBase_OnClick" />
-    </Grid>
-
+                <Button Grid.Row="6" Grid.Column="1" Width="300" Content="Обновить данные " Click="ButtonBase_OnClick" />
+            </Grid>
+        </Border>
+       </Grid>
 </Window>

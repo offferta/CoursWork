@@ -117,10 +117,10 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                 Image = p.Image ?? b
             }).ToList();
     }
-
+    
     private void AddWallButton_OnClick(object sender, RoutedEventArgs e)
     {
-        if (_wallButtonClickCount < 7)
+        if (_wallButtonClickCount < 6)
         {
             var group = CreateElementGroup();
             elementStackPanel.Children.Add(group);
@@ -129,6 +129,10 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         else
         {
             MessageBox.Show("Ограничение на стены");
+        }
+        if (_wallButtonClickCount >= 1)
+        {
+            ListBorder.Visibility = Visibility.Visible;
         }
     }
 
@@ -348,6 +352,11 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
                 CalculateTotal();
             }
+
+            if (_wallButtonClickCount == 0)
+            {
+                ListBorder.Visibility = Visibility.Collapsed;
+            }
         }
     }
 
@@ -368,7 +377,6 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             MessageBox.Show("Проверте вводимые данные");
             return;
         }
-
         if (_sumWall < _sumWindow)
         {
             MessageBox.Show("Площадь окон не может быть больше плоащди стен");
@@ -381,6 +389,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         GetSlatsFinish(getExectResult);
         GetFilm(getExectResult);
         ShowCalculationResults();
+        GetFinishResultBorder.Visibility = Visibility.Visible;
     }
 
     //получение количества сайдинга

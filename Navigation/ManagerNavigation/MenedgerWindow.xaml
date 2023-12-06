@@ -4,8 +4,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
-        Title="Страница менеджера" Width="1920" WindowState="Maximized">
-    <Grid>
+        Background="#F3F5F9"
+        Title="Страница менеджера" Width="1920" WindowState="Maximized" >
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="150" />
             <RowDefinition />
@@ -21,7 +22,9 @@
         </Grid.ColumnDefinitions>
 
         <Frame x:Name="MenedgerFrame" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7" NavigationUIVisibility="Hidden" />
-        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" BorderBrush="Gainsboro" BorderThickness="1"></Border>
+        <Border Grid.Row="0" Grid.Column="1"  Grid.ColumnSpan="5" Background="#FFFFFF" Height="100" Style="{StaticResource CustomBorderStyle}">
+            
+        </Border>
         <Button Grid.Row="0" Grid.Column="1" x:Name="CalculateButton" HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Click="CalculateButton_OnClick">
@@ -43,6 +46,6 @@
 
         <Label x:Name="FullNameLabel" Grid.Column="5"
                MouseLeftButtonUp="FullNameLabel_OnMouseLeftButtonUp" Margin="0"
-               Cursor="Hand" HorizontalContentAlignment="Left" VerticalAlignment="Center" />
+               Cursor="Hand" HorizontalContentAlignment="Left" VerticalAlignment="Center" FontWeight="Regular" />
     </Grid>
 </Window>
