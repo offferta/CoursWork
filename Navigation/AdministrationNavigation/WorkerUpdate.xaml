@@ -5,16 +5,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:Coursework.Navigation.AdministrationNavigation"
         mc:Ignorable="d"
-        Title="WorkerUpdate" Width="1100" Height="550" MinHeight="550" MinWidth="1100">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0" Margin="10">
+        Background="#F3F5F9"
+        Title="WorkerUpdate" >
+    
+   <Grid Margin="10">
+    <Border Style="{StaticResource CustomBorderStyle}">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -24,37 +23,35 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Информация о сотруднике" FontWeight="Bold"
-                   Margin="0 0 0 5" />
+            <Label Grid.Row="0" Grid.ColumnSpan="4" Content="Информация о сотруднике"  Margin="0 0 0 5" />
 
-            <Label Grid.Row="1" Content="Id сотрудника:" VerticalAlignment="Center" />
-            <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtWorkerId" Text="{Binding id, Mode=OneWay}"
-                     IsReadOnly="True" />
+            <Label Grid.Row="1" Grid.Column="0" Content="Id сотрудника:" VerticalAlignment="Center" Visibility="Hidden"/>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtWorkerId" Text="{Binding id, Mode=OneWay}" IsReadOnly="True" Visibility="Hidden" />
 
-            <Label Grid.Row="2" Content="Имя:" VerticalAlignment="Center" />
-            <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtFirstName" Text="{Binding firstName, Mode=OneWay}" />
+            <Label Grid.Row="2" Grid.Column="0" Content="Имя:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtFirstName" Text="{Binding firstName, Mode=OneWay}" Style="{StaticResource TextBoxStyle}" Grid.ColumnSpan="3" />
 
-            <Label Grid.Column="0" Grid.Row="3" Content="Фамилия:" VerticalAlignment="Center" />
-            <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtLastName" Text="{Binding lastName, Mode=OneWay}" />
+            <Label Grid.Row="3" Grid.Column="0" Content="Фамилия:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtLastName" Text="{Binding lastName, Mode=OneWay}" Style="{StaticResource TextBoxStyle}" Grid.ColumnSpan="3" />
 
-            <Label Grid.Column="0" Grid.Row="6" Content="Отчество:" VerticalAlignment="Center" />
-            <TextBox Grid.Row="6" Grid.Column="1" x:Name="txtSecondName" Text="{Binding secondName, Mode=OneWay}" />
+            <Label Grid.Row="4" Grid.Column="0" Content="Отчество:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtSecondName" Text="{Binding secondName, Mode=OneWay}" Style="{StaticResource TextBoxStyle}" Grid.ColumnSpan="3" />
 
-            <Label Grid.Column="3" Grid.Row="2" Content="Телефон:" VerticalAlignment="Center" />
-            <TextBox Grid.Row="2" Grid.Column="4" x:Name="txtPhone" Text="{Binding phone, Mode=OneWay}" />
+            <Label Grid.Row="5" Grid.Column="0" Content="Телефон:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="5" Grid.Column="1" x:Name="txtPhone" Text="{Binding phone, Mode=OneWay}" Style="{StaticResource TextBoxStyle}" Grid.ColumnSpan="3" />
 
-            <Label Grid.Column="3" Grid.Row="3" Content="Email:" VerticalAlignment="Center" />
-            <TextBox Grid.Row="3" Grid.Column="4" x:Name="txtEmail" Text="{Binding email, Mode=OneWay}" />
+            <Label Grid.Row="6" Grid.Column="0" Content="Email:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="6" Grid.Column="1" x:Name="txtEmail" Text="{Binding email, Mode=OneWay}" Style="{StaticResource TextBoxStyle}" Grid.ColumnSpan="3" />
 
-            <Button Grid.Column="4" Grid.ColumnSpan="1" Grid.Row="6" Content="Сохранить изменения"
-                    Click="ButtonBase_OnClick" />
+            <Button Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Content="Сохранить изменения" Click="ButtonBase_OnClick" />
         </Grid>
-    </Grid>
+    </Border>
+</Grid>
+
 </Window>

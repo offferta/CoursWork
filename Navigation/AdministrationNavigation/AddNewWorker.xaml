@@ -121,7 +121,7 @@
                         <Label Grid.Column="2" Grid.Row="6" Content="Роль:" VerticalAlignment="Center" />
                         <ComboBox Grid.Column="3" Grid.Row="6" Width="230" x:Name="RoleComboBox" SelectionChanged="Selector_OnSelectionChanged" />
                         
-                        <Button Grid.Row="6" Grid.Column="5" VerticalAlignment="Bottom" x:Name="AddWorker" Content="Выйти"
+                        <Button Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Width="350" x:Name="AddWorker" Content="Добавить работника"
                                 Click="AddButton_Click" />
                     </Grid>
                 </Border>
