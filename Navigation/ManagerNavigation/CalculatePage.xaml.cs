@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -13,7 +14,13 @@ using Coursework.Context;
 using Coursework.Entities;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Microsoft.Office.Interop.Word;
+using Microsoft.Win32;
 using Color = System.Drawing.Color;
+using Page = System.Windows.Controls.Page;
+using Path = System.Windows.Shapes.Path;
+using Task = System.Threading.Tasks.Task;
+using Uri = System.Uri;
 using Window = Coursework.Entities.Window;
 
 namespace Coursework;
@@ -23,6 +30,9 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
     private readonly List<Tuple<TextBox, TextBox>> _groupTextBoxes = new();
     private readonly List<Tuple<TextBox, TextBox, TextBox>> _groupTextBoxes2 = new();
     private readonly double _priceFilm = 5200; //цена пленки5200 
+    private readonly double _priceSlats = 420; //цена пленки5200 
+    private  double _finishPrice = 0; //цена пленки5200 
+    
     private readonly double _totalResult = 0;
     private readonly Worker _worker;
     private decimal _areaSidind; //площадь сайдинга
@@ -38,7 +48,6 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
     private double _sumFilm; //сумма плёнки
 
     private double _sumSiding; //сумма сайдинга итоговая
-
     private double _sumSlats; //сумма планокСтартовых/Финишных
     private double _sumWall; //сумма стенк
 
@@ -415,7 +424,6 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                     .Select(item => item.FeaturesMaterials)
                     .ToList();
                 
-
                 if (featuresMaterialsValue.Count >= 2)
                 {
                     _lengthSiding = Math.Round(Convert.ToDecimal(featuresMaterialsValue[0]), 3);
@@ -630,7 +638,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
             };
             var sidingSlatsPriceBlock = new TextBlock
             {
-                Text = $"Цена за штуку: {420:C}",
+                Text = $"Цена за штуку: {_priceSlats.ToString()}",
                 FontFamily = new FontFamily("Arial"),
                 FontSize = 20,
                 TextAlignment = TextAlignment.Left, Margin = new Thickness(5)
@@ -835,11 +843,91 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         };
         exectResult.Children.Add(finishPlanksLabel);
 
-        var saveResultCalButton = new Button { Content = "Сохранить" };
+        var saveResultCalButton = new Button { Content = "Сохранить в БД" };
         saveResultCalButton.Click += SaveResultCalButtonOnClick;
-        saveResultCalButton.Width = 200;
+        saveResultCalButton.Width = 250;
+
+        var saveWordFileButton = new Button { Content = "Сохранить файл Ворд"};
+        saveWordFileButton.Click += SaveWordFileButtonOnClick ;
+        saveResultCalButton.Width = 250;
+       
 
         exectResult.Children.Add(saveResultCalButton);
+        exectResult.Children.Add(saveWordFileButton);
+    }
+
+    private async void ReplaceValuesInFile(Dictionary<string, string> items)
+    {
+        try
+        {
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\', '/');
+            string relativePath = "Resources/hablon.txt";
+            string absolutePath = $"{baseDirectory}\\{relativePath}";
+
+            
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog.Title = "Сохранение файла";
+            saveFileDialog.ShowDialog();
+
+            if (saveFileDialog.FileName != "")
+            {
+                string newFilePath = saveFileDialog.FileName;
+
+                string[] fileLines =  File.ReadAllLines(absolutePath);
+
+                for (int i = 0; i < fileLines.Length; i++)
+                {
+                    foreach (var item in items)
+                    {
+                        if (fileLines[i].Contains(item.Key))
+                        {
+                            fileLines[i] = fileLines[i].Replace(item.Key, item.Value);
+                        }
+                    }
+                }
+                File.WriteAllLines(newFilePath, fileLines);
+                MessageBox.Show("Файл успешно создан.");
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Ошибка: {ex.Message}");
+        }
+    }
+    
+    private void SaveWordFileButtonOnClick(object sender, RoutedEventArgs e)
+    {
+        
+        try
+        {
+            _finishPrice = _sumSiding + _sumSlats + _sumFilm;
+            var items = new Dictionary<string, string>
+            {
+                //Название материала
+                {"<SidingName>", SelectedSiding.Title.ToString()},
+                //Цена за штуку
+                {"<SidingPrice>", SelectedSiding.Price.ToString()},
+                {"<PlankaPrice>", _priceSlats.ToString()},
+                {"<PlenkaPrice>", _priceFilm.ToString()},
+                //Необходимое количество
+                {"<SidingCount>", _countSiding.ToString()},
+                {"<PlankaCount>", _countSlats.ToString()},
+                {"<PlenkaCount>", _countFilm.ToString()},
+                //Итоговая цена 
+                {"<SidingFinishPrice>", _sumSiding.ToString()},
+                {"<PlankaFinishStart>", _sumSlats.ToString()},
+                {"<PlenkaFinishPrice>", _sumFilm.ToString()},
+                //Общая сумма
+                {"<FinishPrice>", _finishPrice.ToString()},
+            };
+
+            ReplaceValuesInFile(items);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Ошибка: " + ex.Message);
+        }
     }
 
     private void WindowDoorCheckBox_OnChecked(object sender, RoutedEventArgs e)

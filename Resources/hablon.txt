@@ -1,0 +1,19 @@
+Счёт фактура
+
+Название материала: <SidingName>
+
+Цена за штуку: <SidingPrice>
+Цена за планку: <PlankaPrice>
+Цена за пленку: <PlenkaPrice>
+
+Необходимое количество материала: <SidingCount>
+Необходимое количество стратовых планок: <PlankaCount>
+Необходимое количество финишных планок: <PlankaCount>
+Необходимое количество пленки: <PlenkaCount>
+
+Итоговая цена материала: <SidingFinishPrice>
+Начальная цена за планку: <PlankaFinishStart>
+Итоговая цена за пленку: <PlenkaFinishPrice>
+
+Общая сумма: <FinishPrice>
+

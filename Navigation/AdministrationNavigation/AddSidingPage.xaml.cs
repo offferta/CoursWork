@@ -113,17 +113,36 @@ public partial class
 
     private void BrowseImage_OnClick(object sender, RoutedEventArgs e)
     {
-        var dlg = new OpenFileDialog();
-        dlg.DefaultExt = ".jpg";
-        dlg.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
+        AddImage();
+    }
 
-        if (dlg.ShowDialog() == true)
+    private void AddImage()
+    {
+        try
         {
-            var imagePath = dlg.FileName;
-            var bitmap = new BitmapImage(new Uri(imagePath));
-            SelectedImage.Source = bitmap;
+            var dlg = new OpenFileDialog();
+            dlg.DefaultExt = ".jpg";
+            dlg.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
 
-            _imageData = File.ReadAllBytes(imagePath);
+            if (dlg.ShowDialog() == true)
+            {
+                var imagePath = dlg.FileName;
+                try
+                {
+                    var bitmap = new BitmapImage(new Uri(imagePath));
+                    SelectedImage.Source = bitmap;
+                    _imageData = File.ReadAllBytes(imagePath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка чтения изображения: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Обработка других ошибок (например, при открытии диалогового окна).
+            MessageBox.Show("Ошибка: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 

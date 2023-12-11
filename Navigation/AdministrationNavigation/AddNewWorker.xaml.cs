@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -39,6 +40,11 @@ public partial class AddNewWorker : Page
     }
 
     private async void AddButton_Click(object sender, RoutedEventArgs e)
+    {
+        await AddNewUser();
+    }
+
+    private async Task AddNewUser()
     {
         if (string.IsNullOrWhiteSpace(LoginTextBox.Text) || string.IsNullOrWhiteSpace(PasswordTextBox.Password) ||
             string.IsNullOrWhiteSpace(FirstNameTextBox.Text) || string.IsNullOrWhiteSpace(LastNameTextBox.Text))

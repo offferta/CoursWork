@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using Coursework.Context;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,11 @@ public partial class Authorization : Window
     }
 
     private async void AuthorizatiorButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        await Auntification();
+    }
+
+    private async Task Auntification()
     {
         var username = LoginTextBox.Text;
         var password = PasswordTextBox.Password;
