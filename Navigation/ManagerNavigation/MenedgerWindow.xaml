@@ -27,22 +27,21 @@
         </Border>
         <Button Grid.Row="0" Grid.Column="1" x:Name="CalculateButton" HorizontalAlignment="Center"
                 VerticalAlignment="Center"
+                Width="260"
                 Click="CalculateButton_OnClick">
             Рассчитать
         </Button>
         <Button Grid.Row="0" Grid.Column="2" x:Name="CalculationButton"
                 Click="CalculationButton_OnClick" 
+                Width="260"
                 >
-            Расчёты
+            Список расчётов
         </Button>
         <Button Grid.Row="0" Grid.Column="3" x:Name="ListMaterialsButton"
                 Click="ListMaterialsButton_OnClick" Width="260">
             Список Материалов
         </Button>
-        <Button Grid.Row="0" Grid.Column="4" x:Name="ListCalculationButton" Width="260"
-                Click="ListCalculationButton_OnClick">
-            Список Расчётов
-        </Button>
+       
 
         <Label x:Name="FullNameLabel" Grid.Column="5"
                MouseLeftButtonUp="FullNameLabel_OnMouseLeftButtonUp" Margin="0"

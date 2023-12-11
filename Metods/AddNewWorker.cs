@@ -10,7 +10,7 @@ public class AddNewUser
     public string password { get; set; }
     public int roleId { get; set; }
   
-    public void AddNewUser2(string login, string password, int roleId, MyDbContext _context)
+    public void AddNewUser2(string login, string password, int roleId, DbContext _context)
     {
 
         var newWorker = new Worker()
@@ -19,7 +19,7 @@ public class AddNewUser
             Password = password,
             RoleId = roleId
         };
-        _context.Workers.Add(newWorker);
+        _context.Add(newWorker);
         _context.SaveChanges(); 
     }
 }

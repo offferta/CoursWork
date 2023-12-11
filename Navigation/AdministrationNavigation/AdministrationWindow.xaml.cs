@@ -50,7 +50,14 @@ public partial class AdministrationWindow : Window, INotifyPropertyChanged
                 })
                 .FirstOrDefaultAsync();
 
-            if (FullNameLabel != null) FullNameLabel.Content = $"{workerInformations.FIO}";
+            if (FullNameLabel != null)
+            {
+                FullNameLabel.Content = $"Администратор";
+            }
+            else
+            {
+                FullNameLabel.Content = $"";
+            }
         }
         catch (Exception exception)
         {

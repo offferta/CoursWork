@@ -14,7 +14,6 @@ using Coursework.Context;
 using Coursework.Entities;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Microsoft.Office.Interop.Word;
 using Microsoft.Win32;
 using Color = System.Drawing.Color;
 using Page = System.Windows.Controls.Page;
@@ -219,7 +218,7 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
 
 
         // Button
-        var deleteButton = new Button { Content = "Удалить проём" };
+        var deleteButton = new Button { Content = "Удалить стену" };
         deleteButton.Width = 230;
         deleteButton.Click += DeleteGroup_Click;
         Grid.SetRow(deleteButton, 6);
@@ -449,13 +448,11 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                         MessageBox.Show(_countSiding.ToString());
                     }
                 }
-                
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Произошла ошибка: {ex.Message}");
             }
-            
         }
         else
         {
@@ -846,10 +843,12 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         var saveResultCalButton = new Button { Content = "Сохранить в БД" };
         saveResultCalButton.Click += SaveResultCalButtonOnClick;
         saveResultCalButton.Width = 250;
+        saveResultCalButton.Margin = new Thickness(0,20,0,20);
 
-        var saveWordFileButton = new Button { Content = "Сохранить файл Ворд"};
+        var saveWordFileButton = new Button { Content = "Сохранить в файл"};
         saveWordFileButton.Click += SaveWordFileButtonOnClick ;
-        saveResultCalButton.Width = 250;
+        saveWordFileButton.Width = 250;
+        saveWordFileButton.Margin = new Thickness(0,20,0,20);
        
 
         exectResult.Children.Add(saveResultCalButton);
@@ -938,7 +937,9 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         additionalButton.Margin = new Thickness(0);
         StackPanel.Children.Add(additionalButton);
 
-        if (_windowButtonClickCount < 8)
+        WindowsBorder.Visibility = Visibility.Visible;
+
+        if (_windowButtonClickCount < 7)
         {
             var group = GetWindow();
             WindowStackPanel.Children.Add(group);
@@ -1046,19 +1047,19 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         };
 
         // Buttons
-        var deleteButton = new Button { Content = "Удалить стену" };
+        var deleteButton = new Button { Content = "Удалить проём" };
         deleteButton.Width = 200;
         deleteButton.Click += DeleteWindowGroup_Click;
         Grid.SetRow(deleteButton, 8);
         Grid.SetColumn(deleteButton, 1); // Moved to the second column
         grid.Children.Add(deleteButton);
-
+        
         return grid;
     }
 
     private void AdditionalButton_Click(object sender, RoutedEventArgs e)
     {
-        if (_windowButtonClickCount < 6)
+        if (_windowButtonClickCount < 5)
         {
             var group = GetWindow();
             WindowStackPanel.Children.Add(group);
@@ -1067,6 +1068,10 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
         else
         {
             MessageBox.Show("Ограничение на проёмы");
+        }
+        if (_windowButtonClickCount >= 0)
+        {
+            WindowsBorder.Visibility = Visibility.Visible;
         }
     }
 
@@ -1087,10 +1092,15 @@ public partial class CalculatePage : Page, INotifyPropertyChanged
                 CalculateTotal2();
             }
         }
+        if (_windowButtonClickCount < 0)
+        {
+            WindowsBorder.Visibility = Visibility.Collapsed;
+        }
     }
 
     private void WindowDoorCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
     {
+        WindowsBorder.Visibility = Visibility.Collapsed;
         WindowStackPanel.Children.Clear();
         StackPanel.Children.Clear();
         _windowButtonClickCount = 0;
