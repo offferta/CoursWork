@@ -15,24 +15,22 @@ public partial class Authorization : Window
 
     private async void AuthorizatiorButton_OnClick(object sender, RoutedEventArgs e)
     {
-        await Auntification();
+        await Authentication();
     }
 
-    private async Task Auntification()
-    {
-        var username = LoginTextBox.Text;
-        var password = PasswordTextBox.Password;
+    private async Task Authentication() { var username = LoginTextBox.Text; var password = PasswordTextBox.Password;
 
         if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
         {
-            MessageBox.Show("Пожалуйста, введите имя пользователя и пароль.", "Ошибка Авторизации", MessageBoxButton.OK,
-                MessageBoxImage.Error);
+            MessageBox.Show("Пожалуйста, введите имя пользователя и пароль.", "Authentication Error", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
 
-        if (username != LoginTextBox.Text || password != PasswordTextBox.Password)
-            MessageBox.Show("Имя пользователя и пароль не содержат пробелы в начале или конце.", "Ошибка Авторизации",
-                MessageBoxButton.OK, MessageBoxImage.Error);
+        if (username.Trim() != username || password.Trim() != password)
+        {
+            MessageBox.Show("Имя пользователя и пароль не должны содержать начальных или конечных пробелов.", "Authentication Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
 
         try
         {
@@ -40,8 +38,9 @@ public partial class Authorization : Window
             var worker = await context.Workers
                 .Include(e => e.Role)
                 .FirstOrDefaultAsync(e =>
-                    e.Login == LoginTextBox.Text &&
-                    e.Password == PasswordTextBox.Password);
+                    e.Login == username &&
+                    e.Password == password);
+    
             if (worker is null)
                 throw null!;
 
@@ -59,8 +58,7 @@ public partial class Authorization : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Провертье логин и пароль "  + ex, "Ошибка авторизации", MessageBoxButton.OK,
-                MessageBoxImage.Error);
+            MessageBox.Show("Пожалуйста, проверьте свое имя пользователя и пароль.", "Authentication Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

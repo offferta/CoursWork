@@ -23,6 +23,7 @@ public partial class MenedgerWindow : Window, INotifyPropertyChanged
         _worker = worker;
         GetFullName(_worker.WorkerId);
         MenedgerFrame.Navigate(new CalculatePage(_worker));
+        Application.Current.MainWindow = this;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

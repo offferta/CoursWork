@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using Coursework.AdministrationNavigation;
 using Coursework.Context;
 using Coursework.Entities;
@@ -25,8 +27,9 @@ public partial class AdministrationWindow : Window, INotifyPropertyChanged
         _worker = worker;
         GetFullName(_worker.WorkerId);
         AdministrationFrame.Navigate(new AddSidingPage(_worker));
+        Application.Current.MainWindow = this;
     }
-
+    
     private void AddSiningButton_OnClick(object sender, RoutedEventArgs e)
     {
         AdministrationFrame.Navigate(new AddSidingPage(_worker));
@@ -84,6 +87,7 @@ public partial class AdministrationWindow : Window, INotifyPropertyChanged
     private void FullNameLabel_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
         AdministrationFrame.Navigate(new UpdateWorkerInformation(_worker));
+        
     }
 
     private void CalculationsList_OnClick(object sender, RoutedEventArgs e)

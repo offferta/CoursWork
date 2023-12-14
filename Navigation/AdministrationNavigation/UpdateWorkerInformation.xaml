@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Coursework.Navigation.AdministrationNavigation"
       mc:Ignorable="d"
       Background="#F3F5F9"
-      Title="UpdateWorkerInformation"  Width="1920">
+      Title="UpdateWorkerInformation"  Width="1920" Loaded="UpdateWorkerInformation_OnLoaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70"/>

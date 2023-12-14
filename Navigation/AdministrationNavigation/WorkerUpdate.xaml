@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Coursework.Navigation.AdministrationNavigation"
         mc:Ignorable="d"
         Background="#F3F5F9"
-        Title="WorkerUpdate" >
+        Title="Обновление данных о работнике" Height="900">
     
    <Grid Margin="10">
     <Border Style="{StaticResource CustomBorderStyle}">
@@ -19,6 +19,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="100" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
@@ -49,7 +51,8 @@
             <Label Grid.Row="6" Grid.Column="0" Content="Email:" VerticalAlignment="Center" />
             <TextBox Grid.Row="6" Grid.Column="1" x:Name="txtEmail" Text="{Binding email, Mode=OneWay}" Style="{StaticResource TextBoxStyle}" Grid.ColumnSpan="3" />
 
-            <Button Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Content="Сохранить изменения" Click="ButtonBase_OnClick" />
+            <Button Grid.Row="7" Grid.Column="2" Width="auto"  Content="Сохранить изменения" Click="ButtonBase_OnClick" />
+            <Button Grid.Row="8" Grid.Column="2" Width="auto"  Content="Удалить сотрудника" Click="DeleteButtonBase_OnClick" Background="Red" />
         </Grid>
     </Border>
 </Grid>

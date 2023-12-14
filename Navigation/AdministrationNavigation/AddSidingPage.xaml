@@ -90,7 +90,7 @@
                                 Content="Загрузить изображение" HorizontalAlignment="Right" />
 
                         <Image Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="7" x:Name="SelectedImage"
-                               Stretch="Uniform" Width="700" Height="700" HorizontalAlignment="Center" />
+                               Stretch="Uniform" Width="400" Height="400" HorizontalAlignment="Center" />
 
                         <Button Grid.Column="3" Grid.Row="7" Width="300" x:Name="Save" Click="AddButton_OnClick"
                                 Content="Сохранить" HorizontalAlignment="Right" />

@@ -204,7 +204,7 @@
                 </DockPanel>
             </StackPanel>
             
-            <Border x:Name="WindowsBorder" Grid.Column="1" Grid.ColumnSpan="6" Grid.Row="9"  Style="{StaticResource CustomBorderStyle}" Visibility="Collapsed">
+            <Border x:Name="WindowsBorder" Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="9"  Style="{StaticResource CustomBorderStyle}" Visibility="Collapsed">
                 <StackPanel x:Name="WindowStackPanel" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="5"
                             Orientation="Horizontal" Margin="10" />
             </Border>
@@ -212,11 +212,8 @@
             <StackPanel Grid.Column="1" Grid.ColumnSpan="6" Grid.Row="8"  x:Name="StackPanel" HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                        Margin="0, 40,0,40" />
             
-
-            
             <TextBlock Grid.Column="4" Grid.Row="4" x:Name="totalLenResult" HorizontalAlignment="Left"
                        VerticalAlignment="Top" Margin="0" />
-
                 <Border x:Name="GetFinishResultBorder"
                         Grid.Column="1" Grid.ColumnSpan="6" Grid.Row="13"
                         Style="{StaticResource CustomBorderStyle}"
@@ -233,8 +230,8 @@
                     </Grid>
                 </Border>
                 
-            <Button x:Name="MakeCalculation" Grid.Row="11" Grid.Column="2"  Grid.ColumnSpan="2"
-                    Width="350" Click="MakeCalculation_OnClick" Margin="0" HorizontalAlignment="Center">
+            <Button x:Name="MakeCalculation" Grid.Row="11" Grid.Column="2"  
+                    Width="350" Click="MakeCalculation_OnClick" Margin="150,0,0,0" HorizontalAlignment="Left">
                 Выполнить расчёт
             </Button>
             </Grid>
